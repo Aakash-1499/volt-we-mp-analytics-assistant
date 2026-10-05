@@ -77,16 +77,31 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Browsing | VT Browsing | Clicks tonnage option | False | v1_choose_wt | click | enter_wt_bottomsheet | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing | Clicks 'Submit' | False | v1_cnf_wt | click | enter_wt_bottomsheet | tonnage_req | False |  | weight | False |  |  |  |
 | Browsing | VT Browsing | Clicks 'Close' button | False | v1_close | click | enter_wt_bottomsheet | tonnage_req | False |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_demand_price_range(view)(misc : demandid) | view |  | demand_price_range | False |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_demand_price_range | view |  | demand_price_range | True |  |  | False |  |  |  |
 | Price Confirmation |  | Clicks 'Back' button | False | v1_back_btn | click | top_nav | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation |  | Clicks 'Cancel' button | False | v1_cancel | click | top_nav | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation |  | Clicks 'Edit' widget | False | v1_edit_add | click | top_nav | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation |  | Clicks 'Edit' widget | False | v1_edit_veh | click | top_nav | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation |  | Clicks DR mode option | False | v1_mode | click | search_modes | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation |  | Clicks 'Next' button | False | v1_confirm_btn | click | bottom_nav | demand_price_range | True |  | mode:quick_confirmation/best_price | False |  |  |  |
-|  |  |  | False |  |  |  | demand_price_range | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  | demand_price_range | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  | demand_price_range | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 | Fulfilment |  | At Loading | False |  |  |  |  | False |  |  | False |  |  |  |
 | Fulfilment |  | Trip Started | False |  |  |  |  | False |  |  | False |  |  |  |
 | Fulfilment |  | At Unloading | False |  |  |  |  | False |  |  | False |  |  |  |
