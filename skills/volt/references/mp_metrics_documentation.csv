@@ -442,7 +442,7 @@ FROM (SELECT a.demand_id, a.demand_date, a.trip_flag, fc.accepted, cx.auto_cance
 Consigner Growth,% Trips with discount,Share of fulfilled trips carrying any discount.,"with discount_data as (
 select demand_id, sum(transaction_amount) as discount
 from mp_analytics_critical.fact_billings
-where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION')
+where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION','REACTIVATION_BONUS')
 group by 1 )
 
 
@@ -459,7 +459,7 @@ where a.load_type='FTL' and b.customer_type ilike '%%sme%%' and b.customer_flag=
 Consigner Growth,Total discount,EDPE + FO activation + middle share + net coupon.,"with discount_data as (
 select demand_id, sum(transaction_amount) as discount
 from mp_analytics_critical.fact_billings
-where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION')
+where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION','REACTIVATION_BONUS')
 group by 1 )
 
 
@@ -471,7 +471,7 @@ where a.load_type='FTL' and b.customer_type ilike '%%sme%%' and b.customer_flag=
 Consigner Growth,% Discount,Total discount over Revenue.,"with discount_data as (
 select demand_id, sum(transaction_amount) as discount
 from mp_analytics_critical.fact_billings
-where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION')
+where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION','REACTIVATION_BONUS')
 group by 1 )
 
 
@@ -487,7 +487,7 @@ sum(transaction_amount) as discount,
 sum(case when transaction_sub_type='GROWTH_DISCOUNT' then transaction_amount else 0 end) as coupon_discount,
 sum(case when transaction_sub_type in ('EDPE','MIDDLE_SHARE','FO_ACTIVATION') then transaction_amount else 0 end) as noncoupon_discount
 from mp_analytics_critical.fact_billings
-where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION')
+where transaction_sub_type in ('GROWTH_DISCOUNT','EDPE','MIDDLE_SHARE','FO_ACTIVATION','REACTIVATION_BONUS')
 group by 1 )
 
 
