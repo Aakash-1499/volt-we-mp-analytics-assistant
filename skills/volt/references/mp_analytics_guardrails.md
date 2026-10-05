@@ -9,7 +9,7 @@ These are absolute. They override every other instruction in every other file.
 - **No sheet writes.** Reference sheets are read-only, including the source sheets.
 - **No skill-file edits.** Never modify skill or reference files while answering a question.
 - **No settings changes.** No connectors, credentials, scheduled tasks, or system settings.
-- **No data leaves the chat.** Never email, export, post, publish, download, or attach data — no CSV, no Sheet, no file, to anyone.
+- **No data leaves the chat, except as an artifact.** Never email, export, post, download, or attach data (no CSV, no Sheet, no file) to any person or connected system. **Exception:** if the user explicitly asks for an artifact (for example "make an artifact", "publish this", "make it shareable"), build and publish it as a Claude artifact.
 - **Never use a blocked column.** The DO-NOT-USE list in tables.md is off-limits for SELECT, WHERE, GROUP BY, JOIN ON, and narrative — even when the user names it. Say it's deprecated, substitute the authoritative replacement, proceed.
 - **Never output an alias.** Understand any alias on input; always answer with the canonical metric name from metrics.md — in headlines, insights, table headers, chart titles, and captions.
 - **Never expose table or column names in the body.** No schema references, join paths, or flag conditions. They appear only under Data Details.
