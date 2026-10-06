@@ -84,33 +84,33 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Price Confirmation | Price Range View | Clicks 'Edit' widget | False | v1_edit_veh | click | top_nav | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation | Price Range View | Clicks DR mode option | False | v1_mode | click | search_modes | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation | Price Range View | Clicks 'Next' button | False | v1_confirm_btn | click | bottom_nav | demand_price_range | True |  | mode:quick_confirmation/best_price | False |  |  |  |
-|  | Loading slot confirmation |  | False | v1_loading_slot | view | loading_slot | demand_price_range | True |  |  | False |  |  |  |
-|  | Loading slot confirmation | Clicks on loading day from options | False | v1_loading_day | click | loading_slot | demand_price_range | True |  | idx:<today/tomorrow | False |  |  |  |
-|  | Loading slot confirmation | Clicks on loading time from options | False | v1_loading_time | click | loading_slot | demand_price_range | True |  | idx:time_slot | False |  |  |  |
-|  | Loading slot confirmation | Clicks on 'Book Now' | False | v1_continue_btn | click | bottom_nav | demand_price_range | True |  | dr_slot :<timestamp> | False |  |  |  |
-|  |  |  | False | v1_dr_stage | view |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_back_btn | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_map_locate | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_dr_stage | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_addr_mode | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_pincode | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_full_addr | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_poc_number | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_contact_book | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_use_my_contact | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_poc_name | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_saved_addr | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_confirm_btn | click |  | add_loading_unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_dr_stage | view |  | unloading | True |  | unloading/insurance::timer:xx | False |  |  |  |
-|  |  |  | False | v1_back(click) | click |  | unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_pincode | click |  | unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_full_addr | click |  | unloading | True |  | timer:xx | False |  |  |  |
-|  |  |  | False | v1_poc_number | click |  | unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_contact_book | click |  | unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_use_my_contact | click |  | unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
-|  |  |  | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
-|  |  |  | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
+| Price Confirmation | Loading slot confirmation |  | False | v1_loading_slot | view | loading_slot | demand_price_range | True |  |  | False |  |  |  |
+| Price Confirmation | Loading slot confirmation | Clicks on loading day from options | False | v1_loading_day | click | loading_slot | demand_price_range | True |  | idx:<today/tomorrow | False |  |  |  |
+| Price Confirmation | Loading slot confirmation | Clicks on loading time from options | False | v1_loading_time | click | loading_slot | demand_price_range | True |  | idx:time_slot | False |  |  |  |
+| Price Confirmation | Loading slot confirmation | Clicks on 'Book Now' | False | v1_continue_btn | click | bottom_nav | demand_price_range | True |  | dr_slot :<timestamp> | False |  |  |  |
+| Price Confirmation |  |  | False | v1_dr_stage | view |  | add_loading_unloading | True |  | dr_stage:Loading1/Loading2/Unloading/Insurance | False |  |  |  |
+| Price Confirmation |  |  | False | v1_back_btn | click | top_nav | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_map_locate | click | map_view | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_dr_stage | click | top_nav | add_loading_unloading | True |  | dr_stage:loading1/loading2/unloading/insurance | False |  |  |  |
+| Price Confirmation |  |  | False | v1_addr_mode | click | top_nav | add_loading_unloading | True |  | entered_via:map/text | False |  |  |  |
+| Price Confirmation |  |  | False | v1_enter_pincode | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_enter_full_addr | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_poc_number | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_contact_book | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_use_my_contact | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_poc_name | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_saved_addr | click | address_dets | add_loading_unloading | True |  | addr_choice:Warehouse1/Warehouse2::type:<LOADING/CONSIGNEE> | False |  |  |  |
+| Price Confirmation |  |  | False | v1_confirm_btn | click | bottom_nav | add_loading_unloading | True |  | entered_via:map/text::action:<Loading/Unloading/Unloading#2/Insurance> | False |  |  |  |
+| Price Confirmation |  |  | False | v1_dr_stage | view |  | unloading | True |  | unloading/insurance::timer:xx | False |  |  |  |
+| Price Confirmation |  |  | False | v1_back(click) | click |  | unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_enter_pincode | click |  | unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_enter_full_addr | click |  | unloading | True |  | timer:xx | False |  |  |  |
+| Price Confirmation |  |  | False | v1_poc_number | click |  | unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_contact_book | click |  | unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_use_my_contact | click |  | unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
+| Price Confirmation |  |  | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
+| Price Confirmation |  |  | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
