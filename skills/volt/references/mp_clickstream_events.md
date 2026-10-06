@@ -101,16 +101,16 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Price Confirmation |  |  | False | v1_poc_name | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
 | Price Confirmation |  |  | False | v1_saved_addr | click | address_dets | add_loading_unloading | True |  | addr_choice:Warehouse1/Warehouse2::type:<LOADING/CONSIGNEE> | False |  |  |  |
 | Price Confirmation |  |  | False | v1_confirm_btn | click | bottom_nav | add_loading_unloading | True |  | entered_via:map/text::action:<Loading/Unloading/Unloading#2/Insurance> | False |  |  |  |
-| Price Confirmation |  |  | False | v1_dr_stage | view |  | unloading | True |  | unloading/insurance::timer:xx | False |  |  |  |
-| Price Confirmation |  |  | False | v1_back(click) | click |  | unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_enter_pincode | click |  | unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_enter_full_addr | click |  | unloading | True |  | timer:xx | False |  |  |  |
-| Price Confirmation |  |  | False | v1_poc_number | click |  | unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_contact_book | click |  | unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_use_my_contact | click |  | unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
-| Price Confirmation |  |  | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
+| Fulfilment |  |  | False | v1_dr_stage | view |  | unloading | True |  | unloading/insurance::timer:xx | False |  |  |  |
+| Fulfilment |  |  | False | v1_back(click) | click |  | unloading | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_enter_pincode | click |  | unloading | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_enter_full_addr | click |  | unloading | True |  | timer:xx | False |  |  |  |
+| Fulfilment |  |  | False | v1_poc_number | click |  | unloading | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_contact_book | click |  | unloading | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_use_my_contact | click |  | unloading | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
+| Fulfilment |  |  | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
