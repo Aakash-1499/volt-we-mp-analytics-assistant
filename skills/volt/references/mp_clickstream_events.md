@@ -109,13 +109,13 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Fulfilment |  | Clicks 'POC Name' textbox | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
 | Fulfilment |  | Clicks one of the saved address options | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
 | Fulfilment |  | Clicks 'Submit Unloading Address #1' | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
-| Fulfilment |  |  | False |  |  |  | scheduled | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False |  |  |  | scheduled | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False |  |  |  | scheduled | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False |  |  |  | scheduled | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False |  |  |  | scheduled | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False |  |  |  | scheduled | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False |  |  |  | scheduled | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_going_to_load | view |  | going_to_load | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_bot | view |  | going_to_load | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_continue | click |  | going_to_load | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_view_details_btn (click)(misc : expensetype:cancellation) | click |  | going_to_load | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_fee_btmsheet(view) | view |  | going_to_load | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_raise_issue | click |  | going_to_load | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False |  |  |  | going_to_load | False |  |  | False |  |  |  |
 | Fulfilment |  |  | False | v1_cancel_fee_accept | view |  | scheduled | True |  |  | False |  |  |  |
 | Fulfilment |  | Clicks 'I agree and accept the truck' | False | v1_confirm_truck | click |  | scheduled | True |  |  | False |  |  |  |
 | Fulfilment |  |  | False | v1_scheduled_preview | view | confirm_demand | scheduled_preview | True |  | timer:xx  (in secs) | False |  |  |  |
