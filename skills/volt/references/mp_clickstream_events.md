@@ -114,34 +114,34 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 |  |  |  | False | v1_cancel_fee_accept | view |  | scheduled | True |  |  | False |  |  |  |
 |  |  |  | False | v1_close | click |  | scheduled | True |  |  | False |  |  |  |
 |  |  |  | False | v1_confirm_truck | click |  | scheduled | True |  |  | False |  |  |  |
-|  |  |  | False | v1_view_details | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_view_pricing | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_add_insurance | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_edit_btn | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_reschedule | click |  | scheduled_preview | True |  |  | False |  |  |  |
-| Fulfilment |  | At Loading | False | v1_cancel_booking | click |  | scheduled_preview | True |  |  | False |  |  |  |
-| Fulfilment |  | Trip Started | False | v1_confirm_details | click |  | scheduled_preview | True |  |  | False |  |  |  |
-| Fulfilment |  | At Unloading | False | v1_confirm_truck | click |  | scheduled_preview | True |  |  | False |  |  |  |
-| Fulfilment |  | Trip Completed | False | v1_tnc | view |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_confirm_detail_warning | view |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_cancel_bot | view |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_continue | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_close | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_unlock_discount | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_extra_charge_policy | view |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_extra_charge_policy | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_remove_pricing | click |  | scheduled_preview | True |  |  | False |  |  |  |
-|  |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | True |  |  | False |  |  |  |
+|  |  |  | False | v1_scheduled_preview | view | confirm_demand | scheduled_preview | True | view |  | False |  |  |  |
+|  |  |  | False | v1_view_details | click |  | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_view_pricing | click | insurance | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | True | view |  | False |  |  |  |
+|  |  |  | False | v1_add_insurance | click | insurance | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_edit_btn | click | trip_details | scheduled_preview | True | click |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_reschedule | click |  | scheduled_preview | True | click |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_booking | click |  | scheduled_preview | True | click |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_confirm_details | click | v1_confirm_details | scheduled_preview | True | click |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_confirm_truck | click |  | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_tnc | view |  | scheduled_preview | True | view |  | False |  |  |  |
+|  |  |  | False | v1_confirm_detail_warning | view |  | scheduled_preview | True | view |  | False |  |  |  |
+|  |  |  | False | v1_cancel_bot | click |  | scheduled_preview | True | view |  | False |  |  |  |
+|  |  |  | False | v1_continue | click |  | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_close | click |  | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_unlock_discount | view |  | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_extra_charge_policy | click |  | scheduled_preview | True | view |  | False |  |  |  |
+|  |  |  | False | v1_extra_charge_policy | click |  | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_remove_pricing | view | insurance | scheduled_preview | True | click |  | False |  |  |  |
+|  |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | False | view |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  | At Loading | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  | Trip Started | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  | At Unloading | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  | Trip Completed | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
