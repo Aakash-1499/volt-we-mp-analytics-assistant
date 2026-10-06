@@ -88,34 +88,29 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 |  | Loading slot confirmation | Clicks on loading day from options | False | v1_loading_day | click | loading_slot | demand_price_range | True |  | idx:<today/tomorrow | False |  |  |  |
 |  | Loading slot confirmation | Clicks on loading time from options | False | v1_loading_time | click | loading_slot | demand_price_range | True |  | idx:time_slot | False |  |  |  |
 |  | Loading slot confirmation | Clicks on 'Book Now' | False | v1_continue_btn | click | bottom_nav | demand_price_range | True |  | dr_slot :<timestamp> | False |  |  |  |
-|  |  |  | False | v1_dr_stage(view)(misc: dr_stage:loading1/loading2/unloading/insurance::timer:xx) | view |  | add_loading_unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_map_locate(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_dr_stage(click)(misc: loading1/loading2/unloading/insurance) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_addr_mode(click)(entered_via : map/text) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_change_add(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_pincode(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_full_addr(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_city(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_state(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_poc_number(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_contact_book(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_use_my_contact(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_poc_name(click) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_saved_addr(click) (misc : Warehouse1/Warehouse2) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_confirm_btn(click) (misc : addr_mode:<loc/text>, a action:<loading1/loading2/unloading/insurance::timer:xx) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_dr_stage(view)(misc:unloading/insurance; timer:xx (in secs)) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_back(click) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_dr_stage(click)(misc: unloading/insurance) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_pincode(click) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_full_addr(click) (misc:timer:xx) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_city(click) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_enter_state(click) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_poc_number(click) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_contact_book(click) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_use_my_contact(click) (misc:timer:xx) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_poc_name(click) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_saved_addr(click) (misc: addr_choice:warehouse1/warehouse2/other) |  |  | unloading | False |  |  | False |  |  |  |
-|  |  |  | False | v1_confirm_btn (click) (misc: action:<unloading/insurance::timer:xx>) -> v1_payment_page events payment_plc screen |  |  | unloading | False |  |  | False |  |  |  |
+|  |  |  | False | v1_dr_stage | view |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_back_btn | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_map_locate | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_dr_stage | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_addr_mode | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_pincode | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_full_addr | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_poc_number | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_contact_book | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_use_my_contact | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_poc_name | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_saved_addr | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_confirm_btn | click |  | add_loading_unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_dr_stage | view |  | unloading | True |  | unloading/insurance::timer:xx | False |  |  |  |
+|  |  |  | False | v1_back(click) | click |  | unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_pincode | click |  | unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_full_addr | click |  | unloading | True |  | timer:xx | False |  |  |  |
+|  |  |  | False | v1_poc_number | click |  | unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_contact_book | click |  | unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_use_my_contact | click |  | unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
+|  |  |  | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
+|  |  |  | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
