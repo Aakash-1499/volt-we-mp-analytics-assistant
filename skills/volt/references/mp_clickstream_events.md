@@ -89,17 +89,16 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Price Confirmation | Loading slot confirmation | Clicks on loading time from options | False | v1_loading_time | click | loading_slot | demand_price_range | True |  | idx:time_slot | False |  |  |  |
 | Price Confirmation | Loading slot confirmation | Clicks on 'Book Now' | False | v1_continue_btn | click | bottom_nav | demand_price_range | True |  | dr_slot :<timestamp> | False |  |  |  |
 | Price Confirmation |  |  | False | v1_dr_stage | view |  | add_loading_unloading | True |  | dr_stage:Loading1/Loading2/Unloading/Insurance | False |  |  |  |
-| Price Confirmation |  |  | False | v1_back_btn | click | top_nav | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_map_locate | click | map_view | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_dr_stage | click | top_nav | add_loading_unloading | True |  | dr_stage:loading1/loading2/unloading/insurance | False |  |  |  |
-| Price Confirmation |  |  | False | v1_addr_mode | click | top_nav | add_loading_unloading | True |  | entered_via:map/text | False |  |  |  |
-| Price Confirmation |  |  | False | v1_enter_pincode | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_enter_full_addr | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_poc_number | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_contact_book | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_use_my_contact | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_poc_name | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation |  |  | False | v1_saved_addr | click | address_dets | add_loading_unloading | True |  | addr_choice:Warehouse1/Warehouse2::type:<LOADING/CONSIGNEE> | False |  |  |  |
+| Price Confirmation | Adding location | Clicks the pointer on map | False | v1_map_locate | click | map_view | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location | Clicks DR stage:'Loading #1'/'Loading #2','Unloading' | False | v1_dr_stage | click | top_nav | add_loading_unloading | True |  | dr_stage:loading1/loading2/unloading/insurance | False |  |  |  |
+| Price Confirmation | Adding location | Clicks 'Add via text' or 'Add via location' | False | v1_addr_mode | click | top_nav | add_loading_unloading | True |  | entered_via:map/text | False |  |  |  |
+| Price Confirmation | Adding location |  | False | v1_enter_pincode | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location |  | False | v1_enter_full_addr | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location |  | False | v1_poc_number | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location |  | False | v1_contact_book | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location |  | False | v1_use_my_contact | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location |  | False | v1_poc_name | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location |  | False | v1_saved_addr | click | address_dets | add_loading_unloading | True |  | addr_choice:Warehouse1/Warehouse2::type:<LOADING/CONSIGNEE> | False |  |  |  |
 | Price Confirmation |  |  | False | v1_confirm_btn | click | bottom_nav | add_loading_unloading | True |  | entered_via:map/text::action:<Loading/Unloading/Unloading#2/Insurance> | False |  |  |  |
 | Fulfilment |  |  | False | v1_dr_stage | view |  | unloading | True |  | unloading/insurance::timer:xx | False |  |  |  |
 | Fulfilment |  |  | False | v1_back(click) | click |  | unloading | True |  |  | False |  |  |  |
@@ -111,29 +110,29 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Fulfilment |  |  | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
 | Fulfilment |  |  | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
 | Fulfilment |  |  | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
-|  |  |  | False | v1_cancel_fee_accept | view |  | scheduled | True |  |  | False |  |  |  |
-|  |  |  | False | v1_close | click |  | scheduled | True |  |  | False |  |  |  |
-|  |  |  | False | v1_confirm_truck | click |  | scheduled | True |  |  | False |  |  |  |
-|  |  |  | False | v1_scheduled_preview | view | confirm_demand | scheduled_preview | True | view |  | False |  |  |  |
-|  |  |  | False | v1_view_details | click |  | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_view_pricing | click | insurance | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | True | view |  | False |  |  |  |
-|  |  |  | False | v1_add_insurance | click | insurance | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_edit_btn | click | trip_details | scheduled_preview | True | click |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_reschedule | click |  | scheduled_preview | True | click |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_cancel_booking | click |  | scheduled_preview | True | click |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_confirm_details | click | v1_confirm_details | scheduled_preview | True | click |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_confirm_truck | click |  | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_tnc | view |  | scheduled_preview | True | view |  | False |  |  |  |
-|  |  |  | False | v1_confirm_detail_warning | view |  | scheduled_preview | True | view |  | False |  |  |  |
-|  |  |  | False | v1_cancel_bot | click |  | scheduled_preview | True | view |  | False |  |  |  |
-|  |  |  | False | v1_continue | click |  | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_close | click |  | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_unlock_discount | view |  | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_extra_charge_policy | click |  | scheduled_preview | True | view |  | False |  |  |  |
-|  |  |  | False | v1_extra_charge_policy | click |  | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_remove_pricing | view | insurance | scheduled_preview | True | click |  | False |  |  |  |
-|  |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | False | view |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_fee_accept | view |  | scheduled | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_close | click |  | scheduled | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_confirm_truck | click |  | scheduled | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_scheduled_preview | view | confirm_demand | scheduled_preview | True |  | timer:xx  (in secs) | False |  |  |  |
+| Fulfilment |  |  | False | v1_view_details | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_view_pricing | click | insurance | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_add_insurance | click | insurance | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_edit_btn | click | trip_details | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_reschedule | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_booking | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_confirm_details | click | v1_confirm_details | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_confirm_truck | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_tnc | view |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_confirm_detail_warning | view |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_bot | view |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_continue | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_close | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_unlock_discount | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_extra_charge_policy | view |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_extra_charge_policy | click |  | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_remove_pricing | click | insurance | scheduled_preview | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_insurance_btmsheet | view |  | scheduled_preview | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
