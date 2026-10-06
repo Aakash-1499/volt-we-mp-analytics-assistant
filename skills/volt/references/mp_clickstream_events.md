@@ -109,18 +109,18 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Fulfilment |  | Clicks 'POC Name' textbox | False | v1_poc_name | click |  | unloading | True |  |  | False |  |  |  |
 | Fulfilment |  | Clicks one of the saved address options | False | v1_saved_addr | click |  | unloading | True |  | addr_choice:warehouse1/warehouse2/other::timer:xx | False |  |  |  |
 | Fulfilment |  | Clicks 'Submit Unloading Address #1' | False | v1_confirm_btn | click |  | unloading | True |  | action:unloading | False |  |  |  |
-| Fulfilment |  |  | False | v1_going_to_load | view |  | going_to_load | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_cancel_bot | view |  | going_to_load | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_continue | click |  | going_to_load | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_view_details_btn | click |  | going_to_load | False |  | expensetype:cancellation | False |  |  |  |
-| Fulfilment |  |  | False | v1_cancel_fee_btmsheet | view |  | going_to_load | False |  |  | False |  |  |  |
-| Fulfilment |  |  | False | v1_raise_issue | click |  | going_to_load | False |  |  | False |  |  |  |
-|  |  |  | False | v1_cancel_bot | view | cancel_bot | going_to_load | False |  |  | False |  |  |  |
-|  |  |  | False | v1_continue | click | cancel_bot | going_to_load | False |  | searchmode,final_price,time,action<cancel/keep_truck/want_better_price | False |  |  |  |
-|  |  |  | False | v1_truck_on_hold | view | Post_plc_educate | scheduled | False |  |  | False |  |  |  |
-|  |  |  | False | v1_accept | click | conf_cancel_bottomsheet | scheduled | False |  |  | False |  |  |  |
-|  |  |  | False | v1_cancel | click | conf_cancel_bottomsheet | scheduled | False |  |  | False |  |  |  |
-|  |  |  | False | v1_reschedule | click |  | scheduled | False |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_going_to_load | view |  | going_to_load | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_bot | view |  | going_to_load | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_continue | click |  | going_to_load | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_view_details_btn | click |  | going_to_load | True |  | expensetype:cancellation | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_fee_btmsheet | view |  | going_to_load | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_raise_issue | click |  | going_to_load | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel_bot | view | cancel_bot | going_to_load | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_continue | click | cancel_bot | going_to_load | True |  | searchmode,final_price,time,action<cancel/keep_truck/want_better_price | False |  |  |  |
+| Fulfilment |  |  | False | v1_truck_on_hold | view | Post_plc_educate | scheduled | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_accept | click | conf_cancel_bottomsheet | scheduled | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_cancel | click | conf_cancel_bottomsheet | scheduled | True |  |  | False |  |  |  |
+| Fulfilment |  |  | False | v1_reschedule | click |  | scheduled | True |  |  | False |  |  |  |
 | Fulfilment |  |  | False | v1_cancel_fee_accept | view |  | scheduled | True |  |  | False |  |  |  |
 | Fulfilment |  | Clicks 'I agree and accept the truck' | False | v1_confirm_truck | click |  | scheduled | True |  |  | False |  |  |  |
 | Fulfilment |  |  | False | v1_scheduled_preview | view | confirm_demand | scheduled_preview | True |  | timer:xx  (in secs) | False |  |  |  |
