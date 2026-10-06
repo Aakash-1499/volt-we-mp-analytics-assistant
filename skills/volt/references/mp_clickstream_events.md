@@ -84,10 +84,10 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Price Confirmation | Price Range View | Clicks 'Edit' widget | False | v1_edit_veh | click | top_nav | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation | Price Range View | Clicks DR mode option | False | v1_mode | click | search_modes | demand_price_range | False |  |  | False |  |  |  |
 | Price Confirmation | Price Range View | Clicks 'Next' button | False | v1_confirm_btn | click | bottom_nav | demand_price_range | True |  | mode:quick_confirmation/best_price | False |  |  |  |
-|  |  |  | False | v1_loading_slot |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_day (click) (misc: day_idx: ) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | V1_time (click) (misc: idx) |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False | v1_confirm_btn (click) (misc: day time) —No quick/best to be passed for test users |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_loading_slot | view | loading_slot | demand_price_range | True |  |  | False |  |  |  |
+|  |  | Clicks on loading day from options | False | v1_loading_day | click | loading_slot | demand_price_range | True |  | idx:<today/tomorrow | False |  |  |  |
+|  |  | Clicks on loading time from options | False | v1_loading_time | click | loading_slot | demand_price_range | True |  | idx:time_slot | False |  |  |  |
+|  |  | Clicks on 'Book Now' | False | v1_continue_btn | click | bottom_nav | demand_price_range | True |  | dr_slot :<timestamp> | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
