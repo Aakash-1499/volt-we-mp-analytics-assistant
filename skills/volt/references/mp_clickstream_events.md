@@ -88,6 +88,29 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 |  | Loading slot confirmation | Clicks on loading day from options | False | v1_loading_day | click | loading_slot | demand_price_range | True |  | idx:<today/tomorrow | False |  |  |  |
 |  | Loading slot confirmation | Clicks on loading time from options | False | v1_loading_time | click | loading_slot | demand_price_range | True |  | idx:time_slot | False |  |  |  |
 |  | Loading slot confirmation | Clicks on 'Book Now' | False | v1_continue_btn | click | bottom_nav | demand_price_range | True |  | dr_slot :<timestamp> | False |  |  |  |
+|  |  |  | False | v1_dr_stage(view)(misc: dr_stage:loading1/loading2/unloading/insurance::timer:xx) | view |  | add_loading_unloading | False |  |  | False |  |  |  |
+|  |  |  | False | v1_map_locate(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_dr_stage(click)(misc: loading1/loading2/unloading/insurance) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_addr_mode(click)(entered_via : map/text) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_change_add(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_pincode(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_full_addr(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_city(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_enter_state(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_poc_number(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_contact_book(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_use_my_contact(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_poc_name(click) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_saved_addr(click) (misc : Warehouse1/Warehouse2) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False | v1_confirm_btn(click) (misc : addr_mode:<loc/text>, a action:<loading1/loading2/unloading/insurance::timer:xx) |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  | unloading | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
+|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
@@ -106,31 +129,6 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Fulfilment |  | Trip Started | False |  |  |  |  | False |  |  | False |  |  |  |
 | Fulfilment |  | At Unloading | False |  |  |  |  | False |  |  | False |  |  |  |
 | Fulfilment |  | Trip Completed | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
-|  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
 |  |  |  | False |  |  |  |  | False |  |  | False |  |  |  |
