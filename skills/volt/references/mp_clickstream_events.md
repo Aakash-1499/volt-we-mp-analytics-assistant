@@ -92,11 +92,11 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Price Confirmation | Adding location | Clicks the pointer on map | False | v1_map_locate | click | map_view | add_loading_unloading | True |  |  | False |  |  |  |
 | Price Confirmation | Adding location | Clicks DR stage:'Loading #1'/'Loading #2','Unloading' | False | v1_dr_stage | click | top_nav | add_loading_unloading | True |  | dr_stage:loading1/loading2/unloading/insurance | False |  |  |  |
 | Price Confirmation | Adding location | Clicks 'Add via text' or 'Add via location' | False | v1_addr_mode | click | top_nav | add_loading_unloading | True |  | entered_via:map/text | False |  |  |  |
-| Price Confirmation | Adding location |  | False | v1_enter_pincode | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation | Adding location |  | False | v1_enter_full_addr | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation | Adding location |  | False | v1_poc_number | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation | Adding location |  | False | v1_contact_book | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
-| Price Confirmation | Adding location |  | False | v1_use_my_contact | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location | Clicks 'Enter pincode' textbox | False | v1_enter_pincode | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location | Clicks 'Enter full address' textbox | False | v1_enter_full_addr | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location | Clicks 'Enter POC number' textbox | False | v1_poc_number | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location | Clicks 'Contact' icon | False | v1_contact_book | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
+| Price Confirmation | Adding location | Ticks 'Use my contact'  checkbox | False | v1_use_my_contact | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
 | Price Confirmation | Adding location |  | False | v1_poc_name | click | address_dets | add_loading_unloading | True |  |  | False |  |  |  |
 | Price Confirmation | Adding location |  | False | v1_saved_addr | click | address_dets | add_loading_unloading | True |  | addr_choice:Warehouse1/Warehouse2::type:<LOADING/CONSIGNEE> | False |  |  |  |
 | Price Confirmation |  |  | False | v1_confirm_btn | click | bottom_nav | add_loading_unloading | True |  | entered_via:map/text::action:<Loading/Unloading/Unloading#2/Insurance> | False |  |  |  |
