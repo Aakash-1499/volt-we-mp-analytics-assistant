@@ -334,14 +334,14 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 8 | opfreight | <missing in Glossary> | 16800 | — |
 | 9 | amount_in_paisa | <missing in Glossary> | 19900 | — |
 | 10 | refund_amount_in_paisa | <missing in Glossary> | 19900 | — |
-| 11 | trigger_source | This refers to mode the bid is given.<br>TESSERACT_SERVICE = Operator bid via visiting app directly or via notification.<br>MANUAL = Operator bid on notification sent manually by ops. | TESSERACT_SERVICE | — |
-| 12 | transaction_code | It is payment transaction code for token paid | WEWLTTXN610E3B... | — |
-| 13 | refund_transaction_code | It is payment transaction code for refunded token. | WEWLTTXN58F279... | — |
+| 11 | trigger_source | <missing in Glossary> | TESSERACT_SERVICE | — |
+| 12 | transaction_code | It is payment transaction code for paid amount. | WEWLTTXN610E3B... | — |
+| 13 | refund_transaction_code | It is payment transaction code for refunded. | WEWLTTXN58F279... | — |
 | 14 | bidding_type | <missing in Glossary Do not Use> | TEST_B0 | — |
 | 15 | auction_type | <missing in Glossary, Do not Use> | 0 | — |
 | 16 | flow | This refers to operator opting to pay at price shown or give his own price.<br>MATCHING = Opt for shown price<br>BIDDING = Opt to give his own bid | BIDDING | — |
-| 17 | token_paid_time | it is datetime when taoken amount is paid | 2026-06-20 00:00:00 | — |
-| 18 | vehicle_submitted_time | it is datetime when vehicle details given | 2026-06-20 00:00:00 | — |
+| 17 | token_paid_time | it is datetime when token amount is paid. | 2026-06-20 00:00:00 | — |
+| 18 | vehicle_submitted_time | it is datetime when vehicle details given. | 2026-06-20 00:00:00 | — |
 
 ## 9_fact_operators_demand_mp_events
 
