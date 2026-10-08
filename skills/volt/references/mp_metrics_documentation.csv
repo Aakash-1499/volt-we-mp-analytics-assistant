@@ -932,26 +932,27 @@ from mp_analytics_core.dim_operator_base_district a
 left join mp_analytics_core.dim_mp_districts b on a.district_id=b.district_id",True,Gajinder
 Matching,Bid per Demand,Operator have given bid against demands,"select demand_id, 
 count(distinct operator_code) as bids
-from mp_analytics_core.fact_operator_tokens
+from mp_analytics_core.fact_operator_bidding
+where bid_amount>0
 group by 1",True,Gajinder
 Matching,Token per Demand,"Aliases : Token Bids, Bids with Token
 
 Operator have given bid and token amount against demands","select demand_id, 
 count(distinct case when status in ('SUCCESS','PAYMENT_SUCCESS','REFUNDED','PAYMENT_INITIATED','PARTIALLY_REFUNDED','FORFEITED') then operator_code else null end) as token_bids
-from mp_analytics_core.fact_operator_tokens
+from mp_analytics_core.fact_operator_bidding
 group by 1",True,Gajinder
 Matching,Valid Bid per Demand,"Aliases : VD Vids, Vehicle Details against Bid
 
 Operator have given bid, token amounts, and vehicle details against demands","select demand_id, 
 count(distinct case when vehicle_submitted_time is not null then operator_code else null end) as valid_bids
-from mp_analytics_core.fact_operator_tokens
+from mp_analytics_core.fact_operator_bidding
 group by 1",True,Gajinder
 Matching,DR with minimum time for Matching,"Aliases: DR with minimum time for BA, DR with minimum time for Booking Automation
 
 DR which were active minimum x minutes to find vehicle. Standard is 30 minutes is not specified.","select count(a.demand_id)
 from mp_analytics_core.fact_demands a
 left join mp_analytics_core.dim_consigners b on a.consigner_user_code=b.consigner_user_code
-where a.load_type='FTL' and b.customer_type ilike '%%sme%%' and b.customer_flag='WE_Customer' and a.status='FULFILLED'
+where a.load_type='FTL' and b.customer_type ilike '%%sme%%' and b.customer_flag='WE_Customer'
 and (case when a.plc_flag=0 then datediff('minutes', a.dr_time, coalesce(a.demand_cancel_by_cx_time, a.demand_cancel_by_sys_time)) else 10000 end) >= 30",True,Gajinder
 FO Growth,Avg Opsearch FOs per DR,"Aliases: 2A. Avg Opsearch FOs Per DR; Supply Quantity Appearing in DRs.
 
