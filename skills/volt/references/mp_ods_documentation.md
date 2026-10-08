@@ -331,9 +331,9 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 5 | demand_id | Unique identifier of a demand created by a consigner. | 4605454 | — |
 | 6 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE4629721 | — |
 | 7 | status | This refers token status againt bid submitted.<br>INITIATED = Bid is submitted but token is not paid.<br>SUCCESS = Token is paid<br>REFUNDED = Token is paid and is refunded back after token is not converted to trip.<br>FORFEITED = Token is paid and win the bidding, but operator backout from trip.<br>EXPIRED = Bid is expired due to no token paid | REFUNDED | — |
-| 8 | opfreight | Bid value submitted by operator | 16800 | — |
-| 9 | amount_in_paisa | Token amount needed to submit. This amount stored in paisa denomination. | 19900 | — |
-| 10 | refund_amount_in_paisa | Token amount refunded. This amount stored in paisa denomination and is valid for REFUNDED status only. | 19900 | — |
+| 8 | opfreight | <missing in Glossary> | 16800 | — |
+| 9 | amount_in_paisa | <missing in Glossary> | 19900 | — |
+| 10 | refund_amount_in_paisa | <missing in Glossary> | 19900 | — |
 | 11 | trigger_source | This refers to mode the bid is given.<br>TESSERACT_SERVICE = Operator bid via visiting app directly or via notification.<br>MANUAL = Operator bid on notification sent manually by ops. | TESSERACT_SERVICE | — |
 | 12 | transaction_code | It is payment transaction code for token paid | WEWLTTXN610E3B... | — |
 | 13 | refund_transaction_code | It is payment transaction code for refunded token. | WEWLTTXN58F279... | — |
