@@ -1145,8 +1145,8 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 9 | bid_trigger_source | This refers to mode the bid is given.<br>TESSERACT_SERVICE = Operator bid via visiting app directly or via notification.<br>MANUAL = Operator bid on notification sent manually by ops. | TESSERACT_SERVICE | — |
 | 10 | transaction_code | It is payment transaction code for paid amount. | 0 | — |
 | 11 | refund_transaction_code | It is payment transaction code for refunded. | 0 | — |
-| 12 | bidding_type | <missing in Glossary> | 0 | — |
-| 13 | auction_type | <missing in Glossary> | 0 | — |
+| 12 | bidding_type | Do Not Use | 0 | — |
+| 13 | auction_type | Do Not Use | 0 | — |
 | 14 | token_paid_time | it is datetime when token amount is paid. | 46281.663194444445 | — |
 | 15 | vehicle_submitted_time | it is datetime when vehicle details given. | 46303.57013888889 | — |
 | 16 | vehicle_number | Vehicle registration / number plate (RTO number). | DL1LAE3249 | — |
