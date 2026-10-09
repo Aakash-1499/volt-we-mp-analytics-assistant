@@ -66,7 +66,7 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Browsing | VT Browsing | Clicks any VT card | False | v1_veh_opted | click |  | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing | Clicks 'height' option | False | v1_height | click |  | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing | Clicks  any special request choice | False | v1_spcl_req | click |  | tonnage_req | False |  |  | False |  |  |  |
-| Demand | VT Browsing | Clicks 'Confirm <VT>' | False | v1_cnf_veh | click |  | tonnage_req | False |  | chosen option index | False |  |  |  |
+| Browsing | VT Browsing | Clicks 'Confirm <VT>' | False | v1_cnf_veh | click |  | tonnage_req | False |  | chosen option index | False |  |  |  |
 | Browsing | VT Browsing |  | False | v1_spcl_req_bottomsheet | view |  | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing | Clicks 'Okay, Got it' button | False | v1_continue | click | special_req_bottomsheet | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing |  | False | v1_scroll | view |  | tonnage_req | False |  |  | False |  |  |  |
