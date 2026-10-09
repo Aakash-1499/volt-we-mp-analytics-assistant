@@ -27,7 +27,7 @@
 
 | POD | Experiment Type | Experiment Name | Start Date | Current Status | 100% Scaled Up Date<br>or<br>Rolled Back Date<br>(Optional) | Config iD | Variant ID | Variant Name | Data Filters<br>(Optional) | Top of the Funnel | Success Metric<br>(Optional) | Guardrail Metric<br>(Optional) | Leading Metric<br>(Optional) | Other Metrics<br>(Optional) | Android App Version<br>(In case of Forced Release)<br>(Optional) | iOS App Version<br>(In case of Forced Release)<br>(Optional) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Cx Growth | User Level | Booking revamp | 46246 | Live |  | 32 |  | Test |  | Demands | Demand to Trip | Gross Take Rate | Plc to Trip |  |  |  |
+| Cx Growth | User Level | Booking revamp | 46246 | Live |  |  |  | Test |  | Demands | Demand to Trip | Gross Take Rate | Plc to Trip |  |  |  |
 | Cx Growth | User Level | Booking revamp | 46246 | Live |  | 33 |  | Control |  | Demands | Demand to Trip | Gross Take Rate | Plc to Trip |  |  |  |
 | Cx Growth | User Level | Trailer | 46200 | Live |  | 28 |  | Test | Demands where VT is Trailers | Demands | Demand to Plc | Demand to DR |  |  |  |  |
 | Cx Growth | User Level | Trailer | 46200 | Live |  | 29 |  | Control | Demands where VT is Trailers | Demands | Demand to Plc | Demand to DR |  |  |  |  |
