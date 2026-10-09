@@ -51,7 +51,7 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Signup | Insurance Opt in |  | False | V1_close | click | update_ins_pricing | <dynamic_screen> | True |  |  | False |  |  |  |
 | Signup | Insurance Opt in |  | False | v1_ok | click | update_ins_pricing | <dynamic_screen> | True |  |  | False |  |  |  |
 | Signup | Insurance Opt in |  | False | v1_ok | click | fragile_items_list | <dynamic_screen> | True |  |  | False |  |  |  |
-| Demand | Enter Tonnage |  | False | v1_tonnage | view |  | tonnage_req_v1 | False |  |  | False |  |  |  |
+| Browsing | Enter Tonnage |  | False | v1_tonnage | view |  | tonnage_req_v1 | False |  |  | False |  |  |  |
 | Browsing | Enter Tonnage | Enters tonnage | False | v1_input_wt | click |  | tonnage_req_v1 | False |  |  | False |  |  |  |
 | Browsing | Enter Tonnage | Chooses tonnage option | False | v1_choose_wt | click |  | tonnage_req_v1 | False |  |  | False |  |  |  |
 | Browsing | Enter Tonnage | Clicks 'I don't know my material weight' | False | v1_dont_know_wt | click |  | tonnage_req_v1 | False |  |  | False |  |  |  |
@@ -66,7 +66,7 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Browsing | VT Browsing | Clicks any VT card | False | v1_veh_opted | click |  | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing | Clicks 'height' option | False | v1_height | click |  | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing | Clicks  any special request choice | False | v1_spcl_req | click |  | tonnage_req | False |  |  | False |  |  |  |
-| Browsing | VT Browsing | Clicks 'Confirm <VT>' | False | v1_cnf_veh | click |  | tonnage_req | False |  | chosen option index | False |  |  |  |
+| Browsing | VT Browsing | Clicks 'Confirm <VT>'  (Demand Created) | False | v1_cnf_veh | click |  | tonnage_req | False |  | chosen option index | False |  |  |  |
 | Browsing | VT Browsing |  | False | v1_spcl_req_bottomsheet | view |  | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing | Clicks 'Okay, Got it' button | False | v1_continue | click | special_req_bottomsheet | tonnage_req | False |  |  | False |  |  |  |
 | Browsing | VT Browsing |  | False | v1_scroll | view |  | tonnage_req | False |  |  | False |  |  |  |
