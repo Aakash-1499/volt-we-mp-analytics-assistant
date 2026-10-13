@@ -50,5 +50,5 @@
 | Cx Growth | User Level | DR-Scheduler | 46282 | Live |  | 38 |  | BOOKING_MODE_V2_DEFAULT |  | Demands | % Plc to Trip | % Demand to DR, % DR to Plc |  | % Scheduled DRs '. Use dr_type as 'SCHEDULED' in fact_demands table |  |  |
 |  | Non-User Level | DS Discounting |  |  |  |  | ? | Test |  |  |  |  |  |  |  |  |
 |  | Non-User Level | DS Discounting |  |  |  |  | ? | Control |  |  |  |  |  |  |  |  |
-| Cx Payments | Non-User Level | Advance Trip Expense Recovery | 46216 | Live |  |  |  | Test |  |  | % Recovery within DueDate | % Demand to DR,% DR to Plc,% Plc to Trip |  |  |  |  |
-| Cx Payments | Non-User Level | Advance Trip Expense Recovery | 46216 | Live |  |  |  | Control |  |  | % Recovery within DueDate | % Demand to DR,% DR to Plc,% Plc to Trip |  |  |  |  |
+| Cx Payments | User Level | Advance Trip Expense Recovery | 46216 | Live |  | 30 |  | Test |  | Demands,Plc,Trip | % Recovery within DueDate,% Recovery within DueDate+7 | % Demand to DR,% DR to Plc,% Plc to Trip |  |  |  |  |
+| Cx Payments | User Level | Advance Trip Expense Recovery | 46216 | Live |  | 31 |  | Control |  | Demands,Plc,Trip | % Recovery within DueDate,% Recovery within DueDate+7 | % Demand to DR,% DR to Plc,% Plc to Trip |  |  |  |  |
