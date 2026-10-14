@@ -308,9 +308,39 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 10 | veh_availability | Opeator's any vehicle matching with requested VT is available for the day when opsearch executed<br>1 = Available<br>0 = Not Available | 0 | — |
 | 11 | matching_qualified | Operator is qualified for notification<br>1 = Notification will be sent<br>0 = Notification will not be sent | 0 | — |
 
-## 8_fact_operator_tokens
+## 8_fact_operator_bidding
 
-#REF! (Cannot find range or sheet for imported range.)
+**mp_analytics_core.fact_operator_bidding:** Owner
+
+**Gajinder:** Grain
+
+**bid_id, token_product:** Short description
+
+Stores bids submitted by operators. Data is valid only if token_amount column is not empty.
+Entry is created when operator enters bid amount. After the bid, next step is to pay token amount and give vehicle details.
+After valid vehicle details are given, the bid is valid for placement.
+Above mentioned grain represent single bid.
+
+Columns (Description pulled from Glossary via VLOOKUP)
+
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
+| --- | --- | --- | --- | --- |
+| 1 | bid_id | Unique identifier for bid given by FO against demand. This column have unique value per token_product. | 870367 | — |
+| 2 | token_product | This is source of bidding data. | One Token per FO | — |
+| 3 | bid_time | Datetime when bid is recieved against demand. | 46303.57013888889 | — |
+| 4 | demand_id | Unique identifier of a demand created by a consigner. | 5079699 | — |
+| 5 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE334910 | — |
+| 6 | bid_amount | Bid value submitted by operator | 13600 | — |
+| 7 | token_amount | Token amount needed to submit. | 999 | — |
+| 8 | token_status | This refers token status againt bid submitted.<br>INITIATED = Bid is submitted but token is not paid.<br>SUCCESS = Token is paid<br>REFUNDED = Token is paid and is refunded back after token is not converted to trip.<br>FORFEITED = Token is paid and win the bidding, but operator backout from trip.<br>EXPIRED = Bid is expired due to no token paid | SUCCESS | — |
+| 9 | bid_trigger_source | This refers to mode the bid is given.<br>TESSERACT_SERVICE = Operator bid via visiting app directly or via notification.<br>MANUAL = Operator bid on notification sent manually by ops. | TESSERACT_SERVICE | — |
+| 10 | transaction_code | It is payment transaction code for paid amount. | 0 | — |
+| 11 | refund_transaction_code | It is payment transaction code for refunded. | 0 | — |
+| 12 | bidding_type | Do Not Use | 0 | — |
+| 13 | auction_type | Do Not Use | 0 | — |
+| 14 | token_paid_time | it is datetime when token amount is paid. | 46281.663194444445 | — |
+| 15 | vehicle_submitted_time | it is datetime when vehicle details given. | 46303.57013888889 | — |
+| 16 | vehicle_number | Vehicle registration / number plate (RTO number). | DL1LAE3249 | — |
 
 ## 9_fact_operators_demand_mp_events
 
@@ -1116,37 +1146,3 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 45 | l3 | Upper end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
 | 46 | reference_id | This is not relevent columns. DNU |  | — | DNU |
 | 47 | tds_metadata | Consignment TDS details information exist here. Only relevent for finance use |  | — | DNU |
-
-## 8_fact_operator_bidding
-
-**mp_analytics_core.fact_operator_bidding:** Owner
-
-**Gajinder:** Grain
-
-**bid_id, token_product:** Short description
-
-Stores bids submitted by operators. Data is valid only if token_amount column is not empty.
-Entry is created when operator enters bid amount. After the bid, next step is to pay token amount and give vehicle details.
-After valid vehicle details are given, the bid is valid for placement.
-Above mentioned grain represent single bid.
-
-Columns (Description pulled from Glossary via VLOOKUP)
-
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | bid_id | Unique identifier for bid given by FO against demand. This column have unique value per token_product. | 870367 | — |
-| 2 | token_product | This is source of bidding data. | One Token per FO | — |
-| 3 | bid_time | Datetime when bid is recieved against demand. | 46303.57013888889 | — |
-| 4 | demand_id | Unique identifier of a demand created by a consigner. | 5079699 | — |
-| 5 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE334910 | — |
-| 6 | bid_amount | Bid value submitted by operator | 13600 | — |
-| 7 | token_amount | Token amount needed to submit. | 999 | — |
-| 8 | token_status | This refers token status againt bid submitted.<br>INITIATED = Bid is submitted but token is not paid.<br>SUCCESS = Token is paid<br>REFUNDED = Token is paid and is refunded back after token is not converted to trip.<br>FORFEITED = Token is paid and win the bidding, but operator backout from trip.<br>EXPIRED = Bid is expired due to no token paid | SUCCESS | — |
-| 9 | bid_trigger_source | This refers to mode the bid is given.<br>TESSERACT_SERVICE = Operator bid via visiting app directly or via notification.<br>MANUAL = Operator bid on notification sent manually by ops. | TESSERACT_SERVICE | — |
-| 10 | transaction_code | It is payment transaction code for paid amount. | 0 | — |
-| 11 | refund_transaction_code | It is payment transaction code for refunded. | 0 | — |
-| 12 | bidding_type | Do Not Use | 0 | — |
-| 13 | auction_type | Do Not Use | 0 | — |
-| 14 | token_paid_time | it is datetime when token amount is paid. | 46281.663194444445 | — |
-| 15 | vehicle_submitted_time | it is datetime when vehicle details given. | 46303.57013888889 | — |
-| 16 | vehicle_number | Vehicle registration / number plate (RTO number). | DL1LAE3249 | — |
