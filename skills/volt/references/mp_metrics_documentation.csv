@@ -949,7 +949,7 @@ Operator have given bid, token amounts, and vehicle details against demands","se
 count(distinct case when vehicle_submitted_time is not null then operator_code else null end) as valid_bids
 from mp_analytics_core.fact_operator_bidding
 group by 1",True,Gajinder
-Matching,DR with minimum time for Matching,"Aliases: DR with minimum time for BA, DR with minimum time for Booking Automation
+Matching,DR with minimum time for Matching,"Aliases: DR with minimum time for BA, DR with minimum time for Booking Automation, Valid DR
 
 DR which were active minimum x minutes to find vehicle. Standard is 30 minutes is not specified.","select count(a.demand_id)
 from mp_analytics_core.fact_demands a
