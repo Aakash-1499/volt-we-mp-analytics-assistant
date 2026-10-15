@@ -674,14 +674,14 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 1 | browsing_time | Timestamp when the customer requested the PTL lane price quote. | 2025-04-03 05:59:43 | — | USE |
 | 2 | browsing_id | Unique identifier generated when a customer requests a PTL lane price quote. | 163 | — | USE |
 | 3 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE7562357 | — | USE |
-| 4 | uom | Unit for width/height/length. INCH (130,717) or CM (114,511). Dimensions are meaningless without this. | CM | — | USE |
-| 5 | width | Package width in uom units, stored as decimal string. 0.0 common (dimensions skipped). | 15.0 | — | USE |
-| 6 | height | Package height in uom units. Often equal to width/length (cubic cartons). | 12.0 | — | USE |
-| 7 | length | Package length in uom units. | 20.0 | — | USE |
-| 8 | service_type | Leg configuration: DOOR_TO_DOOR (75%), WAREHOUSE_TO_WAREHOUSE, WAREHOUSE_TO_DOOR, DOOR_TO_WAREHOUSE. | DOOR_TO_DOOR | — | USE |
-| 9 | pickup_pincode | 6-digit pickup PIN, text to preserve leading zeros. | 201306 | — | USE |
-| 10 | drop_pincode | 6-digit delivery PIN. | 570016 | — | USE |
-| 11 | requested_weight | Total weight in kg. Severely dirty — range −5 to 5e+27. Must be range-capped before aggregation. | 352 | — | USE |
+| 4 | uom | Unit of measurement for PTL package dimensions (width, height, length), typically INCH or CM. | CM | — | USE |
+| 5 | width | PTL package width measured in uom units, stored as a decimal string. Typically 0.0 if dimensions are skipped. | 15.0 | — | USE |
+| 6 | height | PTL package height measured in uom units, stored as a decimal string. Typically 0.0 if dimensions are skipped. | 12.0 | — | USE |
+| 7 | length | PTL package length measured in uom units, stored as a decimal string. Typically 0.0 if dimensions are skipped. | 20.0 | — | USE |
+| 8 | service_type | PTL service leg configuration (e.g., DOOR_TO_DOOR, WAREHOUSE_TO_WAREHOUSE, WAREHOUSE_TO_DOOR, DOOR_TO_WAREHOUSE). | DOOR_TO_DOOR | — | USE |
+| 9 | pickup_pincode | 6-digit postal code (PIN) for the PTL pickup location | 201306 | — | USE |
+| 10 | drop_pincode | 6-digit postal code (PIN) for the PTL drop location | 570016 | — | USE |
+| 11 | requested_weight | Total weight of the PTL shipment in kg. | 352 | — | USE |
 | 12 | request_quantity | Constant 1 on every row — no information. Real counts live in materiallist. | 1 | — | DNU |
 | 13 | appointmentrequired | Appointment-slot needed. String boolean: false (196,016) / true (24,564); NULL on older rows. | false | — | USE |
 | 14 | topay | Freight billed to consignee on delivery. String boolean: false (166,113) / true (32,964). | true | — | USE |
