@@ -476,7 +476,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | --- | --- | --- | --- | --- | --- |
 | 1 | consigner_name | Business name of the consigner — variant of customer_name. | cosmos eco friends | — | USE |
 | 2 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE4634228 | — | USE |
-| 3 | browsing_id | Unique request ID (245,248 distinct, range 1–245,280). | 178807 | — | USE |
+| 3 | browsing_id | Unique identifier generated when a customer requests a PTL lane price quote. | 178807 | — | USE |
 | 4 | demand_time | Exact timestamp when the demand was created. | 2024-10-10 18:09:25.273 | — | USE |
 | 5 | demand_id | Unique identifier of a demand created by a consigner. | 2674174 | — | USE |
 | 6 | demand_status | Status of the demand (e.g.,PENDING<br>FULFILLED<br>EXPIRED). | FULFILLED | — | USE |
@@ -671,8 +671,8 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | browsing_time |  | 2025-04-03 05:59:43 | — | USE |
-| 2 | browsing_id | Unique request ID (245,248 distinct, range 1–245,280). | 163 | — | USE |
+| 1 | browsing_time | Timestamp when the customer requested the PTL lane price quote. | 2025-04-03 05:59:43 | — | USE |
+| 2 | browsing_id | Unique identifier generated when a customer requests a PTL lane price quote. | 163 | — | USE |
 | 3 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE7562357 | — | USE |
 | 4 | uom | Unit for width/height/length. INCH (130,717) or CM (114,511). Dimensions are meaningless without this. | CM | — | USE |
 | 5 | width | Package width in uom units, stored as decimal string. 0.0 common (dimensions skipped). | 15.0 | — | USE |
