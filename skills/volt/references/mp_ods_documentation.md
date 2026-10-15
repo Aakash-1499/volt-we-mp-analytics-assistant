@@ -682,9 +682,9 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 9 | pickup_pincode | 6-digit postal code (PIN) for the PTL pickup location | 201306 | — | USE |
 | 10 | drop_pincode | 6-digit postal code (PIN) for the PTL drop location | 570016 | — | USE |
 | 11 | requested_weight | Total weight of the PTL shipment in kg. | 352 | — | USE |
-| 12 | request_quantity | Constant 1 on every row — no information. Real counts live in materiallist. | 1 | — | DNU |
-| 13 | appointmentrequired | Appointment-slot needed. String boolean: false (196,016) / true (24,564); NULL on older rows. | false | — | USE |
-| 14 | topay | Freight billed to consignee on delivery. String boolean: false (166,113) / true (32,964). | true | — | USE |
+| 12 | request_quantity | DO NOT USE | 1 | — | DNU |
+| 13 | appointmentrequired | Indicates whether an appointment slot is required for the PTL shipment (stored as a string boolean: true/false) | false | — | USE |
+| 14 | topay | Indicates if freight charges are billed to the consignee upon PTL delivery (stored as a string boolean: true/false). | true | — | USE |
 | 15 | insurance | Cargo insurance opted. String boolean; only 0.9% attach rate. | false | — | USE |
 | 16 | materiallist | JSON array of package types with the real quantities: [{"length":..,"width":..,"height":..,"quantity":..}]. | [{"length":15.0,"width":15.0,"height":15.0,"quantity":16}] | — | USE |
 | 17 | source | Channel through which the ticket was raised (e.g., App, Call, Email). Also in ss_1_mp_system_tickets. | WEB PORTAL | — | USE |
