@@ -671,7 +671,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | browsing_time | Timestamp of the PTL enquiry — primary date filter. | 2025-04-03 05:59:43 | — | USE |
+| 1 | browsing_time |  | 2025-04-03 05:59:43 | — | USE |
 | 2 | browsing_id | Unique request ID (245,248 distinct, range 1–245,280). | 163 | — | USE |
 | 3 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE7562357 | — | USE |
 | 4 | uom | Unit for width/height/length. INCH (130,717) or CM (114,511). Dimensions are meaningless without this. | CM | — | USE |
