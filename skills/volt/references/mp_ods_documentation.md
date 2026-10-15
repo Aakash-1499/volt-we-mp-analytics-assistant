@@ -685,8 +685,8 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 12 | request_quantity | DO NOT USE | 1 | — | DNU |
 | 13 | appointmentrequired | Indicates whether an appointment slot is required for the PTL shipment (stored as a string boolean: true/false) | false | — | USE |
 | 14 | topay | Indicates if freight charges are billed to the consignee upon PTL delivery (stored as a string boolean: true/false). | true | — | USE |
-| 15 | insurance | Cargo insurance opted. String boolean; only 0.9% attach rate. | false | — | USE |
-| 16 | materiallist | JSON array of package types with the real quantities: [{"length":..,"width":..,"height":..,"quantity":..}]. | [{"length":15.0,"width":15.0,"height":15.0,"quantity":16}] | — | USE |
+| 15 | insurance | Indicates if cargo insurance was opted for the PTL shipment (stored as a string boolean: true/false). | false | — | USE |
+| 16 | materiallist | DO NOT USE | [{"length":15.0,"width":15.0,"height":15.0,"quantity":16}] | — | USE |
 | 17 | source | Channel through which the ticket was raised (e.g., App, Call, Email). Also in ss_1_mp_system_tickets. | WEB PORTAL | — | USE |
 
 ## 19_fact_leads
@@ -875,7 +875,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 6 | demand_payment_mode | Payment mode / credit term code agreed for the demand (29 distinct values, e.g. A4, W1). | A4 | — | USE |
 | 7 | discount | Discount given on the freight, stored as a negative amount. | -200 | — | USE |
 | 8 | gst | GST charged on the freight for this demand. | 0 | — | USE |
-| 9 | insurance | Cargo insurance opted. String boolean; only 0.9% attach rate. | 0 | — | USE |
+| 9 | insurance | Indicates if cargo insurance was opted for the PTL shipment (stored as a string boolean: true/false). | 0 | — | USE |
 | 10 | freight | Base freight amount for the demand (₹). | 4120 | — | USE |
 | 11 | freight_diff | Difference between the originally quoted freight and the finally agreed / revised freight. | 0 | — | USE |
 | 12 | freight_settled | Freight amount settled via adjustment or write-off rather than actual collection. | 0 | — | USE |
