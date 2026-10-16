@@ -31,15 +31,15 @@
 | Cx Growth | User Level | Booking revamp | 46246 | Live |  | 33 |  | Control |  | Demands | Demand to Trip | Gross Take Rate | Plc to Trip |  |  |  |
 | Cx Growth | User Level | Trailer | 46200 | Live |  | 28 |  | Test | Demands where VT is Trailers | Demands | Demand to Plc | Demand to DR |  |  |  |  |
 | Cx Growth | User Level | Trailer | 46200 | Live |  | 29 |  | Control | Demands where VT is Trailers | Demands | Demand to Plc | Demand to DR |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 19 |  | Super Test A |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 20 |  | Super Test B |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 21 |  | Super Control |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 22 |  | One time Test A |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 23 |  | One time Test B |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 24 |  | One time Control |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 25 |  | Normal Test A |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 26 |  | Normal Test B |  |  | Onboarding | Discount per trip |  |  |  |  |
-| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 27 |  | Normal Control |  |  | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 19 |  | Super Test A |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 20 |  | Super Test B |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 21 |  | Super Control |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 22 |  | One time Test A |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 23 |  | One time Test B |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 24 |  | One time Control |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 25 |  | Normal Test A |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 26 |  | Normal Test B |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
+| Cx Growth | User Level | Segmented discounting | 46200 | Live |  | 27 |  | Normal Control |  | Consigner user code | Onboarding | Discount per trip |  |  |  |  |
 | Cx Growth | Non-User Level | Variable take rate | 46228 | Live |  |  |  | TAKE_RATE_EXP_V1 |  | Demands |  |  |  |  |  |  |
 | Cx Growth | Non-User Level | Variable take rate | 46228 | Live |  |  |  | TAKE_RATE_EXP_V2 |  | Demands |  |  |  |  |  |  |
 | Cx Growth | Non-User Level | Variable take rate | 46228 | Live |  |  |  | TAKE_RATE_EXP_V3 |  | Demands |  |  |  |  |  |  |
@@ -52,3 +52,5 @@
 | Cx Payments | User Level | Advance Trip Expense Recovery | 46218 | Live |  | 31 |  | Control | Weight all recovery metrics by tripstart_flag=1. eligible_flag is populated for Test rows ONLY (1 on 2708 demands; 0 on every Control row) - NEVER use it as a cross-arm filter, it breaks the comparison and swings prior-trip recovery from 1.52% to 8.56%. | Demands,Plc,Trip | % Prior Trips Recovery Within Trip Start, % Current Trip Recovery Within Trip Start | % Demand to DR, % DR to Plc, % Plc to Trip |  | % Prior Trips Settled amount |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46308 | Live |  |  |  | DS_DISCOUNTING_TEST |  | Placement |  |  |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46308 | Live |  |  |  | DS_DISCOUNTING_CONTROL |  | Placement |  |  |  |  |  |  |
+| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 44 |  | Control | where load_type is PTL |  |  |  |  |  |  |  |
+| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 45 |  | Test | where load_type is PTL |  |  |  |  |  |  |  |
