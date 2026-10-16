@@ -52,5 +52,5 @@
 | Cx Payments | User Level | Advance Trip Expense Recovery | 46218 | Live |  | 31 |  | Control | Weight all recovery metrics by tripstart_flag=1. eligible_flag is populated for Test rows ONLY (1 on 2708 demands; 0 on every Control row) - NEVER use it as a cross-arm filter, it breaks the comparison and swings prior-trip recovery from 1.52% to 8.56%. | Demands,Plc,Trip | % Prior Trips Recovery Within Trip Start, % Current Trip Recovery Within Trip Start | % Demand to DR, % DR to Plc, % Plc to Trip |  | % Prior Trips Settled amount |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46308 | Live |  |  |  | DS_DISCOUNTING_TEST |  | Placement |  |  |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46308 | Live |  |  |  | DS_DISCOUNTING_CONTROL |  | Placement |  |  |  |  |  |  |
-| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 44 |  | Control | where load_type is PTL | Demands |  |  |  |  |  |  |
-| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 45 |  | Test | where load_type is PTL | Demands |  |  |  |  |  |  |
+| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 44 |  | Control | where load_type is PTL | Demands | % Price Search to Demands | % Demand to Plc, % Plc to Trip |  |  |  |  |
+| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 45 |  | Test | where load_type is PTL | Demands | % Price Search to Demands | % Demand to Plc, % Plc to Trip |  |  |  |  |
