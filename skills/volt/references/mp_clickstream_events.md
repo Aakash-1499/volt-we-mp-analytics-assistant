@@ -1112,3 +1112,100 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 |  |  |  |  |  | v1_minus | click | bottom_nav | web_rate_and_confirm |  | demand_id |
 |  |  |  | Token Paid clicked |  | v1_submit | click | bottom_nav | web_rate_and_confirm | conf_freight : Rate selected by FO<br>get_prob : % probability value shown to FO | demand_id |
 |  |  |  |  | This is scroll button | v1_submit_btn | click | we_wallet_bottom_sheet | web_load_confirmation | token_amt : Rate selected by FO | demandId |
+| Load Browsing Flow | FO lands on Marketplace Home (Live loads) and browses available loads.<br>Covers vehicle availability popup, vehicle / vehicle-type chips, Loading-Unloading-Vehicle filters, My loads tab, add vehicle (+) and opening a load card into Load details. | Home – Live loads | Home page viewed | Fires on every Home open (also after bottom-nav HOME and after a bid) | non_sub_loads | view |  | web_non_sub_loads |  |  |
+|  |  |  | Home template viewed |  | template_name | view | top_nav | web_non_sub_loads | u_s : user segment (blank for test user) | u_c, u_m (null for test user) |
+|  |  |  | Broker promo tooltip viewed | Fires 2× per Home open | broker_promo_tooltip | view | broker_promo_tooltip | web_home_page |  |  |
+|  |  |  | Token card viewed | screen_name comes as web_trip_details on Home (wrong) | token_active | view | token_card | web_trip_details |  |  |
+|  |  |  | Bottom nav clicked | event_name = tab clicked (HOME, AVAILABLE_VEHICLES, TRIPS, HELP_SUPPORT, OPERATOR_PROFILE); screen_name = screen being left | HOME / AVAILABLE_VEHICLES / TRIPS / HELP_SUPPORT / OPERATOR_PROFILE | click | bottom_nav | web_home / web_my_trips / web_veh_available / web_help / web_my_account |  |  |
+|  |  | Vehicle availability popup ("कौनसी गाड़ी खाली है?") | Popup viewed | Opens on Home load; also fires after every filter submit | vt_list | view |  | web_active_loads |  |  |
+|  |  |  | Vehicle marked available / not available | Toggle on a vehicle row | toggle | click |  | web_active_loads | on_off : on / off<br>vehicle_id : internal vehicle id<br>load_count : loads available for that vehicle |  |
+|  |  |  | "गाड़ी खाली नहीं है" clicked | No event fires (gap). Search box also fires nothing |  |  |  |  |  |  |
+|  |  | Home – chips & filters | Vehicle chip clicked | Chips at top: सभी लोड / each vehicle number | veh_select | click | load_filters | web_active_loads | vehicle_number : vehicle selected (सभी लोड = all) |  |
+|  |  |  | Vehicle-type chip clicked | e.g. ओपन 42-45 ft. Same event for select and unselect | filter_select | click | filters | web_active_loads | id : vehicle-type id |  |
+|  |  |  | Loading dropdown clicked | Opens Filter sheet on Loading tab | loading_location_filter | click | filters | web_active_loads |  |  |
+|  |  |  | अन्य गाड़ी clicked | Opens Filter sheet on Vehicle type tab | select_other_veh | click | filters | web_active_loads |  |  |
+|  |  | Filter sheet ("फ़िल्टर लगाएं") | Tab switched | Tabs: लोडिंग / अनलोडिंग / गाड़ी टाइप. Picking a state, city, vehicle type or length fires nothing (gap) | tab_switch | click | unified_filter | web_all_loads | tab : LOADING / UNLOADING / VEHICLE |  |
+|  |  |  | All filters cleared | सभी फ़िल्टर हटाएं | clear_all | click | unified_filter | web_all_loads |  |  |
+|  |  |  | Filters applied | जमा करें | submit | click | unified_filter | web_all_loads | loading : no. of loading cities selected<br>unloading : no. of unloading cities selected<br>vehicle : no. of vehicle types selected<br>loadCount : loads matching the filter |  |
+|  |  |  | No-result "अन्य लोड देखें" clicked | Shown when filter returns 0 loads | no_loads_found | click | loads_list | web_active_loads |  |  |
+|  |  | Home – My loads | My loads / Live loads tab clicked |  | loads_view | click | loads_view_select | web_active_loads | section : my_loads / new_loads |  |
+|  |  |  | My loads empty state viewed | Fires 2× per open | no_loads | view |  | web_active_loads |  |  |
+|  |  |  | More-loads banner viewed | screen_name in uppercase | more_loads_for_veh | view | misc_banner | web_HOME_PAGE |  |  |
+|  |  | Add vehicle sheet (+) | Add vehicle (+) clicked | + next to vehicle chips | broker_add_chip | click | broker_add_vehicle_fab | web_home_page |  |  |
+|  |  |  | Add vehicle sheet viewed |  | broker_search_sheet | view | broker_search_btm_sheet | web_home_page |  |  |
+|  |  |  | Vehicle number error shown | e.g. "इस गाड़ी पर GPS नहीं लगा है" | broker_search_error | view | broker_search_btm_sheet | web_home_page | vn : vehicle number entered<br>em : error message shown |  |
+|  |  |  | नंबर जमा करें clicked | One click fires both events; lookup event has wrong screen_name | broker_search_submit | click | broker_search_btm_sheet | web_home_page | vn : vehicle number entered |  |
+|  |  |  |  |  | broker_search_lookup_fire | click | broker_search_btm_sheet | web_vehicle_confirmation | vn : vehicle number entered |  |
+|  |  | Demand Card → Load details | Clicked on Demand Card | One click fires both events | confirm | click | load_card | web_confirm_load | scroll_action : list scrolled before click (true/false)<br>vh_id : vehicle chip selected (ALL)<br>loadTag : card tag (e.g. RECOMMENDED)<br>v_dist : distance shown (true/false)<br>tab : all_loads |  |
+|  |  |  |  |  | rate_and_confirm | click | load_cards | web_confirm_load | entity : demand_id<br>scroll_action, vh_id, loadTag, v_dist, tab : same as above | demand_id (inside miscellaneous) |
+|  |  |  | Load details page viewed |  | new_load_details | view | top_nav | web_new_load_details | ldp_type : bidding / confirm<br>is_subscribed : token active (true/false)<br>br : broker flag<br>dr : demand rate type<br>source : where opened from (all_loads) | demand_id |
+| Valid Bid Flow | FO opens a bidding load, sets a rate, picks a vehicle and driver and submits the bid.<br>This flow covers journey from Demand Card to Bid success (token already active). | Demand Card | Clicked on Demand Card | One click fires both events | confirm | click | load_card | web_confirm_load | scroll_action, vh_id, loadTag, v_dist, tab |  |
+|  |  |  |  |  | rate_and_confirm | click | load_cards | web_confirm_load | entity : demand_id | demand_id (inside miscellaneous) |
+|  |  | Bidding (Load details) | Bidding page viewed |  | new_load_details | view | top_nav | web_new_load_details | ldp_type : bidding<br>is_subscribed : token active<br>br, dr, source | demand_id |
+|  |  |  |  |  | rate_and_confirm | view | rate_and_confirm | web_rate_and_confirm | conf_freight : always null on view | demand_id |
+|  |  |  | Token strip viewed |  | token_active | view | token_card | web_confirm_load |  |  |
+|  |  |  | Rate edited | − / + buttons | minus | click | bottom_nav | web_new_load_details | ldp_type : bidding<br>conf_freight : rate after change | demand_id |
+|  |  |  |  |  | plus | click | bottom_nav | web_new_load_details | ldp_type : bidding<br>conf_freight : rate after change | demand_id |
+|  |  |  | Bid submitted (swipe) | Swipe slider "भाड़ा जमा करें" – logged as click | confirm_load | click | bottom_nav | web_new_load_details | ldp_type : bidding<br>conf_freight : rate selected by FO | demand_id |
+|  |  | Vehicle selection sheet | Vehicle sheet viewed |  | vehicle_confirmation | view | vehicle_details | web_vehicle_confirmation | time_left : bid timer end (epoch ms)<br>br : broker flag | demand_id |
+|  |  |  |  |  | token_active | view | token_card | web_confirm_load |  |  |
+|  |  |  | Broker coachmark viewed | "यहाँ पर क्लिक करके मार्केट की कोई भी गाड़ी लगाएं" | broker_coachmark | view | broker_coachmark | web_vehicle_confirmation | br : broker flag |  |
+|  |  |  | Coachmark ठीक है clicked |  | broker_coachmark_cta | click | broker_coachmark | web_vehicle_confirmation | br : broker flag |  |
+|  |  |  | Vehicle selected | One click fires both events (fired 3× per tap on 18 Oct) | select_veh | click | veh_selection | web_confirm_load | vehicle_num : vehicle selected |  |
+|  |  |  |  |  | veh_num_select | click | vehicle_details | web_vehicle_confirmation | br : broker flag<br>on : owner name (null)<br>vn : vehicle number |  |
+|  |  |  | Vehicle changed (बदले) |  | vehicle_change | click | vehicle_details | web_vehicle_confirmation |  |  |
+|  |  |  | जमा करें clicked | One click fires both events; opens driver details | driver_info_btn | click | bottom_nav | web_vehicle_confirmation |  |  |
+|  |  |  |  |  | submit | click | bottom_nav | web_confirm_load |  |  |
+|  |  | Driver details | Driver details page viewed | No view event fires (gap). Name field appears after a 10-digit number |  |  |  |  |  |  |
+|  |  |  | Driver details submitted | API POST /token/{demandId}/vehicle-details. If vehicle is busy API returns 400 with no message and no event | submit_btn | click | bottom_nav | web_vehicle_confirmation | sel_type : manual / suggested vehicle<br>br : broker flag<br>on : owner name<br>vn : vehicle number<br>pbv : pre-booked vehicle (true/false) | demand_id |
+|  |  | Bid success | Load confirmation viewed | Fires 5–6×; conf_freight comes as 0 | load_confirmation | view |  | web_load_confirmation | conf_freight : rate (sent as 0)<br>address_count : no. of addresses (2) | demand_id |
+|  |  |  | More-loads card viewed |  | view_load | view | load_card | web_more_loads_for_veh |  |  |
+|  |  |  | Bid success sheet viewed | Auto-closes in ~2 s and returns to Home. On 18 Oct this fired as bid_success_bottom_sheet / web_vehicle_confirmation (demand_id) instead | bidding_success | view | token_pay_bottom_sheet | web_load_bidding |  |  |
+| Available Vehicles Flow | FO marks which vehicles are free so the app can show matching loads.<br>This flow covers the खाली गाड़ी tab: vehicle list, availability toggle, see loads for a vehicle, and add vehicle. | Available vehicles list | Tab opened | From bottom nav खाली गाड़ी; screen_name = screen being left | AVAILABLE_VEHICLES | click | bottom_nav | web_home |  |  |
+|  |  |  | Vehicle list viewed | Same event name as the Home popup | vt_list | view |  | web_veh_available |  |  |
+|  |  |  | Vehicle marked available / not available | Toggle on a vehicle row. Search box fires nothing (gap) | toggle | click |  | web_veh_available | on_off : on / off<br>vehicle_id : internal vehicle id<br>load_count : loads available for that vehicle |  |
+|  |  |  | "X लोड देखें" clicked | Shown after toggle ON; opens Home with that vehicle's loads | see_loads | click |  | web_veh_available | vehicle_id : internal vehicle id<br>load_count : loads available |  |
+|  |  | Add vehicle sheet | + गाड़ी ऐड करें clicked | Home uses broker_add_chip for the same sheet | broker_add_fab | click | broker_add_vehicle_fab | web_available_vehicle |  |  |
+|  |  |  | Add vehicle sheet viewed | screen_name has a hyphen here | broker_search_sheet | view | broker_search_btm_sheet | web_available-vehicles |  |  |
+|  |  |  | Vehicle number error shown | e.g. "इस गाड़ी पर GPS नहीं लगा है" | broker_search_error | view | broker_search_btm_sheet | web_available-vehicles | vn : vehicle number entered<br>em : error message shown |  |
+|  |  |  | नंबर जमा करें clicked | One click fires both events; lookup event has wrong screen_name | broker_search_submit | click | broker_search_btm_sheet | web_available-vehicles | vn : vehicle number entered |  |
+|  |  |  |  |  | broker_search_lookup_fire | click | broker_search_btm_sheet | web_vehicle_confirmation | vn : vehicle number entered | demand_id (null here) |
+| Trips – Change Driver Flow | FO opens the ट्रिप tab and changes the driver on an active trip.<br>This flow covers Trips list → ड्राइवर बदलें → driver form → confirmation. | Trips list | Tab opened | From bottom nav ट्रिप. Trips list itself fires no view event, and tabs चालू / समाप्त / कैंसिल fire nothing (gap) | TRIPS | click | bottom_nav | web_home |  |  |
+|  |  |  | ड्राइवर बदलें clicked | On an active trip card | driver_replacement | click | trip_cards | web_my_trips |  | trip_id |
+|  |  | Driver details | Driver form viewed | Name field appears after a 10-digit number | driver_details | view | driver_details | web_driver_details_update |  | trip_id |
+|  |  |  | जमा करें clicked |  | submit_btn | click | driver_details | web_driver_details_update |  | trip_id |
+|  |  |  | Confirmation viewed | "ड्राइवर बदल दिया गया है"; ठीक है opens Trip details | driver_details_confirmation | view | driver_details_confirmation | web_driver_details_update |  | trip_id |
+| Help & Support Flow | FO gets help for a trip or a general issue and raises a ticket.<br>This flow covers the सहायता tab: ticket list, existing ticket chat, trip FAQ and creating a new ticket. | Help home | Tab opened | From bottom nav सहायता | HELP_SUPPORT | click | bottom_nav | web_my_trips |  |  |
+|  |  |  | Help page viewed |  | help | view |  | web_help | cat_viewed : sections shown (trip_cards_ticket_cards) |  |
+|  |  |  | General issue clicked | साधारण समस्याएँ list (e.g. गाड़ी KYC की समस्या) | issue_select | click | trip_list | web_help |  | questionId : issue text |
+|  |  | Tickets | सब देखे clicked | Ticket listing page fires no view event (gap) | view_all | click | issue_cards | web_help |  |  |
+|  |  |  | Ticket opened |  | open_tkt | click | issue_cards | web_help |  | ticket_id |
+|  |  |  | Ticket chat viewed |  | chat_with_us | view | issue_list | web_chat_with_us | trip_id : null for an existing ticket |  |
+|  |  | Trip help (FAQ → chat) | Trip सहायता पाएँ clicked | From आपकी ट्रिप card | need_help | click | trip_cards | web_help |  | trip_id |
+|  |  |  | Trip FAQ viewed |  | need_help_trip_detail | view |  | web_need_help_trip_detail |  |  |
+|  |  |  | Issue clicked | e.g. वाहन लोड करने में देरी – answer expands | issue_select | click | issue_list | web_need_help_trip_detail |  | questionId : issue text |
+|  |  |  | सहायता पाएँ clicked (still need help) |  | chat_with_us | click | issue_list | web_need_help_trip_detail | questionId : issue text |  |
+|  |  |  | Chat viewed |  | chat_with_us | view | issue_list | web_chat_with_us | trip_id : trip id |  |
+|  |  |  | Ticket raised (जमा करे) | Ticket T0089004 created on stage | raise_issue | click | chat_interaction | web_chat_with_us | question_id : issue text<br>trip_id : trip id<br>option : text typed by FO |  |
+| Profile Flow | FO checks their profile: service score, policies, language and token history.<br>This flow covers the KYC करें tab (MSME is in Coming soon). | Profile | Tab opened | From bottom nav KYC करें | OPERATOR_PROFILE | click | bottom_nav | web_help |  |  |
+|  |  |  | Profile viewed | आपकी KYC / गाड़ी KYC steps fire nothing (gap) | my_profile | view |  | web_operator_profile |  |  |
+|  |  |  | Score card viewed |  | v1_view_score | view | op_rating_details | web_operator_profile | score : service score (0–100) |  |
+|  |  |  | Token card viewed |  | token_active | view | token_card | web_operator_profile |  |  |
+|  |  | Score detail | अपने स्कोर को समझे clicked | Score detail fires no view event | v1_understand_score | click | op_rating_details | web_operator_profile | score : service score |  |
+|  |  |  | Guideline carousel scrolled | Auto scroll | v1_horiz_scroll | scroll | rating_guidelines | web_rating_details | slide_number : current / total<br>action_type : auto / manual |  |
+|  |  | Policies | लोड पॉलिसी clicked | Policy listing fires no view event | load_policy | click | policy_detail | web_operator_profile |  |  |
+|  |  |  | Policy clicked | e.g. टोकन रिफंड पॉलिसी | policy_preview | click | policy_detail | web_load_policy | policy : policy name |  |
+|  |  |  | Policy page viewed | Event name changes per policy | token_non_refund_policy | view | token_non_refund_policy | web_token_non_refund_policy | op_code : operator code |  |
+|  |  |  | मैं पॉलिसी स्वीकार करता हूँ clicked | event_name comes blank (issue) | (blank) | click | policy_acceptance | web_policy_page | op_code : operator code<br>prev_path : OPERATOR_POLICY |  |
+|  |  | Language | भाषा बदले clicked | screen_name comes as web_confirm_load on Profile (wrong). आगे बढ़ें fires nothing | edit_lang | click | top_nav | web_confirm_load | cur_lang : current language |  |
+|  |  | Token history | टोकन एक्टिव card clicked | Same event name as the view | token_active | click | token_card | web_operator_profile |  |  |
+|  |  |  | Token history viewed | टोकन वापस ले (refund) is in Coming soon | token_txn_history | view |  | web_token_txn_history |  |  |
+| Confirm Load Flow | Instant confirm of a confirm-type load → vehicle + driver → token payment |  | Coming soon | No confirm-type load on stage during the crawl | Coming soon |  |  |  |  |  |
+| Trip Journey Flow | Trip details → reached loading → start trip (bilty OTP) → in transit → unloading → POD → payment |  | Coming soon | Needs stage bilty OTP | Coming soon |  |  |  |  |  |
+| Trips – Change Vehicle Flow | गाड़ी नं बदले → reason → vehicle number → saved |  | Coming soon | Vehicle field did not open from the browser; covered by the script run | Coming soon |  |  |  |  |  |
+| Token Purchase / Refund Flow | Buy token → payment → token active; टोकन वापस ले → refund |  | Coming soon | Needs payment test mode; refund moves money | Coming soon |  |  |  |  |  |
+| Broker / Market Vehicle Flow | Bid with a market (non-own) vehicle |  | Coming soon | Stage vehicles have no GPS | Coming soon |  |  |  |  |  |
+| MSME Flow | MSME number, type, certificate photo → saved |  | Coming soon | Needs a real photo upload; page fires no events today | Coming soon |  |  |  |  |  |
+| Signup Flow | New number → OTP → profile → KYC |  | Coming soon | Native app screens (needs stage APK) | Coming soon |  |  |  |  |  |
+| Login Flow | Number → OTP → Home |  | Coming soon | Native app screens (needs stage APK) | Coming soon |  |  |  |  |  |
+| Notification Flow | NotificationStatus / NotificationAction |  | Coming soon | Native push events (needs stage APK or BigQuery) | Coming soon |  |  |  |  |  |
