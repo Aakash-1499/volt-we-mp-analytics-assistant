@@ -81,7 +81,7 @@ The rest of the fields are present in the 'mp_analytics_core.fact_cx_events_l3m'
 | Signup | Company Registration Check |  | True |  | v1_co_reg_detail | view |  | co_reg_detail | False |  |  | True |  |  |  |
 | Signup | Company Registration Check | Clicks 'New Company' on 'Acct Creat' | False |  | v1_new_comp | click | acct_creat | co_reg_detail | False |  |  | True |  |  |  |
 | Signup | Company Registration Check | Clicks 'Already Registered' on 'Acct Creat' | False |  | v1_already_reg | click | acct_creat | co_reg_detail | False |  |  | True |  |  |  |
-| Signup | GST Details |  | True |  | v1_gst_details | view |  | gst_details | False |  |  | True |  |  |  |
+| Signup | GST Details |  | False |  | v1_gst_details | view |  | gst_details | False |  |  | True |  |  |  |
 | Signup | GST Details |  | False |  | v1_verify_acct_bot | view |  | gst_details | False |  |  | True |  |  |  |
 | Signup | GST Details | Clicks 'Back' arrow | False |  | v1_back_btn | click | top_nav | gst_details | False |  |  | True |  |  |  |
 | Signup | GST Details | Clicks 'GST Number' field on 'Gst Input' | False |  | v1_enter_gst | click | gst_input | gst_details | False |  | status | True |  |  |  |
