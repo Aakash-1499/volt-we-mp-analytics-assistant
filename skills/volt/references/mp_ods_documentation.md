@@ -152,7 +152,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 |  | price_confidence | Do Not Use |  | — | DNU |
 |  | plc_price_range | Bucket label for the consigner fare vs base rate 1,2,3 |  | — |  |
 |  | haul | Haul type derived from route_distance (e.g., 'Short Haul', 'Long Haul','Medium Haul') |  | — |  |
-|  | dr_time | Timestamp when the demand became a DR (Details Required) — i.e., entered the supply matching pipeline. |  | — |  |
+|  | dr_time | Timestamp when vehicle search was started |  | — |  |
 |  | first_plc_time | Timestamp of the first placement event on the demand |  | — |  |
 |  | last_plc_time | Timestamp of the most recent placement event on the demand |  | — |  |
 |  | total_plc | DO NOT USE |  | — |  |
@@ -1037,11 +1037,11 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 4 | app_platform | Type of platform used to create a demand.<br>[Same data as 'platform' in fact_consigner_demands_lead_source — standardize naming] |  | — | USE |
 | 5 | price_browsing_id | 32-char hex UUID of the pricing-browse request. 2,943,311 distinct — the join key to downstream pricing/conversion. |  |  | USE |
 | 6 | variant_ids | Variant details of the A/B experiment if live at demand level. It contains experiment ids in list format. These ids are joined at exp_id in mp_analytics_core.dim_pricing_experiments. |  | — | USE |
-| 7 | confirm_demand_flag | Indicates if a Details Required (DR) was given by consigner <br>(1 = Yes, 0 = No) |  | — | USE |
-| 8 | confirm_demand_time |  |  | — | USE |
+| 7 | confirm_demand_flag | Indicates if a Required Details was given by consigner <br>(1 = Yes, 0 = No) |  | — | USE |
+| 8 | confirm_demand_time | Datetime when details were completed by consigner |  | — | USE |
 | 9 | dr_type | Classification of the DR  eg BEST PRICE, QUICK CONFIRMATION, SCHEDULED, etc |  | — | USE |
 | 10 | dr_flag | Indicates if vehicle search is started for demand.<br>(1 = Yes, 0 = No) |  |  | USE |
-| 11 | dr_time | Timestamp when the demand became a DR (Details Required) — i.e., entered the supply matching pipeline. |  | — | USE |
+| 11 | dr_time | Timestamp when vehicle search was started |  | — | USE |
 | 12 | demand_cancel_by_cx_time | Timestamp when the demand was cancelled by consigner. |  | — | USE |
 | 13 | demand_cancel_by_sys_time | Timestamp when the demand was cancelled by system. |  | — | USE |
 | 14 | plc_flag | Indicates if demand was placed with a vehicle (1 = Yes, 0 = No) |  | — | USE |
