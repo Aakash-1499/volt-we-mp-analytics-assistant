@@ -83,7 +83,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 12 | sales_team | The sales team that was aligned with the consigner at a given point of time | NOT ASSIGNED | — |  |
 | 13 | sales_sub_team | The sales sub team that was aligned with the consigner at a given point of time | NOT ASSIGNED | — |  |
 | 17 | demand_id | Unique identifier of a demand created by a consigner. | 2006163 | — |  |
-| 18 | dr_flag | Indicates if a Details Required (DR) was given by consigner <br>(1 = Yes, 0 = No) | 0 | — |  |
+| 18 | dr_flag | Indicates if vehicle search is started for demand.<br>(1 = Yes, 0 = No) | 0 | — |  |
 | 19 | plc_flag | Indicates if demand was placed with a vehicle (1 = Yes, 0 = No) | 0 | — |  |
 | 20 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) | 0 | — |  |
 | 21 | demand_restriction | This defines the status of the consigner at the time of demand creation<br>Restricted<br>Unrestricted | Unrestricted | — |  |
@@ -1035,55 +1035,70 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 2 | demand_time | Exact timestamp when the demand was created. |  | — | USE |
 | 3 | app_version | App version at the time of the event. |  | — | USE |
 | 4 | app_platform | Type of platform used to create a demand.<br>[Same data as 'platform' in fact_consigner_demands_lead_source — standardize naming] |  | — | USE |
-| 5 | experiment_ids | Variant details of the A/B experiment if live at demand level. It contains experiment ids in list format. These ids are joined at exp_id in mp_analytics_core.dim_pricing_experiments. |  |  | USE |
-| 6 | dr_type | Classification of the DR  eg BEST PRICE, QUICK CONFIRMATION, SCHEDULED, etc |  | — | USE |
-| 7 | dr_flag | Indicates if a Details Required (DR) was given by consigner <br>(1 = Yes, 0 = No) |  | — | USE |
-| 8 | dr_time | Timestamp when the demand became a DR (Details Required) — i.e., entered the supply matching pipeline. |  | — | USE |
-| 9 | demand_cancel_by_cx_time | Timestamp when the demand was cancelled by consigner. |  | — | USE |
-| 10 | demand_cancel_by_sys_time | Timestamp when the demand was cancelled by system. |  |  | USE |
-| 11 | plc_flag | Indicates if demand was placed with a vehicle (1 = Yes, 0 = No) |  | — | USE |
-| 12 | acceptance_flag | Consigner accepted the placement (1 = Yes, 0 = No). |  | — | USE |
-| 13 | auto_cancel_flag | After placement, consigner need to fill address details for demand. Acceptance is considered incomplete without this step. If consigner fails to update address within x minutes, then demand is cancel automatically (1 = Yes, 0 = No). |  | — | USE |
-| 14 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) |  | — | USE |
-| 15 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. |  | — | USE |
-| 16 | plc_demand_type | Placement demand-type classification. |  | — | USE |
-| 17 | replacement_flag | Placed vehicle is replaced once for the demand (1 = Yes, 0 = No). |  | — | USE |
-| 18 | operator_induced_backout | Consignment cancelled due to FO reasons (1 = Yes, 0 = No). |  | — | USE |
-| 19 | operator_triggered_backout | Consignment cancelled by FO via the operator app (1 = Yes, 0 = No). |  | — | USE |
-| 20 | consigner_induced_backout | Consignment cancelled due to consigner reasons (1 = Yes, 0 = No). |  | — | USE |
-| 21 | consigner_triggered_backout | Consignment cancelled by consigner via the app (1 = Yes, 0 = No). |  | — | USE |
-| 22 | non_plc_reason | Reason a demand was not placed. |  | — | USE |
-| 23 | drop_points | Drop/destination points associated with the demand. |  | — | USE |
-| 24 | special_req | 1 = demand had a special request; 0 = no special request. |  | — | USE |
-| 25 | special_type | Type of special request (overheight, overweight, expressdeliverytat, opendala, extrawidth, extraperson, dieselvehicle). |  | — | USE |
-| 26 | pricing_special_req | 1/0 flag for special request per pricing VT definitions (overheight & overweight defined per pricing rules). |  | — | USE |
-| 27 | pricing_special_type | Type of special request per pricing definitions (overheight, overweight, expressdeliverytat, opendala, extrawidth, extraperson, dieselvehicle). |  | — | USE |
-| 28 | load_type | Load type: PTL (Part Truck Load) / FTL (Full Truck Load). |  | — | USE |
-| 29 | from_lat | Latitude of pickup/origin location. |  | — | USE |
-| 30 | from_long | Longitude of pickup/origin location. |  | — | USE |
-| 31 | to_lat | Latitude of drop/destination location. |  | — | USE |
-| 32 | to_long | Longitude of drop/destination location. |  | — | USE |
-| 33 | route_distance | Origin → destination route distance (km). Used as a filter (min_distance / max_distance) on the Placement and FO dashboards and to derive 'haul'. |  | — | USE |
-| 34 | shortest_route_distance | Straight-line distance between origin and destination. |  | — | USE |
-| 35 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner |  | — | USE |
-| 36 | consigner_payment_status | Consigner's ability to complete DR based on outstanding payment: RESTRICTED / UNRESTRICTED. This is defined at the creation of demand. |  | — | USE |
-| 37 | consigner_payment_status_at_dr | Consigner's ability to complete DR based on outstanding payment: RESTRICTED / UNRESTRICTED. This is defined at the DR. |  | — | USE |
-| 38 | consigner_type | Classification of the consigner at time of demand (New / Repeat). |  | — | USE |
-| 39 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). |  | — | USE |
-| 40 | tyre_count | Tyre count of the specific vehicle.  [Same data as 'tyre' in fact_consigner_demands_lead_source — STANDARDIZE naming] |  | — | USE |
-| 41 | size_in_ft | Vehicle size in feet (length of the cargo body). |  | — | USE |
-| 42 | tonnage | Vehicle tonnage capacity in metric tons. |  | — | USE |
-| 43 | pricing_vt_id | Unique identifier of VT description aling with pricing logics. Joined with mp_analytics_core.dim_pricing_vt |  | — | USE |
-| 44 | supply_vt_id | Vehicle type ID — canonical identifier combining body type, size, and tyre count. Joined with mp_analytics_core.fact_demand_vt |  | — | USE |
-| 45 | latest_consignment_id | Unique identifier of the latest consignment/placement wrt demand |  | — | USE |
-| 46 | total_consignments | Number of unique vehicles found for the demand. Count is >1 in case of operator backout. |  | — | USE |
-| 47 | origin_id | District id of the demand's origin. Joined with id in mp_analytics_core.dim_mp_districts |  | — | USE |
-| 48 | destination_id | District id of the demand's destination. Joined with id in mp_analytics_core.dim_mp_districts |  | — | USE |
-| 49 | predicted_rate_flag | Indicates if predicted price exists (1 = Yes, 0 = No). |  | — | USE |
-| 50 | l1 | Lower end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
-| 51 | l2 | Predicted consigner freight fare for the given ODVT. Derived by multiplying supply_l2 (predicted supply_fare from the pricing model) by a factor that may vary across ODVTs. |  | — | USE |
-| 52 | l3 | Upper end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
-| 53 | price_browsing_id | 32-char hex UUID of the pricing-browse request. 2,943,311 distinct — the join key to downstream pricing/conversion. |  | — | USE |
+| 5 | price_browsing_id | 32-char hex UUID of the pricing-browse request. 2,943,311 distinct — the join key to downstream pricing/conversion. |  |  | USE |
+| 6 | variant_ids | Variant details of the A/B experiment if live at demand level. It contains experiment ids in list format. These ids are joined at exp_id in mp_analytics_core.dim_pricing_experiments. |  | — | USE |
+| 7 | confirm_demand_flag | Indicates if a Details Required (DR) was given by consigner <br>(1 = Yes, 0 = No) |  | — | USE |
+| 8 | confirm_demand_time |  |  | — | USE |
+| 9 | dr_type | Classification of the DR  eg BEST PRICE, QUICK CONFIRMATION, SCHEDULED, etc |  | — | USE |
+| 10 | dr_flag | Indicates if vehicle search is started for demand.<br>(1 = Yes, 0 = No) |  |  | USE |
+| 11 | dr_time | Timestamp when the demand became a DR (Details Required) — i.e., entered the supply matching pipeline. |  | — | USE |
+| 12 | demand_cancel_by_cx_time | Timestamp when the demand was cancelled by consigner. |  | — | USE |
+| 13 | demand_cancel_by_sys_time | Timestamp when the demand was cancelled by system. |  | — | USE |
+| 14 | plc_flag | Indicates if demand was placed with a vehicle (1 = Yes, 0 = No) |  | — | USE |
+| 15 | acceptance_flag | Consigner accepted the placement (1 = Yes, 0 = No). |  | — | USE |
+| 16 | auto_cancel_flag | After placement, consigner need to fill address details for demand. Acceptance is considered incomplete without this step. If consigner fails to update address within x minutes, then demand is cancel automatically (1 = Yes, 0 = No). |  | — | USE |
+| 17 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) |  | — | USE |
+| 18 | demand_status | Status of the demand (e.g.,PENDING<br>FULFILLED<br>EXPIRED). |  | — | USE |
+| 19 | plc_demand_type | Placement demand-type classification. |  | — | USE |
+| 20 | replacement_flag | Placed vehicle is replaced once for the demand (1 = Yes, 0 = No). |  | — | USE |
+| 21 | operator_induced_backout | Consignment cancelled due to FO reasons (1 = Yes, 0 = No). |  | — | USE |
+| 22 | operator_triggered_backout | Consignment cancelled by FO via the operator app (1 = Yes, 0 = No). |  | — | USE |
+| 23 | consigner_induced_backout | Consignment cancelled due to consigner reasons (1 = Yes, 0 = No). |  | — | USE |
+| 24 | consigner_triggered_backout | Consignment cancelled by consigner via the app (1 = Yes, 0 = No). |  | — | USE |
+| 25 | non_plc_reason | Reason a demand was not placed. |  | — | USE |
+| 26 | drop_points | Drop/destination points associated with the demand. |  | — | USE |
+| 27 | special_req | 1 = demand had a special request; 0 = no special request. |  | — | USE |
+| 28 | special_type | Type of special request (overheight, overweight, expressdeliverytat, opendala, extrawidth, extraperson, dieselvehicle). |  | — | USE |
+| 29 | pricing_special_req | 1/0 flag for special request per pricing VT definitions (overheight & overweight defined per pricing rules). |  | — | USE |
+| 30 | pricing_special_type | Type of special request per pricing definitions (overheight, overweight, expressdeliverytat, opendala, extrawidth, extraperson, dieselvehicle). |  | — | USE |
+| 31 | load_type | Load type: PTL (Part Truck Load) / FTL (Full Truck Load). |  | — | USE |
+| 32 | from_lat | Latitude of pickup/origin location. |  | — | USE |
+| 33 | from_long | Longitude of pickup/origin location. |  | — | USE |
+| 34 | to_lat | Latitude of drop/destination location. |  | — | USE |
+| 35 | to_long | Longitude of drop/destination location. |  | — | USE |
+| 36 | route_distance | Origin → destination route distance (km). Used as a filter (min_distance / max_distance) on the Placement and FO dashboards and to derive 'haul'. |  | — | USE |
+| 37 | shortest_route_distance | Straight-line distance between origin and destination. |  | — | USE |
+| 38 | load_reach_time |  |  | — | USE |
+| 39 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner |  | — | USE |
+| 40 | consigner_payment_status | Consigner's ability to complete DR based on outstanding payment: RESTRICTED / UNRESTRICTED. This is defined at the creation of demand. |  | — | USE |
+| 41 | consigner_payment_status_at_dr | Consigner's ability to complete DR based on outstanding payment: RESTRICTED / UNRESTRICTED. This is defined at the DR. |  | — | USE |
+| 42 | consigner_type | Classification of the consigner at time of demand (New / Repeat). |  | — | USE |
+| 43 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). |  | — | USE |
+| 44 | tyre_count | Tyre count of the specific vehicle.  [Same data as 'tyre' in fact_consigner_demands_lead_source — STANDARDIZE naming] |  | — | USE |
+| 45 | size_in_ft | Vehicle size in feet (length of the cargo body). |  | — | USE |
+| 46 | tonnage | Vehicle tonnage capacity in metric tons. |  | — | USE |
+| 47 | pricing_vt_id | Unique identifier of VT description aling with pricing logics. Joined with mp_analytics_core.dim_pricing_vt |  | — | USE |
+| 48 | supply_vt_id | Vehicle type ID — canonical identifier combining body type, size, and tyre count. Joined with mp_analytics_core.fact_demand_vt |  | — | USE |
+| 49 | latest_consignment_id | Unique identifier of the latest consignment/placement wrt demand |  | — | USE |
+| 50 | total_consignments | Number of unique vehicles found for the demand. Count is >1 in case of operator backout. |  | — | USE |
+| 51 | origin_id | District id of the demand's origin. Joined with id in mp_analytics_core.dim_mp_districts |  | — | USE |
+| 52 | destination_id | District id of the demand's destination. Joined with id in mp_analytics_core.dim_mp_districts |  | — | USE |
+| 53 | predicted_rate_flag | Indicates if predicted price exists (1 = Yes, 0 = No). |  | — | USE |
+| 54 | l1 | Lower end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
+| 55 | l2 | Predicted consigner freight fare for the given ODVT. Derived by multiplying supply_l2 (predicted supply_fare from the pricing model) by a factor that may vary across ODVTs. |  | — | USE |
+| 56 | l3 | Upper end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
+| 57 | to_pay |  |  | — | USE |
+| 58 | consignee_payment_mode | Payment mode used by the consignee (e.g., 'PAY_AT_LOADING', 'PAY_AT_UNLOADING'). |  | — | USE |
+| 59 | created_by | User who created the ticket. |  | — | USE |
+| 60 | demand_remarks |  |  | — | USE |
+| 61 | demand_remarks_category |  |  | — | USE |
+| 62 | expiry_remarks |  |  | — | USE |
+| 63 | expiry_remarks_category |  |  | — | USE |
+| 64 | payment_submode |  |  | — | USE |
+| 65 | demand_start_time |  |  | — | USE |
+| 66 | shipper_tat_in_hr |  |  | — | USE |
+| 67 | lane_name |  |  | — | USE |
+| 68 | chargeable_weight |  |  | — | USE |
 
 ## 27_fact_consignments
 
