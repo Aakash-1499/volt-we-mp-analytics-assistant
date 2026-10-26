@@ -1068,7 +1068,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 35 | to_long | Longitude of drop/destination location. |  | — | USE |
 | 36 | route_distance | Origin → destination route distance (km). Used as a filter (min_distance / max_distance) on the Placement and FO dashboards and to derive 'haul'. |  | — | USE |
 | 37 | shortest_route_distance | Straight-line distance between origin and destination. |  | — | USE |
-| 38 | load_reach_time |  |  | — | USE |
+| 38 | load_reach_time | DNU |  | — | USE |
 | 39 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner |  | — | USE |
 | 40 | consigner_payment_status | Consigner's ability to complete DR based on outstanding payment: RESTRICTED / UNRESTRICTED. This is defined at the creation of demand. |  | — | USE |
 | 41 | consigner_payment_status_at_dr | Consigner's ability to complete DR based on outstanding payment: RESTRICTED / UNRESTRICTED. This is defined at the DR. |  | — | USE |
@@ -1087,18 +1087,18 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 54 | l1 | Lower end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
 | 55 | l2 | Predicted consigner freight fare for the given ODVT. Derived by multiplying supply_l2 (predicted supply_fare from the pricing model) by a factor that may vary across ODVTs. |  | — | USE |
 | 56 | l3 | Upper end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
-| 57 | to_pay |  |  | — | USE |
+| 57 | to_pay | DNU |  | — | USE |
 | 58 | consignee_payment_mode | Payment mode used by the consignee (e.g., 'PAY_AT_LOADING', 'PAY_AT_UNLOADING'). |  | — | USE |
 | 59 | created_by | User who created the ticket. |  | — | USE |
-| 60 | demand_remarks |  |  | — | USE |
-| 61 | demand_remarks_category |  |  | — | USE |
-| 62 | expiry_remarks |  |  | — | USE |
-| 63 | expiry_remarks_category |  |  | — | USE |
-| 64 | payment_submode |  |  | — | USE |
-| 65 | demand_start_time |  |  | — | USE |
-| 66 | shipper_tat_in_hr |  |  | — | USE |
-| 67 | lane_name |  |  | — | USE |
-| 68 | chargeable_weight |  |  | — | USE |
+| 60 | demand_remarks | DNU |  | — | USE |
+| 61 | demand_remarks_category | DNU |  | — | USE |
+| 62 | expiry_remarks | DNU |  | — | USE |
+| 63 | expiry_remarks_category | DNU |  | — | USE |
+| 64 | payment_submode | DNU |  | — | USE |
+| 65 | demand_start_time | DNU |  | — | USE |
+| 66 | shipper_tat_in_hr | DNU |  | — | USE |
+| 67 | lane_name | DNU |  | — | USE |
+| 68 | chargeable_weight | DNU |  | — | USE |
 
 ## 27_fact_consignments
 
