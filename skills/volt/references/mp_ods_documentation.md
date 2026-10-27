@@ -468,7 +468,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 **demand_id:** Short description
 
-PTL funnel (demand → placement → trip), on-time performance, and repeat-behaviour analysis by cx segment.
+Demand-to-delivery fact for PTL bookings. Carries the consigner, lane, transporter/consignment, manifest status, money, and the full timestamp + ETA-breach chain.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
