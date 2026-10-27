@@ -720,9 +720,9 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 15 | assigned_sales_sub_team | The current sales sub team aligned with the consigner: <br>ONBOARDING<br>RETENTION<br>NOT ASSIGNED | ONBOARDING | — | USE |
 | 16 | first_sales_team | Sales team prospect was assigned to the first time: INSIDE SALES, FIELD SALES, etc. | INSIDE SALES | — | USE |
 | 17 | first_sales_sub_team | Sales sub team prospect was assigned to the first time: RETENTION, ONBOARDING, etc. | ONBOARDING | — | USE |
-| 18 | first_sales_team_time | DO NOT USE | 2026-05-07 20:27:13.948 | — | USE |
-| 19 | first_sales_team_date | DO NOT USE | 2026-08-12 (= 13 Aug IST) | — | USE |
-| 20 | consigner_city | Do Not Use | NEW DELHI | — | USE |
+| 18 | first_sales_team_time | DO NOT USE | 2026-05-07 20:27:13.948 | — | DNU |
+| 19 | first_sales_team_date | DO NOT USE | 2026-08-12 (= 13 Aug IST) | — | DNU |
+| 20 | consigner_city | Do Not Use | NEW DELHI | — | DNU |
 | 21 | consigner_state | It depicts the state of the consigner | NCR | — | USE |
 | 22 | consigner_region | Consigner's resolved region (sales geography region).<br>It depicts the region of the consigner and can have three values :<br>R2 (Next 24 clusters)<br>R3 (ROI)<br>NCR<br>R1 (Top 5 clusters) | ROI | — | USE |
 | 23 | consigner_state_segment | Consigner's state-level segment classification (sales geography segmentation).<br>Consigner region is extracted from the very first source in this priority - FIELD SALES>SIGNUP>VT>DEMAND>WEB | SIGNUP | — | USE |
@@ -843,7 +843,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 5 | description | Free-text complaint body, mostly Hinglish. | "The operator has a outstanding recovery of Rs.-890.51" | — | USE |
 | 6 | status | it shows the status of ticket (like - ACTIVE,HOLD,RESOLVED) | ACTIVE | — | USE |
 | 7 | created | Epoch microseconds of source write. Basis of created_ts. | 2026-07-05 15:34:35.618 | — | USE |
-| 8 | updated | DO NOT USE | 2026-08-12 12:33:47.310 | — | USE |
+| 8 | updated | DO NOT USE | 2026-08-12 12:33:47.310 | — | DNU |
 | 9 | created_by | User who created the ticket. | SYSTEM | — | USE |
 | 10 | updated_by | User who last updated the ticket. | ashish.kr@wheelseye.com | — | USE |
 | 11 | source | Channel through which the ticket was raised (e.g., App, Call, Email). Also in ss_1_mp_system_tickets. | SYSTEM | — | USE |
