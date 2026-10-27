@@ -12,49 +12,49 @@ mp_analytics_core.fact_operators_mp_events
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | event_date | Calendar date of the event (or timestamp when the event occurred). | 2025-03-30T18:30:00.000Z | — |
-| 2 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE3987982 | — |
-| 3 | landed_on_mp | 1 if the FO landed on the our app ; 0 otherwise. | 1 | — |
-| 4 | is_checked_loads | 1 if the FO checked at least one load on this day; 0 otherwise (operator-day grain). | 1 | — |
-| 5 | is_checked_loads_matching | 1 if the FO checked at least one load in the matching flow on this day. | 0 | — |
-| 6 | is_checked_loads_bid | 1 if the FO checked at least one load in the bidding flow on this day. | 0 | — |
-| 7 | is_landed_on_bid | 1 if the FO landed on the bidding screen on this day. | 0 | — |
-| 8 | is_landed_on_confirm | 1 if the FO landed on the booking confirmation screen on this day. | 0 | — |
-| 9 | is_marked_veh_available | 1 if the FO marked their vehicle as 'available' on this day. | 0 | — |
-| 10 | is_marked_veh_not_available | 1 if the FO marked their vehicle as 'NOT available' on this day. | 0 | — |
-| 11 | is_loading_filter_used | 1 if the FO used the loading-location filter on this day. | 0 | — |
-| 12 | is_unloading_filter_used | 1 if the FO used the unloading-location filter on this day. | 0 | — |
-| 13 | is_matching_submit | 1 if the FO submitted a matching response on this day. | 0 | — |
-| 14 | count_of_loads_checked | Number of distinct loads the FO checked on this day. | 0 | — |
-| 15 | count_of_loads_bid_submit | Number of bids the FO submitted on this day. | 0 | — |
-| 16 | count_of_loads_matching_submit | Do not use | 0 | — |
-| 17 | is_matching_submit_loads | Mohit Kumar | 0 | — |
-| 18 | is_token_paid | 1 if the FO paid the booking token on this day. | 0 | — |
-| 19 | is_token_paid_loads | Count of token paid on that day | 0 | — |
-| 20 | is_subscribed_at_event | 1 if the FO had an active subscription at the time of the event. | 1 | — |
-| 21 | total_placed_loads | Total loads on which the FO was placed on this day. | 100 | — |
-| 22 | total_placed_loads_cancelled_by_cx | Of the placements this day, how many were subsequently cancelled by the consigner. | 0 | — |
-| 23 | total_trips_loads | Total trips completed by the FO on this day. | 78 | — |
-| 24 | reverse_loads_trips | Count of reverse-load (return-leg) trips completed by the FO on this day. | 0 | — |
-| 25 | life_time_trips | Cumulative trips completed by the FO across their entire history on the marketplace. | 84 | — |
-| 26 | fleet_size | Fleet-size segment of the FO: SVO (Single Vehicle FO),SFO (Small FO), MFO (Multi-vehicle FO), LFO (Large FO),XLFO (Extra Large FO).<br>XLFO>=50<br>LFO-25-49,SFO 2-3,MFO 4-24 ,SVO 1 | SFO | — |
-| 27 | fo_base_region | "(do not use this )" | NCR | — |
-| 28 | first_trip_date | First Trip date of FO | 2022-10-03T12:04:04.649Z | ⚠ FIRST_TRIP_DATE — should be 'first_trip_date (NEEDS context prefix)' |
-| 29 | trips_till_date | Cumulative trips up to and including this event date. | 78 | — |
-| 30 | plc_till_date | Cumulative placements up to and including this event date. | 100 | — |
-| 31 | token_till_date | Cumulative tokens paid up to and including this event date. | 103 | — |
-| 32 | first_placement_date | Date the consigner where demand_status = 'FULFILLED' first time | 2022-10-02T18:30:00.000Z | — |
-| 33 | life_time_placements | Cumulative placements the FO has received across their entire history. | 110 | — |
-| 34 | trip_bucket | Bucketed FO lifetime trip count | 3+ | — |
-| 35 | fo_segment | FO segment is the FO Trip segmentation , 0=0 trip, 1-2 = 1st trip or 2nd trip  and 2+ fo who have done more than 2+trip | 3+ | — |
-| 36 | lifetime_loads_checked | Cumulative loads checked by the FO across their entire history. | 0 | — |
-| 37 | fo_load_impressions | Bucketed count of load impressions or checking of load in lifetime for the FO (e.g., '0', '1-4', '5+'). | 0 | — |
-| 38 | fo_sub_type | Subscription type / status: 'Subs' (subscribed)=1, 'Non-Subs',=0 | Subs | — |
-| 39 | qualified_in_opsearch | 1 if the FO qualified in the opsearch (matching) algorithm for at least one demand on this day. | 0 | — |
-| 40 | qualified_in_matching | 1 if the FO qualified in the matching engine for at least one demand on this day. | 0 | — |
-| 41 | ready_fo | Marketplace readiness flag — 1 if the FO is MP Ready, 0 otherwise. | 0 | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | event_date | Calendar date of the event (or timestamp when the event occurred). | 2025-03-30T18:30:00.000Z | — | USE |
+| 2 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE3987982 | — | USE |
+| 3 | landed_on_mp | 1 if the FO landed on the our app ; 0 otherwise. | 1 | — | USE |
+| 4 | is_checked_loads | 1 if the FO checked at least one load on this day; 0 otherwise (operator-day grain). | 1 | — | USE |
+| 5 | is_checked_loads_matching | 1 if the FO checked at least one load in the matching flow on this day. | 0 | — | USE |
+| 6 | is_checked_loads_bid | 1 if the FO checked at least one load in the bidding flow on this day. | 0 | — | USE |
+| 7 | is_landed_on_bid | 1 if the FO landed on the bidding screen on this day. | 0 | — | USE |
+| 8 | is_landed_on_confirm | 1 if the FO landed on the booking confirmation screen on this day. | 0 | — | USE |
+| 9 | is_marked_veh_available | 1 if the FO marked their vehicle as 'available' on this day. | 0 | — | USE |
+| 10 | is_marked_veh_not_available | 1 if the FO marked their vehicle as 'NOT available' on this day. | 0 | — | USE |
+| 11 | is_loading_filter_used | 1 if the FO used the loading-location filter on this day. | 0 | — | USE |
+| 12 | is_unloading_filter_used | 1 if the FO used the unloading-location filter on this day. | 0 | — | USE |
+| 13 | is_matching_submit | 1 if the FO submitted a matching response on this day. | 0 | — | USE |
+| 14 | count_of_loads_checked | Number of distinct loads the FO checked on this day. | 0 | — | USE |
+| 15 | count_of_loads_bid_submit | Number of bids the FO submitted on this day. | 0 | — | USE |
+| 16 | count_of_loads_matching_submit | Do not use | 0 | — | DNU |
+| 17 | is_matching_submit_loads | Mohit Kumar | 0 | — | DNU |
+| 18 | is_token_paid | 1 if the FO paid the booking token on this day. | 0 | — | USE |
+| 19 | is_token_paid_loads | Count of token paid on that day | 0 | — | USE |
+| 20 | is_subscribed_at_event | 1 if the FO had an active subscription at the time of the event. | 1 | — | USE |
+| 21 | total_placed_loads | Total loads on which the FO was placed on this day. | 100 | — | USE |
+| 22 | total_placed_loads_cancelled_by_cx | Of the placements this day, how many were subsequently cancelled by the consigner. | 0 | — | USE |
+| 23 | total_trips_loads | Total trips completed by the FO on this day. | 78 | — | USE |
+| 24 | reverse_loads_trips | Count of reverse-load (return-leg) trips completed by the FO on this day. | 0 | — | USE |
+| 25 | life_time_trips | Cumulative trips completed by the FO across their entire history on the marketplace. | 84 | — | USE |
+| 26 | fleet_size | Fleet-size segment of the FO: SVO (Single Vehicle FO),SFO (Small FO), MFO (Multi-vehicle FO), LFO (Large FO),XLFO (Extra Large FO).<br>XLFO>=50<br>LFO-25-49,SFO 2-3,MFO 4-24 ,SVO 1 | SFO | — | USE |
+| 27 | fo_base_region | "(do not use this )" | NCR | — | DNU |
+| 28 | first_trip_date | First Trip date of FO | 2022-10-03T12:04:04.649Z | ⚠ FIRST_TRIP_DATE — should be 'first_trip_date (NEEDS context prefix)' | USE |
+| 29 | trips_till_date | Cumulative trips up to and including this event date. | 78 | — | USE |
+| 30 | plc_till_date | Cumulative placements up to and including this event date. | 100 | — | USE |
+| 31 | token_till_date | Cumulative tokens paid up to and including this event date. | 103 | — | USE |
+| 32 | first_placement_date | Date the consigner where demand_status = 'FULFILLED' first time | 2022-10-02T18:30:00.000Z | — | USE |
+| 33 | life_time_placements | Cumulative placements the FO has received across their entire history. | 110 | — | USE |
+| 34 | trip_bucket | Bucketed FO lifetime trip count | 3+ | — | USE |
+| 35 | fo_segment | FO segment is the FO Trip segmentation , 0=0 trip, 1-2 = 1st trip or 2nd trip  and 2+ fo who have done more than 2+trip | 3+ | — | USE |
+| 36 | lifetime_loads_checked | Cumulative loads checked by the FO across their entire history. | 0 | — | USE |
+| 37 | fo_load_impressions | Bucketed count of load impressions or checking of load in lifetime for the FO (e.g., '0', '1-4', '5+'). | 0 | — | USE |
+| 38 | fo_sub_type | Subscription type / status: 'Subs' (subscribed)=1, 'Non-Subs',=0 | Subs | — | USE |
+| 39 | qualified_in_opsearch | 1 if the FO qualified in the opsearch (matching) algorithm for at least one demand on this day. | 0 | — | USE |
+| 40 | qualified_in_matching | 1 if the FO qualified in the matching engine for at least one demand on this day. | 0 | — | USE |
+| 41 | ready_fo | Marketplace readiness flag — 1 if the FO is MP Ready, 0 otherwise. | 0 | — | USE |
 
 ## 2_fact_consigner_demands_lead_source
 
@@ -68,105 +68,105 @@ mp_analytics_core.fact_consigner_demands_lead_source
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Descriptions | Sample value | ⚠ Standardization | col_6 |
+| # | Column | Descriptions | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE69409 | — |  |
-| 2 | login_month | It defines the month when the consigner was active on the app | 2020-03-31T18:30:00.000Z | — |  |
-| 4 | platform | App platform through whcih demand was created: App/Web | android | — |  |
-| 5 | signup_date | Date the consigner signed up. | 2020-03-31T18:30:00.000Z | — |  |
-| 6 | signup_week | It defines the week of the signup date | 2020-03-29T18:30:00.000Z | — |  |
-| 7 | signup_month | It defines the month of the signup date | 2020-03-31T18:30:00.000Z | — |  |
-| 8 | demand_time | Exact timestamp when the demand was created. | 2020-04-01T10:33:20.092Z | — |  |
-| 9 | demand_date | Date the demand was created (day-truncated from demand_time). | 2020-03-31T18:30:00.000Z | — |  |
-| 10 | demand_week | Week-start timestamp of the demand. | 2020-03-29T18:30:00.000Z | — |  |
-| 11 | demand_month | It depicts the Month in which demand was created | 2020-03-31T18:30:00.000Z | — |  |
-| 12 | sales_team | The sales team that was aligned with the consigner at a given point of time | NOT ASSIGNED | — |  |
-| 13 | sales_sub_team | The sales sub team that was aligned with the consigner at a given point of time | NOT ASSIGNED | — |  |
-| 17 | demand_id | Unique identifier of a demand created by a consigner. | 2006163 | — |  |
-| 18 | dr_flag | Indicates if vehicle search is started for demand.<br>(1 = Yes, 0 = No) | 0 | — |  |
-| 19 | plc_flag | Indicates if demand was placed with a vehicle (1 = Yes, 0 = No) | 0 | — |  |
-| 20 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) | 0 | — |  |
-| 21 | demand_restriction | This defines the status of the consigner at the time of demand creation<br>Restricted<br>Unrestricted | Unrestricted | — |  |
-| 22 | dr_restriction | It depicts whether the consigner is allowed to give DR or not based upon its previous balance clearance <br>It can have the following values ( restricted / unrestricted ) | Unrestricted | — |  |
-| 25 | trip_rank | Rank of this demand within the consigner's trip history (1 = first trip, etc.). | 1 | — | ? |
-| 26 | active_cx_trip_rank | Rank of consigner's trip which resets if the consigner becomes dormant | 0 | — | ? |
-| 27 | latest_acq_time | Timestamp of the latest 'acquisition' event for the consigner | 2020-03-18T15:21:39.918Z | — | It is 1st demand time where trip_flag =1 for that consignor |
-| 29 | cx_segment | Consigner trip-bucket segment: 'New' (0 trips), '1-4' (1-4 lifetime trips), '4+' (4+ trips) | 1-4 | — |  |
-| 31 | auto_plc | 'YES' / 'NO' — whether the placement was done automatically by the system (vs. manually by ops). | NO | — |  |
-| 35 | app_version | App version at the time of the event. | (NULL) | — |  |
-| 36 | demand_region | Demand origin region | OTHERS | — |  |
-| 37 | demand_state | State of the demand's origin. | DELHI NCR | — |  |
-| 38 | demand_city | City of the demand's origin. |  | — |  |
-| 39 | demand_cluster | Demand origin cluster | NOT AVAILABLE | — |  |
-| 42 | destination_id | District id of the demand's destination. Joined with id in mp_analytics_core.dim_mp_districts | (NULL) | — |  |
-| 43 | destination_cluster_id | Cluster id of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. | (NULL) | — |  |
-| 44 | destination_region | Demand destination id | OTHERS | — |  |
-| 46 | destination_city | City of the demand's destination. | (NULL) | — |  |
-| 47 | destination_cluster | Cluster of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. | OTHERS | — |  |
-| 48 | vt_id | <missing in Glossary> | (NULL) | — |  |
-| 49 | vt_pricing_id | <missing in Glossary> | (NULL) | — | ? |
-| 50 | cod | Combination of Consigner_user_code,Demand_date,Origin_id,Destination_id | (NULL) | — |  |
-| 51 | codvt | Combination of Consigner_user_code,Demand_date,Origin_id,Destination_id,vehicle_type_id | (NULL) | — |  |
-| 52 | codvt_pricing | Do Not Use | (NULL) | — | ? |
-| 55 | base_price | Supply fare with our margin ('Middle Share') which should have been shown to the consignor in case there is zero non-coupon discount applicable. | (NULL) | — | ? |
-| 56 | base_rate1 | This is the lower end of the price range shown to the consigner before we start searching for the vehicle. It is derived by multiplying base_rate2 with a factor which might vary across ODVTs. | (NULL) | — | ? |
-| 57 | base_rate2 | This is the predicted consigner freight fare for the given ODVT.<br>It is derived by multiplying supply_l2 (predicted supply_fare for the given ODVT by our pricing model) with a factor which might vary across ODVTs. | (NULL) | — | ? |
-| 58 | base_rate3 | This is the upper end of the price range shown to the consigner before we start searching for the vehicle. It is derived by multiplying base_rate2 with a factor which might vary across ODVTs. | (NULL) | — | ? |
-| 61 | consigner_freight_fare | Final freight fare quoted to the consigner (₹). | (NULL) | — | ? |
-| 63 | cx_plc_cancel_time | Timestamp when placement was cancelled by consigner | (NULL) | — |  |
-| 64 | ccvt_fo | <missing in Glossary> | (NULL) | — | ? |
-| 74 | consigner_city | Do Not Use | NOT AVAILABLE | — | ? |
-| 75 | consigner_state | It depicts the state of the consigner | NOT AVAILABLE | — | ? |
-| 76 | consigner_region | Consigner's resolved region (sales geography region).<br>It depicts the region of the consigner and can have three values :<br>R2 (Next 24 clusters)<br>R3 (ROI)<br>NCR<br>R1 (Top 5 clusters) | NEW SERVICEABLE | — |  |
-| 77 | consigner_state_segment | Consigner's state-level segment classification (sales geography segmentation).<br>Consigner region is extracted from the very first source in this priority - FIELD SALES>SIGNUP>VT>DEMAND>WEB | NOT AVAILABLE | — | DNU |
-| 83 | original_lead_source_detailed | This defines the first source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others | App (Organic) | — |  |
-| 84 | utm_source | UTM parameter for campaign tracking (source) |  | — |  |
-| 85 | latest_lead_source_detailed | This defines the latest source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others | App (Organic) | — | DNU |
-| 87 | assigned_sales_team | The current sales team aligned with the consigner: <br>FIELD SALES<br>INSIDE SALES<br>NOT ASSIGNED | INSIDE SALES | — |  |
-| 88 | assigned_sales_sub_team | The current sales sub team aligned with the consigner: <br>ONBOARDING<br>RETENTION<br>NOT ASSIGNED | RETENTION | — |  |
-| 89 | relevant_sales_team | Do Not Use | NOT ASSIGNED | — | DNU |
-| 90 | cx_potential | Consigner Potential as provided by Sales team | NOT AVAILABLE | — |  |
-| 91 | cx_business_category | Business Category provided by user during signup like<br>MANUFACTURER, TRADER, INDIVIDUAL, SERVICE PROVIDER, etc. | NOT AVAILABLE | — |  |
-| 97 | app_potential | Trip potential provided by user during signup | (NULL) | — |  |
-| 98 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). | UNKNOWN | — |  |
-| 99 | login_date | Day-truncated login timestamp. Granularity of the (consigner_user_code × login_date × demand_id) primary key — i.e., one row per day the consigner was active.<br>Used to get Daily Active Users (DAU), Monthly Active Users (MAU), etc. |  | — | DNU |
-|  | sales_state | DO NOT USE |  | ⚠ SALES_STATE — should be 'sales_state' | DNU |
-|  | sales_city | DO NOT USE |  | ⚠ SALES_CITY — should be 'sales_city' | DNU |
-|  | sales_cluster | DO NOT USE |  | — | DNU |
-|  | placement_rn | DO NOT USE |  | — | DNU |
-|  | placement_rank | Sequence of trips for a user (ONLY for fulfilled demands)<br> Counts successful trips only<br> Ignores non-trip demands (sets them to 0) |  | — |  |
-|  | last_trip_time | Timestamp of the consigner's most recent completed trip prior to (or as of) this demand |  | — |  |
-|  | dr_type | DO NOT USE |  | — |  |
-|  | route_distance | Origin → destination route distance (km). Used as a filter (min_distance / max_distance) on the Placement and FO dashboards and to derive 'haul'. |  | — |  |
-|  | tyre | Tyre count of the requested vehicle on the demand. [Same data as 'tyre_count' in fact_vehicle_info — STANDARDIZE naming] |  | ⚠ TYRE_COUNT — should be 'tyre_count' |  |
-|  | origin_id | District id of the demand's origin. Joined with id in mp_analytics_core.dim_mp_districts |  | — |  |
-|  | origin_cluster_id | Cluster id of the demand's origin. Derived from mp_analytics_core.dim_mp_districts. |  | — | DNU |
-|  | destination_state | State of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. |  | — | DNU |
-|  | odvt | Origin × Destination × Vehicle Type key (pricing dimension WITHOUT the consigner). Combination of origin_id, destination_id, vehicle_type_id. |  | — |  |
-|  | odvt_pricing | DO NOT USE |  | — | DNU |
-|  | pnl | Realised net P&L on the demand (₹) wrt final freight fare. |  | — |  |
-|  | pnl_expected | Expected (pre-cost) P&L on the demand (₹) wrt final freight fare. |  | — |  |
-|  | time_to_plc | Time in minutes between DR creation and the final placement on the demand. |  | — |  |
-|  | opsearch_fo | Flag/count for FOs returned by the OpSearch (matching) algorithm for this demand. Used in North Star OpSearch-FO bucketing. |  | — | DNU |
-|  | supply_confidence | Do Not Use |  | — | DNU |
-|  | price_confidence | Do Not Use |  | — | DNU |
-|  | plc_price_range | Bucket label for the consigner fare vs base rate 1,2,3 |  | — |  |
-|  | haul | Haul type derived from route_distance (e.g., 'Short Haul', 'Long Haul','Medium Haul') |  | — |  |
-|  | dr_time | Timestamp when vehicle search was started |  | — |  |
-|  | first_plc_time | Timestamp of the first placement event on the demand |  | — |  |
-|  | last_plc_time | Timestamp of the most recent placement event on the demand |  | — |  |
-|  | total_plc | DO NOT USE |  | — |  |
-|  | prospectid | Prospect / lead ID linked to the consigner before they became a registered consigner_user_code (pre-signup identifier). |  | — |  |
-|  | prospect_id_created_time | Timestamp when the prospect record was first created. |  | — |  |
-|  | prospect_id_created_date | Date when the prospect record was first created. |  | — |  |
-|  | prospect_id_created_week | Week-start of the prospect's creation date. |  | — |  |
-|  | prospect_id_created_month | Month-start of the prospect's creation date. |  | — |  |
-|  | latest_utm_source | <missing in Glossary> |  | — |  |
-|  | first_sales_team | Sales team prospect was assigned to the first time: INSIDE SALES, FIELD SALES, etc. |  | — | DNU |
-|  | first_sales_sub_team | Sales sub team prospect was assigned to the first time: RETENTION, ONBOARDING, etc. |  | — | DNU |
-|  | first_sales_team_time | DO NOT USE |  | — | DNU |
-|  | first_sales_team_date | DO NOT USE |  | — | DNU |
-|  | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. |  | — |  |
+| 1 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE69409 | — | USE |
+| 2 | login_month | It defines the month when the consigner was active on the app | 2020-03-31T18:30:00.000Z | — | USE |
+| 4 | platform | App platform through whcih demand was created: App/Web | android | — | USE |
+| 5 | signup_date | Date the consigner signed up. | 2020-03-31T18:30:00.000Z | — | USE |
+| 6 | signup_week | It defines the week of the signup date | 2020-03-29T18:30:00.000Z | — | USE |
+| 7 | signup_month | It defines the month of the signup date | 2020-03-31T18:30:00.000Z | — | USE |
+| 8 | demand_time | Exact timestamp when the demand was created. | 2020-04-01T10:33:20.092Z | — | USE |
+| 9 | demand_date | Date the demand was created (day-truncated from demand_time). | 2020-03-31T18:30:00.000Z | — | USE |
+| 10 | demand_week | Week-start timestamp of the demand. | 2020-03-29T18:30:00.000Z | — | USE |
+| 11 | demand_month | It depicts the Month in which demand was created | 2020-03-31T18:30:00.000Z | — | USE |
+| 12 | sales_team | The sales team that was aligned with the consigner at a given point of time | NOT ASSIGNED | — | USE |
+| 13 | sales_sub_team | The sales sub team that was aligned with the consigner at a given point of time | NOT ASSIGNED | — | USE |
+| 17 | demand_id | Unique identifier of a demand created by a consigner. | 2006163 | — | USE |
+| 18 | dr_flag | Indicates if vehicle search is started for demand.<br>(1 = Yes, 0 = No) | 0 | — | USE |
+| 19 | plc_flag | Indicates if demand was placed with a vehicle (1 = Yes, 0 = No) | 0 | — | USE |
+| 20 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) | 0 | — | USE |
+| 21 | demand_restriction | This defines the status of the consigner at the time of demand creation<br>Restricted<br>Unrestricted | Unrestricted | — | USE |
+| 22 | dr_restriction | It depicts whether the consigner is allowed to give DR or not based upon its previous balance clearance <br>It can have the following values ( restricted / unrestricted ) | Unrestricted | — | USE |
+| 25 | trip_rank | Rank of this demand within the consigner's trip history (1 = first trip, etc.). | 1 | — | USE |
+| 26 | active_cx_trip_rank | Rank of consigner's trip which resets if the consigner becomes dormant | 0 | — | USE |
+| 27 | latest_acq_time | Timestamp of the latest 'acquisition' event for the consigner | 2020-03-18T15:21:39.918Z | — | USE |
+| 29 | cx_segment | Consigner trip-bucket segment: 'New' (0 trips), '1-4' (1-4 lifetime trips), '4+' (4+ trips) | 1-4 | — | USE |
+| 31 | auto_plc | 'YES' / 'NO' — whether the placement was done automatically by the system (vs. manually by ops). | NO | — | USE |
+| 35 | app_version | App version at the time of the event. | (NULL) | — | USE |
+| 36 | demand_region | Demand origin region | OTHERS | — | USE |
+| 37 | demand_state | State of the demand's origin. | DELHI NCR | — | USE |
+| 38 | demand_city | City of the demand's origin. |  | — | USE |
+| 39 | demand_cluster | Demand origin cluster | NOT AVAILABLE | — | USE |
+| 42 | destination_id | District id of the demand's destination. Joined with id in mp_analytics_core.dim_mp_districts | (NULL) | — | USE |
+| 43 | destination_cluster_id | Cluster id of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. | (NULL) | — | USE |
+| 44 | destination_region | Demand destination id | OTHERS | — | USE |
+| 46 | destination_city | City of the demand's destination. | (NULL) | — | USE |
+| 47 | destination_cluster | Cluster of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. | OTHERS | — | USE |
+| 48 | vt_id | <missing in Glossary> | (NULL) | — | USE |
+| 49 | vt_pricing_id | <missing in Glossary> | (NULL) | — | USE |
+| 50 | cod | Combination of Consigner_user_code,Demand_date,Origin_id,Destination_id | (NULL) | — | USE |
+| 51 | codvt | Combination of Consigner_user_code,Demand_date,Origin_id,Destination_id,vehicle_type_id | (NULL) | — | USE |
+| 52 | codvt_pricing | Do Not Use | (NULL) | — | USE |
+| 55 | base_price | Supply fare with our margin ('Middle Share') which should have been shown to the consignor in case there is zero non-coupon discount applicable. | (NULL) | — | USE |
+| 56 | base_rate1 | This is the lower end of the price range shown to the consigner before we start searching for the vehicle. It is derived by multiplying base_rate2 with a factor which might vary across ODVTs. | (NULL) | — | USE |
+| 57 | base_rate2 | This is the predicted consigner freight fare for the given ODVT.<br>It is derived by multiplying supply_l2 (predicted supply_fare for the given ODVT by our pricing model) with a factor which might vary across ODVTs. | (NULL) | — | USE |
+| 58 | base_rate3 | This is the upper end of the price range shown to the consigner before we start searching for the vehicle. It is derived by multiplying base_rate2 with a factor which might vary across ODVTs. | (NULL) | — | USE |
+| 61 | consigner_freight_fare | Final freight fare quoted to the consigner (₹). | (NULL) | — | USE |
+| 63 | cx_plc_cancel_time | Timestamp when placement was cancelled by consigner | (NULL) | — | USE |
+| 64 | ccvt_fo | <missing in Glossary> | (NULL) | — | USE |
+| 74 | consigner_city | Do Not Use | NOT AVAILABLE | — | USE |
+| 75 | consigner_state | It depicts the state of the consigner | NOT AVAILABLE | — | USE |
+| 76 | consigner_region | Consigner's resolved region (sales geography region).<br>It depicts the region of the consigner and can have three values :<br>R2 (Next 24 clusters)<br>R3 (ROI)<br>NCR<br>R1 (Top 5 clusters) | NEW SERVICEABLE | — | USE |
+| 77 | consigner_state_segment | Consigner's state-level segment classification (sales geography segmentation).<br>Consigner region is extracted from the very first source in this priority - FIELD SALES>SIGNUP>VT>DEMAND>WEB | NOT AVAILABLE | — | USE |
+| 83 | original_lead_source_detailed | This defines the first source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others | App (Organic) | — | USE |
+| 84 | utm_source | UTM parameter for campaign tracking (source) |  | — | USE |
+| 85 | latest_lead_source_detailed | This defines the latest source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others | App (Organic) | — | USE |
+| 87 | assigned_sales_team | The current sales team aligned with the consigner: <br>FIELD SALES<br>INSIDE SALES<br>NOT ASSIGNED | INSIDE SALES | — | USE |
+| 88 | assigned_sales_sub_team | The current sales sub team aligned with the consigner: <br>ONBOARDING<br>RETENTION<br>NOT ASSIGNED | RETENTION | — | USE |
+| 89 | relevant_sales_team | Do Not Use | NOT ASSIGNED | — | USE |
+| 90 | cx_potential | Consigner Potential as provided by Sales team | NOT AVAILABLE | — | USE |
+| 91 | cx_business_category | Business Category provided by user during signup like<br>MANUFACTURER, TRADER, INDIVIDUAL, SERVICE PROVIDER, etc. | NOT AVAILABLE | — | USE |
+| 97 | app_potential | Trip potential provided by user during signup | (NULL) | — | USE |
+| 98 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). | UNKNOWN | — | USE |
+| 99 | login_date | Day-truncated login timestamp. Granularity of the (consigner_user_code × login_date × demand_id) primary key — i.e., one row per day the consigner was active.<br>Used to get Daily Active Users (DAU), Monthly Active Users (MAU), etc. |  | — | USE |
+|  | sales_state | DO NOT USE |  | ⚠ SALES_STATE — should be 'sales_state' | USE |
+|  | sales_city | DO NOT USE |  | ⚠ SALES_CITY — should be 'sales_city' | USE |
+|  | sales_cluster | DO NOT USE |  | — | USE |
+|  | placement_rn | DO NOT USE |  | — | USE |
+|  | placement_rank | Sequence of trips for a user (ONLY for fulfilled demands)<br> Counts successful trips only<br> Ignores non-trip demands (sets them to 0) |  | — | USE |
+|  | last_trip_time | Timestamp of the consigner's most recent completed trip prior to (or as of) this demand |  | — | USE |
+|  | dr_type | DO NOT USE |  | — | USE |
+|  | route_distance | Origin → destination route distance (km). Used as a filter (min_distance / max_distance) on the Placement and FO dashboards and to derive 'haul'. |  | — | USE |
+|  | tyre | Tyre count of the requested vehicle on the demand. [Same data as 'tyre_count' in fact_vehicle_info — STANDARDIZE naming] |  | ⚠ TYRE_COUNT — should be 'tyre_count' | USE |
+|  | origin_id | District id of the demand's origin. Joined with id in mp_analytics_core.dim_mp_districts |  | — | USE |
+|  | origin_cluster_id | Cluster id of the demand's origin. Derived from mp_analytics_core.dim_mp_districts. |  | — | USE |
+|  | destination_state | State of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. |  | — | USE |
+|  | odvt | Origin × Destination × Vehicle Type key (pricing dimension WITHOUT the consigner). Combination of origin_id, destination_id, vehicle_type_id. |  | — | USE |
+|  | odvt_pricing | DO NOT USE |  | — | USE |
+|  | pnl | Realised net P&L on the demand (₹) wrt final freight fare. |  | — | USE |
+|  | pnl_expected | Expected (pre-cost) P&L on the demand (₹) wrt final freight fare. |  | — | USE |
+|  | time_to_plc | Time in minutes between DR creation and the final placement on the demand. |  | — | USE |
+|  | opsearch_fo | Flag/count for FOs returned by the OpSearch (matching) algorithm for this demand. Used in North Star OpSearch-FO bucketing. |  | — | USE |
+|  | supply_confidence | Do Not Use |  | — | USE |
+|  | price_confidence | Do Not Use |  | — | USE |
+|  | plc_price_range | Bucket label for the consigner fare vs base rate 1,2,3 |  | — | USE |
+|  | haul | Haul type derived from route_distance (e.g., 'Short Haul', 'Long Haul','Medium Haul') |  | — | USE |
+|  | dr_time | Timestamp when vehicle search was started |  | — | USE |
+|  | first_plc_time | Timestamp of the first placement event on the demand |  | — | USE |
+|  | last_plc_time | Timestamp of the most recent placement event on the demand |  | — | USE |
+|  | total_plc | DO NOT USE |  | — | USE |
+|  | prospectid | Prospect / lead ID linked to the consigner before they became a registered consigner_user_code (pre-signup identifier). |  | — | USE |
+|  | prospect_id_created_time | Timestamp when the prospect record was first created. |  | — | USE |
+|  | prospect_id_created_date | Date when the prospect record was first created. |  | — | USE |
+|  | prospect_id_created_week | Week-start of the prospect's creation date. |  | — | USE |
+|  | prospect_id_created_month | Month-start of the prospect's creation date. |  | — | USE |
+|  | latest_utm_source | <missing in Glossary> |  | — | USE |
+|  | first_sales_team | Sales team prospect was assigned to the first time: INSIDE SALES, FIELD SALES, etc. |  | — | USE |
+|  | first_sales_sub_team | Sales sub team prospect was assigned to the first time: RETENTION, ONBOARDING, etc. |  | — | USE |
+|  | first_sales_team_time | DO NOT USE |  | — | USE |
+|  | first_sales_team_date | DO NOT USE |  | — | USE |
+|  | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. |  | — | USE |
 
 ## 3_dim_operator_base_district
 
