@@ -403,22 +403,22 @@ mp_analytics_core.fact_consigner_service_stats
 
 **Short description:** Trip-level service quality metrics for consigners. Captures gate-to-loading delays, transit delays, vehicle offline time, consigner ratings and reasons, and ticket details linked to the trip. Used for service quality monitoring, delay analysis, and consigner satisfaction tracking.
 
-**:** Columns (Description pulled from Glossary via VLOOKUP)
+Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag | col_7 | col_8 | col_9 | col_10 | col_11 | col_12 | col_13 | col_14 | col_15 | col_16 | col_17 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | demand_id | Unique identifier of a demand created by a consigner. | 4605454 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 2 | code | Consignment code of the trip — likely same data as consignment_code | WE-123456 | consignment_code | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 3 | unloading_done_time | Timestamp when unloading at the destination was completed. | 2025-11-19 14:00:00 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 4 | rating | Rating given by the consigner for the trip (1–5 scale). | 4 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 5 | reasons | reasons associated with trip rating submitted by consigner | Driver Behaviour, | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 6 | gtl_delay | Pickup Delay - (Diffrence of Expected time to arrive at loading & Actual Loading Reaching time) | NO | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 7 | sys_trnst_dly | Delivery Delay (Diffrence of TAT given to Consigner for delivery and Actual Time taken for delivery<br>It Calculates transit delay status. Formula: Trip Journey – TAT = Delay Time.<br>Status categories: in_tat (ontime)<br>delay (up to 20% TaT) <br>critical (>20% TaT) | NO | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 8 | trip_journey | total time taken in transit by vehicle | 12 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 9 | total_offline_time | Total time the vehicle was offline/untracked during the trip (minutes). | 2 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 10 | type | Type Damage Occured in Trip | Major Broken | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 11 | reason | Specific reason for the recorded event (more granular than 'reasons'). | 1 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
-| 12 | fo_trnst | (Time taken by FO - TAT given to FO) in transit to complete the delivery | 1 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | demand_id | Unique identifier of a demand created by a consigner. | 4605454 | — | USE |
+| 2 | code | Consignment code of the trip — likely same data as consignment_code | WE-123456 | consignment_code | USE |
+| 3 | unloading_done_time | Timestamp when unloading at the destination was completed. | 2025-11-19 14:00:00 | — | USE |
+| 4 | rating | Rating given by the consigner for the trip (1–5 scale). | 4 | — | USE |
+| 5 | reasons | reasons associated with trip rating submitted by consigner | Driver Behaviour, | — | USE |
+| 6 | gtl_delay | Pickup Delay - (Diffrence of Expected time to arrive at loading & Actual Loading Reaching time) | NO | — | USE |
+| 7 | sys_trnst_dly | Delivery Delay (Diffrence of TAT given to Consigner for delivery and Actual Time taken for delivery<br>It Calculates transit delay status. Formula: Trip Journey – TAT = Delay Time.<br>Status categories: in_tat (ontime)<br>delay (up to 20% TaT) <br>critical (>20% TaT) | NO | — | USE |
+| 8 | trip_journey | total time taken in transit by vehicle | 12 | — | USE |
+| 9 | total_offline_time | Total time the vehicle was offline/untracked during the trip (minutes). | 2 | — | USE |
+| 10 | type | Type Damage Occured in Trip | Major Broken | — | USE |
+| 11 | reason | Specific reason for the recorded event (more granular than 'reasons'). | 1 | — | USE |
+| 12 | fo_trnst | (Time taken by FO - TAT given to FO) in transit to complete the delivery | 1 | — | USE |
 
 ## 11_fact_cx_tickets
 
