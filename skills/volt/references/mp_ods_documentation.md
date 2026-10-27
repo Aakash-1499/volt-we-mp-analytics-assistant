@@ -323,24 +323,24 @@ Above mentioned grain represent single bid.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | bid_id | Unique identifier for bid given by FO against demand. This column have unique value per token_product. | 870367 | — |
-| 2 | token_product | This is source of bidding data. | One Token per FO | — |
-| 3 | bid_time | Datetime when bid is recieved against demand. | 46303.57013888889 | — |
-| 4 | demand_id | Unique identifier of a demand created by a consigner. | 5079699 | — |
-| 5 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE334910 | — |
-| 6 | bid_amount | Bid value submitted by operator | 13600 | — |
-| 7 | token_amount | Token amount needed to submit. | 999 | — |
-| 8 | token_status | This refers token status againt bid submitted.<br>INITIATED = Bid is submitted but token is not paid.<br>SUCCESS = Token is paid<br>REFUNDED = Token is paid and is refunded back after token is not converted to trip.<br>FORFEITED = Token is paid and win the bidding, but operator backout from trip.<br>EXPIRED = Bid is expired due to no token paid | SUCCESS | — |
-| 9 | bid_trigger_source | This refers to mode the bid is given.<br>TESSERACT_SERVICE = Operator bid via visiting app directly or via notification.<br>MANUAL = Operator bid on notification sent manually by ops. | TESSERACT_SERVICE | — |
-| 10 | transaction_code | It is payment transaction code for paid amount. | 0 | — |
-| 11 | refund_transaction_code | It is payment transaction code for refunded. | 0 | — |
-| 12 | bidding_type | Do Not Use | 0 | — |
-| 13 | auction_type | Do Not Use | 0 | — |
-| 14 | token_paid_time | it is datetime when token amount is paid. | 46281.663194444445 | — |
-| 15 | vehicle_submitted_time | it is datetime when vehicle details given. | 46303.57013888889 | — |
-| 16 | vehicle_number | Vehicle registration / number plate (RTO number). | DL1LAE3249 | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | bid_id | Unique identifier for bid given by FO against demand. This column have unique value per token_product. | 870367 | — | USE |
+| 2 | token_product | This is source of bidding data. | One Token per FO | — | USE |
+| 3 | bid_time | Datetime when bid is recieved against demand. | 46303.57013888889 | — | USE |
+| 4 | demand_id | Unique identifier of a demand created by a consigner. | 5079699 | — | USE |
+| 5 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE334910 | — | USE |
+| 6 | bid_amount | Bid value submitted by operator | 13600 | — | USE |
+| 7 | token_amount | Token amount needed to submit. | 999 | — | USE |
+| 8 | token_status | This refers token status againt bid submitted.<br>INITIATED = Bid is submitted but token is not paid.<br>SUCCESS = Token is paid<br>REFUNDED = Token is paid and is refunded back after token is not converted to trip.<br>FORFEITED = Token is paid and win the bidding, but operator backout from trip.<br>EXPIRED = Bid is expired due to no token paid | SUCCESS | — | USE |
+| 9 | bid_trigger_source | This refers to mode the bid is given.<br>TESSERACT_SERVICE = Operator bid via visiting app directly or via notification.<br>MANUAL = Operator bid on notification sent manually by ops. | TESSERACT_SERVICE | — | USE |
+| 10 | transaction_code | It is payment transaction code for paid amount. | 0 | — | USE |
+| 11 | refund_transaction_code | It is payment transaction code for refunded. | 0 | — | USE |
+| 12 | bidding_type | Do Not Use | 0 | — | DNU |
+| 13 | auction_type | Do Not Use | 0 | — | DNU |
+| 14 | token_paid_time | it is datetime when token amount is paid. | 46281.663194444445 | — | USE |
+| 15 | vehicle_submitted_time | it is datetime when vehicle details given. | 46303.57013888889 | — | USE |
+| 16 | vehicle_number | Vehicle registration / number plate (RTO number). | DL1LAE3249 | — | USE |
 
 ## 9_fact_operators_demand_mp_events
 
@@ -354,44 +354,44 @@ mp_analytics_core.fact_operators_demand_mp_events
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | demand_id | Unique identifier of a demand created by a consigner. | 4605454 | — |
-| 2 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE4629721 | — |
-| 3 | event_date | Calendar date of the event (or timestamp when the event occurred). | 2025-09-01 | — |
-| 4 | is_load_checked | 1 if the FO checked this specific demand load; 0 otherwise (demand-level, cf. is_checked_loads which is day-level). | 1 | — |
-| 5 | is_bid_submitted | Do Not Use | 0 | — |
-| 6 | is_matching_submit | Do Not Use | 1 | — |
-| 7 | is_token_paid | Do Not Use | 0 | — |
-| 8 | is_placed | Do Not Use | 0 | — |
-| 9 | is_cancelled_by_cx | Do Not Use | 0 | — |
-| 10 | is_trip | Do Not Use | 0 | — |
-| 11 | landed_on_mp | Do Not Use | 1 | — |
-| 12 | is_landed_on_bid | Do Not Use | 0 | — |
-| 13 | is_landed_on_confirm | Do Not Use | 0 | — |
-| 14 | is_marked_veh_available | Do Not Use | 0 | — |
-| 15 | is_marked_veh_not_available | Do Not Use | 0 | — |
-| 16 | is_loading_filter_used | Do Not Use | 0 | — |
-| 17 | is_unloading_filter_used | Do Not Use | 0 | — |
-| 18 | is_subscribed_at_event | Do Not Use | 1 | — |
-| 19 | has_rate_card | Do Not Use | 1 | — |
-| 20 | rate_card_collected_date | Do Not Use | 2025-08-01 | — |
-| 21 | verified_vehicles | Do Not Use | 2 | — |
-| 22 | life_time_trips | Do Not Use | 12 | — |
-| 23 | trip_bucket | Do Not Use | 2+ | — |
-| 24 | fleet_size | Do Not Use | SFO | — |
-| 25 | fo_district | Do Not Use | GURUGRAM | — |
-| 26 | district_id | Do Not Use | 21 | — |
-| 27 | cluster_id | Do Not Use | 5 | — |
-| 28 | fo_base_district | Do Not Use | GURUGRAM | — |
-| 29 | fo_base_state | Do Not Use | HARYANA | — |
-| 30 | fo_base_region | Do Not Use | NCR | — |
-| 31 | ready_fo | Do Not Use | 1 | — |
-| 32 | fo_segment | Do Not Use | 2+ | — |
-| 33 | lifetime_loads_checked | Do Not Use | 45 | — |
-| 34 | fo_load_impressions | Do Not Use | 5+ | — |
-| 35 | fo_sub_type | Do Not Use | Subs | — |
-| 36 | demand_cards_seen | Number of demand cards viewed by the FO for this demand. | 3 | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | demand_id | Unique identifier of a demand created by a consigner. | 4605454 | — | USE |
+| 2 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE4629721 | — | USE |
+| 3 | event_date | Calendar date of the event (or timestamp when the event occurred). | 2025-09-01 | — | USE |
+| 4 | is_load_checked | 1 if the FO checked this specific demand load; 0 otherwise (demand-level, cf. is_checked_loads which is day-level). | 1 | — | USE |
+| 5 | is_bid_submitted | Do Not Use | 0 | — | DNU |
+| 6 | is_matching_submit | Do Not Use | 1 | — | DNU |
+| 7 | is_token_paid | Do Not Use | 0 | — | DNU |
+| 8 | is_placed | Do Not Use | 0 | — | DNU |
+| 9 | is_cancelled_by_cx | Do Not Use | 0 | — | DNU |
+| 10 | is_trip | Do Not Use | 0 | — | DNU |
+| 11 | landed_on_mp | Do Not Use | 1 | — | DNU |
+| 12 | is_landed_on_bid | Do Not Use | 0 | — | DNU |
+| 13 | is_landed_on_confirm | Do Not Use | 0 | — | DNU |
+| 14 | is_marked_veh_available | Do Not Use | 0 | — | DNU |
+| 15 | is_marked_veh_not_available | Do Not Use | 0 | — | DNU |
+| 16 | is_loading_filter_used | Do Not Use | 0 | — | DNU |
+| 17 | is_unloading_filter_used | Do Not Use | 0 | — | DNU |
+| 18 | is_subscribed_at_event | Do Not Use | 1 | — | DNU |
+| 19 | has_rate_card | Do Not Use | 1 | — | DNU |
+| 20 | rate_card_collected_date | Do Not Use | 2025-08-01 | — | DNU |
+| 21 | verified_vehicles | Do Not Use | 2 | — | DNU |
+| 22 | life_time_trips | Do Not Use | 12 | — | DNU |
+| 23 | trip_bucket | Do Not Use | 2+ | — | DNU |
+| 24 | fleet_size | Do Not Use | SFO | — | DNU |
+| 25 | fo_district | Do Not Use | GURUGRAM | — | DNU |
+| 26 | district_id | Do Not Use | 21 | — | DNU |
+| 27 | cluster_id | Do Not Use | 5 | — | DNU |
+| 28 | fo_base_district | Do Not Use | GURUGRAM | — | DNU |
+| 29 | fo_base_state | Do Not Use | HARYANA | — | DNU |
+| 30 | fo_base_region | Do Not Use | NCR | — | DNU |
+| 31 | ready_fo | Do Not Use | 1 | — | DNU |
+| 32 | fo_segment | Do Not Use | 2+ | — | DNU |
+| 33 | lifetime_loads_checked | Do Not Use | 45 | — | DNU |
+| 34 | fo_load_impressions | Do Not Use | 5+ | — | DNU |
+| 35 | fo_sub_type | Do Not Use | Subs | — | DNU |
+| 36 | demand_cards_seen | Number of demand cards viewed by the FO for this demand. | 3 | — | USE |
 
 ## 10_fact_consigner_service_stats
 
@@ -405,20 +405,20 @@ mp_analytics_core.fact_consigner_service_stats
 
 **:** Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | col_6 | col_7 | col_8 | col_9 | col_10 | col_11 | col_12 | col_13 | col_14 | col_15 | col_16 | col_17 |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag | col_7 | col_8 | col_9 | col_10 | col_11 | col_12 | col_13 | col_14 | col_15 | col_16 | col_17 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | demand_id | Unique identifier of a demand created by a consigner. | 4605454 | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 2 | code | Consignment code of the trip — likely same data as consignment_code | WE-123456 | consignment_code |  |  |  |  |  |  |  |  |  |  |  |  |
-| 3 | unloading_done_time | Timestamp when unloading at the destination was completed. | 2025-11-19 14:00:00 | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 4 | rating | Rating given by the consigner for the trip (1–5 scale). | 4 | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 5 | reasons | reasons associated with trip rating submitted by consigner | Driver Behaviour, | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 6 | gtl_delay | Pickup Delay - (Diffrence of Expected time to arrive at loading & Actual Loading Reaching time) | NO | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 7 | sys_trnst_dly | Delivery Delay (Diffrence of TAT given to Consigner for delivery and Actual Time taken for delivery<br>It Calculates transit delay status. Formula: Trip Journey – TAT = Delay Time.<br>Status categories: in_tat (ontime)<br>delay (up to 20% TaT) <br>critical (>20% TaT) | NO | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 8 | trip_journey | total time taken in transit by vehicle | 12 | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 9 | total_offline_time | Total time the vehicle was offline/untracked during the trip (minutes). | 2 | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 10 | type | Type Damage Occured in Trip | Major Broken | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 11 | reason | Specific reason for the recorded event (more granular than 'reasons'). | 1 | — |  |  |  |  |  |  |  |  |  |  |  |  |
-| 12 | fo_trnst | (Time taken by FO - TAT given to FO) in transit to complete the delivery | 1 | — |  |  |  |  |  |  |  |  |  |  |  |  |
+| 1 | demand_id | Unique identifier of a demand created by a consigner. | 4605454 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 2 | code | Consignment code of the trip — likely same data as consignment_code | WE-123456 | consignment_code | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 3 | unloading_done_time | Timestamp when unloading at the destination was completed. | 2025-11-19 14:00:00 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 4 | rating | Rating given by the consigner for the trip (1–5 scale). | 4 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 5 | reasons | reasons associated with trip rating submitted by consigner | Driver Behaviour, | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 6 | gtl_delay | Pickup Delay - (Diffrence of Expected time to arrive at loading & Actual Loading Reaching time) | NO | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 7 | sys_trnst_dly | Delivery Delay (Diffrence of TAT given to Consigner for delivery and Actual Time taken for delivery<br>It Calculates transit delay status. Formula: Trip Journey – TAT = Delay Time.<br>Status categories: in_tat (ontime)<br>delay (up to 20% TaT) <br>critical (>20% TaT) | NO | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 8 | trip_journey | total time taken in transit by vehicle | 12 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 9 | total_offline_time | Total time the vehicle was offline/untracked during the trip (minutes). | 2 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 10 | type | Type Damage Occured in Trip | Major Broken | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 11 | reason | Specific reason for the recorded event (more granular than 'reasons'). | 1 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
+| 12 | fo_trnst | (Time taken by FO - TAT given to FO) in transit to complete the delivery | 1 | — | USE |  |  |  |  |  |  |  |  |  |  |  |
 
 ## 11_fact_cx_tickets
 
@@ -432,7 +432,7 @@ Support tickets raised by or for consigners. Captures ticket lifecycle (created 
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | col_6 |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | 1917184 | — | USE |
 | 2 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | TKT-20251119-001 | — | USE |
@@ -589,40 +589,40 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | id | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 2943463 | — | USE |
-| 2 | origin_district | DO NOT USE | NEW DELHI | — | USE |
-| 3 | destination_district | DO NOT USE | Ambala | — | USE |
-| 4 | origin_key | DO NOT USE | RAJASTHAN_weye_KHAIRTHAL-TIJARA | — | USE |
-| 5 | destination_key | DO NOT USE | HARYANA_weye_AMBALA | — | USE |
-| 6 | via_points | DO NOT USE | {"viaPoint": [{"unloadingDistrict": {"name": "Bangalore Urban", "placeId": "ChIJ..."}}]} | — | USE |
-| 7 | weight | DO NOT USE | 4.5 | — | USE |
-| 8 | date | DO NOT USE | 1787131793842000 | — | USE |
+| 2 | origin_district | DO NOT USE | NEW DELHI | — | DNU |
+| 3 | destination_district | DO NOT USE | Ambala | — | DNU |
+| 4 | origin_key | DO NOT USE | RAJASTHAN_weye_KHAIRTHAL-TIJARA | — | DNU |
+| 5 | destination_key | DO NOT USE | HARYANA_weye_AMBALA | — | DNU |
+| 6 | via_points | DO NOT USE | {"viaPoint": [{"unloadingDistrict": {"name": "Bangalore Urban", "placeId": "ChIJ..."}}]} | — | DNU |
+| 7 | weight | DO NOT USE | 4.5 | — | DNU |
+| 8 | date | DO NOT USE | 1787131793842000 | — | DNU |
 | 9 | consigner_code | Consigner user code | WE1002149 | — | USE |
-| 10 | origin_address_id | DO NOT USE | 117719 | — | USE |
-| 11 | origin_place_id | DO NOT USE | ChIJ9fKGzFLwDDkRpIRCk-KlO84 | — | USE |
+| 10 | origin_address_id | DO NOT USE | 117719 | — | DNU |
+| 11 | origin_place_id | DO NOT USE | ChIJ9fKGzFLwDDkRpIRCk-KlO84 | — | DNU |
 | 12 | demand_address_id | DO NOT USE | 1001 | — | DNU |
 | 13 | price_browsing_id | 32-char hex UUID of the pricing-browse request. 2,943,311 distinct — the join key to downstream pricing/conversion. | df190fae1289493c805c883c3f0ca3b7 | — | USE |
-| 14 | deleted | DO NOT USE | false | — | USE |
+| 14 | deleted | DO NOT USE | false | — | DNU |
 | 15 | created | Epoch microseconds of source write. Basis of created_ts. | 1787131793844000 | — | USE |
-| 16 | updated | DO NOT USE | 1784814204057000 | — | USE |
+| 16 | updated | DO NOT USE | 1784814204057000 | — | DNU |
 | 17 | created_by | User who created the ticket. | abhishek.patel@wheelseye.com | — | USE |
-| 18 | updated_by | User who last updated the ticket. | NULL | — | DNU |
-| 19 | destination_address_id | DO NOT USE | 163049 | — | USE |
-| 20 | destination_place_id | DO NOT USE | ChIJEW8eQiq2DzkRFI0l9ymK0us | — | USE |
-| 21 | ts_ms | DO NOT USE | 1787111993848 | — | USE |
-| 22 | lsn | DO NOT USE | 48610904308088 | — | USE |
-| 23 | _event_time | DO NOT USE | 2026-08-18 22:29:53 | — | USE |
-| 24 | created_ts | DO NOT USE | 2026-07-23 08:12:59.643 | — | USE |
-| 25 | dpyear | DO NOT USE(Use for Partition) | 2026 | — | USE |
-| 26 | dpmonth | DO NOT USE(Use for Partition) | 7 | — | USE |
-| 27 | dpday | DO NOT USE(Use for Partition) | 23 | — | USE |
-| 28 | dphour | DO NOT USE(Use for Partition) | 13 | — | USE |
-| 29 | dpymd | DO NOT USE(Use for Partition) | 20260723 | — | USE |
+| 18 | updated_by | User who last updated the ticket. | NULL | — | USE |
+| 19 | destination_address_id | DO NOT USE | 163049 | — | DNU |
+| 20 | destination_place_id | DO NOT USE | ChIJEW8eQiq2DzkRFI0l9ymK0us | — | DNU |
+| 21 | ts_ms | DO NOT USE | 1787111993848 | — | DNU |
+| 22 | lsn | DO NOT USE | 48610904308088 | — | DNU |
+| 23 | _event_time | DO NOT USE | 2026-08-18 22:29:53 | — | DNU |
+| 24 | created_ts | DO NOT USE | 2026-07-23 08:12:59.643 | — | DNU |
+| 25 | dpyear | DO NOT USE(Use for Partition) | 2026 | — | DNU |
+| 26 | dpmonth | DO NOT USE(Use for Partition) | 7 | — | DNU |
+| 27 | dpday | DO NOT USE(Use for Partition) | 23 | — | DNU |
+| 28 | dphour | DO NOT USE(Use for Partition) | 13 | — | DNU |
+| 29 | dpymd | DO NOT USE(Use for Partition) | 20260723 | — | DNU |
 | 30 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). | CONTAINER | — | USE |
-| 31 | latlng_origin | DO NOT USE | {"lat": 28.7032552, "lng": 77.45342219999999} | — | USE |
-| 32 | latlng_destination | DO NOT USE | {"lat": 30.900965, "lng": 75.8572758} | — | USE |
-| 33 | price_source | DO NOT USE | DS_PRICING_V2 | — | USE |
-| 34 | price_metadata | DO NOT USE | [{"id": "218", "priceShown": 32500.0}] | — | USE |
-| 35 | distance | DO NOT USE | 389045.6 | — | USE |
+| 31 | latlng_origin | DO NOT USE | {"lat": 28.7032552, "lng": 77.45342219999999} | — | DNU |
+| 32 | latlng_destination | DO NOT USE | {"lat": 30.900965, "lng": 75.8572758} | — | DNU |
+| 33 | price_source | DO NOT USE | DS_PRICING_V2 | — | DNU |
+| 34 | price_metadata | DO NOT USE | [{"id": "218", "priceShown": 32500.0}] | — | DNU |
+| 35 | distance | DO NOT USE | 389045.6 | — | DNU |
 
 ## 17_fact_experiment_user_allocat
 
@@ -640,22 +640,22 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | --- | --- | --- | --- | --- | --- |
 | 1 | id | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 311681 | — | USE |
 | 2 | created | Epoch microseconds of source write. Basis of created_ts. | 1774027274257000 | — | USE |
-| 3 | updated | DO NOT USE | 1774088180961936 | — | USE |
-| 4 | deleted | DO NOT USE | false | — | USE |
+| 3 | updated | DO NOT USE | 1774088180961936 | — | DNU |
+| 4 | deleted | DO NOT USE | false | — | DNU |
 | 5 | created_by | User who created the ticket. | bhim.singh@wheelseye.com | — | DNU |
 | 6 | updated_by | User who last updated the ticket. | ptl@wheelseye.com | — | DNU |
 | 7 | user_code | Consigner user code | WE8414272 | — | USE |
 | 8 | flow_type_config_id | Variant identifier per experiment. Used to tag Test and Control consigners in each experiment | 18 | — | USE |
-| 9 | ts_ms | DO NOT USE | 1775736600873 | — | USE |
-| 10 | lsn | DO NOT USE | 0 | — | USE |
-| 11 | _event_time | DO NOT USE | 2026-04-09 06:40:00 | — | USE |
-| 12 | created_ts | DO NOT USE | 2026-03-20 11:51:14.257 | — | USE |
-| 13 | dpyear | DO NOT USE(Use for Partition) | 2026 | — | USE |
-| 14 | dpmonth | DO NOT USE(Use for Partition) | 3 | — | USE |
-| 15 | dpday | DO NOT USE(Use for Partition) | 13 | — | USE |
-| 16 | dphour | DO NOT USE(Use for Partition) | 20 | — | USE |
-| 17 | dpymd | DO NOT USE(Use for Partition) | 20260320 | — | USE |
-| 18 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | NULL | — | DNU |
+| 9 | ts_ms | DO NOT USE | 1775736600873 | — | DNU |
+| 10 | lsn | DO NOT USE | 0 | — | DNU |
+| 11 | _event_time | DO NOT USE | 2026-04-09 06:40:00 | — | DNU |
+| 12 | created_ts | DO NOT USE | 2026-03-20 11:51:14.257 | — | DNU |
+| 13 | dpyear | DO NOT USE(Use for Partition) | 2026 | — | DNU |
+| 14 | dpmonth | DO NOT USE(Use for Partition) | 3 | — | DNU |
+| 15 | dpday | DO NOT USE(Use for Partition) | 13 | — | DNU |
+| 16 | dphour | DO NOT USE(Use for Partition) | 20 | — | DNU |
+| 17 | dpymd | DO NOT USE(Use for Partition) | 20260320 | — | DNU |
+| 18 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | NULL | — | USE |
 
 ## 18_fact_ptl_browsing
 
@@ -686,7 +686,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 13 | appointmentrequired | Indicates whether an appointment slot is required for the PTL shipment (stored as a string boolean: true/false) | false | — | USE |
 | 14 | topay | Indicates if freight charges are billed to the consignee upon PTL delivery (stored as a string boolean: true/false). | true | — | USE |
 | 15 | insurance | Indicates if cargo insurance was opted for the PTL shipment (stored as a string boolean: true/false). | false | — | USE |
-| 16 | materiallist | DO NOT USE | [{"length":15.0,"width":15.0,"height":15.0,"quantity":16}] | — | USE |
+| 16 | materiallist | DO NOT USE | [{"length":15.0,"width":15.0,"height":15.0,"quantity":16}] | — | DNU |
 | 17 | source | Channel through which the ticket was raised (e.g., App, Call, Email). Also in ss_1_mp_system_tickets. | WEB PORTAL | — | USE |
 
 ## 19_fact_leads
