@@ -103,19 +103,19 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 44 | destination_region | Demand destination id | OTHERS | — | USE |
 | 46 | destination_city | City of the demand's destination. | (NULL) | — | USE |
 | 47 | destination_cluster | Cluster of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. | OTHERS | — | USE |
-| 48 | vt_id | <missing in Glossary> | (NULL) | — | USE |
-| 49 | vt_pricing_id | <missing in Glossary> | (NULL) | — | USE |
+| 48 | vt_id | <missing in Glossary> | (NULL) | — | DNU |
+| 49 | vt_pricing_id | <missing in Glossary> | (NULL) | — | DNU |
 | 50 | cod | Combination of Consigner_user_code,Demand_date,Origin_id,Destination_id | (NULL) | — | USE |
 | 51 | codvt | Combination of Consigner_user_code,Demand_date,Origin_id,Destination_id,vehicle_type_id | (NULL) | — | USE |
-| 52 | codvt_pricing | Do Not Use | (NULL) | — | USE |
+| 52 | codvt_pricing | Do Not Use | (NULL) | — | DNU |
 | 55 | base_price | Supply fare with our margin ('Middle Share') which should have been shown to the consignor in case there is zero non-coupon discount applicable. | (NULL) | — | USE |
 | 56 | base_rate1 | This is the lower end of the price range shown to the consigner before we start searching for the vehicle. It is derived by multiplying base_rate2 with a factor which might vary across ODVTs. | (NULL) | — | USE |
 | 57 | base_rate2 | This is the predicted consigner freight fare for the given ODVT.<br>It is derived by multiplying supply_l2 (predicted supply_fare for the given ODVT by our pricing model) with a factor which might vary across ODVTs. | (NULL) | — | USE |
 | 58 | base_rate3 | This is the upper end of the price range shown to the consigner before we start searching for the vehicle. It is derived by multiplying base_rate2 with a factor which might vary across ODVTs. | (NULL) | — | USE |
 | 61 | consigner_freight_fare | Final freight fare quoted to the consigner (₹). | (NULL) | — | USE |
 | 63 | cx_plc_cancel_time | Timestamp when placement was cancelled by consigner | (NULL) | — | USE |
-| 64 | ccvt_fo | <missing in Glossary> | (NULL) | — | USE |
-| 74 | consigner_city | Do Not Use | NOT AVAILABLE | — | USE |
+| 64 | ccvt_fo | <missing in Glossary> | (NULL) | — | DNU |
+| 74 | consigner_city | Do Not Use | NOT AVAILABLE | — | DNU |
 | 75 | consigner_state | It depicts the state of the consigner | NOT AVAILABLE | — | USE |
 | 76 | consigner_region | Consigner's resolved region (sales geography region).<br>It depicts the region of the consigner and can have three values :<br>R2 (Next 24 clusters)<br>R3 (ROI)<br>NCR<br>R1 (Top 5 clusters) | NEW SERVICEABLE | — | USE |
 | 77 | consigner_state_segment | Consigner's state-level segment classification (sales geography segmentation).<br>Consigner region is extracted from the very first source in this priority - FIELD SALES>SIGNUP>VT>DEMAND>WEB | NOT AVAILABLE | — | USE |
@@ -124,48 +124,48 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 85 | latest_lead_source_detailed | This defines the latest source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others | App (Organic) | — | USE |
 | 87 | assigned_sales_team | The current sales team aligned with the consigner: <br>FIELD SALES<br>INSIDE SALES<br>NOT ASSIGNED | INSIDE SALES | — | USE |
 | 88 | assigned_sales_sub_team | The current sales sub team aligned with the consigner: <br>ONBOARDING<br>RETENTION<br>NOT ASSIGNED | RETENTION | — | USE |
-| 89 | relevant_sales_team | Do Not Use | NOT ASSIGNED | — | USE |
+| 89 | relevant_sales_team | Do Not Use | NOT ASSIGNED | — | DNU |
 | 90 | cx_potential | Consigner Potential as provided by Sales team | NOT AVAILABLE | — | USE |
 | 91 | cx_business_category | Business Category provided by user during signup like<br>MANUFACTURER, TRADER, INDIVIDUAL, SERVICE PROVIDER, etc. | NOT AVAILABLE | — | USE |
 | 97 | app_potential | Trip potential provided by user during signup | (NULL) | — | USE |
 | 98 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). | UNKNOWN | — | USE |
 | 99 | login_date | Day-truncated login timestamp. Granularity of the (consigner_user_code × login_date × demand_id) primary key — i.e., one row per day the consigner was active.<br>Used to get Daily Active Users (DAU), Monthly Active Users (MAU), etc. |  | — | USE |
-|  | sales_state | DO NOT USE |  | ⚠ SALES_STATE — should be 'sales_state' | USE |
-|  | sales_city | DO NOT USE |  | ⚠ SALES_CITY — should be 'sales_city' | USE |
-|  | sales_cluster | DO NOT USE |  | — | USE |
-|  | placement_rn | DO NOT USE |  | — | USE |
+|  | sales_state | DO NOT USE |  | ⚠ SALES_STATE — should be 'sales_state' | DNU |
+|  | sales_city | DO NOT USE |  | ⚠ SALES_CITY — should be 'sales_city' | DNU |
+|  | sales_cluster | DO NOT USE |  | — | DNU |
+|  | placement_rn | DO NOT USE |  | — | DNU |
 |  | placement_rank | Sequence of trips for a user (ONLY for fulfilled demands)<br> Counts successful trips only<br> Ignores non-trip demands (sets them to 0) |  | — | USE |
 |  | last_trip_time | Timestamp of the consigner's most recent completed trip prior to (or as of) this demand |  | — | USE |
-|  | dr_type | DO NOT USE |  | — | USE |
+|  | dr_type | DO NOT USE |  | — | DNU |
 |  | route_distance | Origin → destination route distance (km). Used as a filter (min_distance / max_distance) on the Placement and FO dashboards and to derive 'haul'. |  | — | USE |
 |  | tyre | Tyre count of the requested vehicle on the demand. [Same data as 'tyre_count' in fact_vehicle_info — STANDARDIZE naming] |  | ⚠ TYRE_COUNT — should be 'tyre_count' | USE |
 |  | origin_id | District id of the demand's origin. Joined with id in mp_analytics_core.dim_mp_districts |  | — | USE |
 |  | origin_cluster_id | Cluster id of the demand's origin. Derived from mp_analytics_core.dim_mp_districts. |  | — | USE |
 |  | destination_state | State of the demand's destination. Derived from mp_analytics_core.dim_mp_districts. |  | — | USE |
 |  | odvt | Origin × Destination × Vehicle Type key (pricing dimension WITHOUT the consigner). Combination of origin_id, destination_id, vehicle_type_id. |  | — | USE |
-|  | odvt_pricing | DO NOT USE |  | — | USE |
+|  | odvt_pricing | DO NOT USE |  | — | DNU |
 |  | pnl | Realised net P&L on the demand (₹) wrt final freight fare. |  | — | USE |
 |  | pnl_expected | Expected (pre-cost) P&L on the demand (₹) wrt final freight fare. |  | — | USE |
 |  | time_to_plc | Time in minutes between DR creation and the final placement on the demand. |  | — | USE |
 |  | opsearch_fo | Flag/count for FOs returned by the OpSearch (matching) algorithm for this demand. Used in North Star OpSearch-FO bucketing. |  | — | USE |
-|  | supply_confidence | Do Not Use |  | — | USE |
-|  | price_confidence | Do Not Use |  | — | USE |
+|  | supply_confidence | Do Not Use |  | — | DNU |
+|  | price_confidence | Do Not Use |  | — | DNU |
 |  | plc_price_range | Bucket label for the consigner fare vs base rate 1,2,3 |  | — | USE |
 |  | haul | Haul type derived from route_distance (e.g., 'Short Haul', 'Long Haul','Medium Haul') |  | — | USE |
 |  | dr_time | Timestamp when vehicle search was started |  | — | USE |
 |  | first_plc_time | Timestamp of the first placement event on the demand |  | — | USE |
 |  | last_plc_time | Timestamp of the most recent placement event on the demand |  | — | USE |
-|  | total_plc | DO NOT USE |  | — | USE |
+|  | total_plc | DO NOT USE |  | — | DNU |
 |  | prospectid | Prospect / lead ID linked to the consigner before they became a registered consigner_user_code (pre-signup identifier). |  | — | USE |
 |  | prospect_id_created_time | Timestamp when the prospect record was first created. |  | — | USE |
 |  | prospect_id_created_date | Date when the prospect record was first created. |  | — | USE |
 |  | prospect_id_created_week | Week-start of the prospect's creation date. |  | — | USE |
 |  | prospect_id_created_month | Month-start of the prospect's creation date. |  | — | USE |
-|  | latest_utm_source | <missing in Glossary> |  | — | USE |
+|  | latest_utm_source | <missing in Glossary> |  | — | DNU |
 |  | first_sales_team | Sales team prospect was assigned to the first time: INSIDE SALES, FIELD SALES, etc. |  | — | USE |
 |  | first_sales_sub_team | Sales sub team prospect was assigned to the first time: RETENTION, ONBOARDING, etc. |  | — | USE |
-|  | first_sales_team_time | DO NOT USE |  | — | USE |
-|  | first_sales_team_date | DO NOT USE |  | — | USE |
+|  | first_sales_team_time | DO NOT USE |  | — | DNU |
+|  | first_sales_team_date | DO NOT USE |  | — | DNU |
 |  | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. |  | — | USE |
 
 ## 3_dim_operator_base_district
@@ -181,11 +181,11 @@ District name and cluster name can be identified using table anaytics.dim_mp_dis
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE1000021 | — |
-| 5 | district_id | Integer ID of a district. Joinable via dim_mp_districts. | 21 | — |
-| 6 | cluster_id | Integer ID of a geographic cluster .Joinable via dim_mp_districts. | 21 | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE1000021 | — | USE |
+| 5 | district_id | Integer ID of a district. Joinable via dim_mp_districts. | 21 | — | USE |
+| 6 | cluster_id | Integer ID of a geographic cluster .Joinable via dim_mp_districts. | 21 | — | USE |
 
 ## 4_fact_vehicle_info
 
@@ -200,22 +200,22 @@ This table captures operator_code, the vehicle registration number, body type, t
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE123741 | — |
-| 2 | vehicle_id | Unique internal identifier of a specific vehicle in the WheelsEye system. | 3533241 | — |
-| 3 | vehicle_number | Vehicle registration / number plate (RTO number). | HR35X3108 | — |
-| 4 | live_date | Date a vehicle went live on the GPS | 2025-05-24T07:04:13.000Z | — |
-| 5 | deboarding_date | Date a vehicle was deboarded from the GPS | (NULL) | — |
-| 6 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). | Not Known | — |
-| 7 | tyre_count | Tyre count of the specific vehicle.  [Same data as 'tyre' in fact_consigner_demands_lead_source — STANDARDIZE naming] | 0 | ⚠ TYRE_COUNT — should be 'tyre_count' |
-| 8 | size_in_ft | Vehicle size in feet (length of the cargo body). | 0 | — |
-| 9 | tonnage | Vehicle tonnage capacity in metric tons. | 0 | — |
-| 10 | pricing_vt_id | Unique identifier of VT description aling with pricing logics. Joined with mp_analytics_core.dim_pricing_vt | -1 | — |
-| 11 | supply_vt_id | Vehicle type ID — canonical identifier combining body type, size, and tyre count. Joined with mp_analytics_core.fact_demand_vt | -1 | — |
-| 12 | vehicle_category | Coarse vehicle category code (e.g., 'LMV', 'HMV'). | LMV | — |
-| 13 | vehicle_category_desc | Detailed description of the vehicle category (e.g., 'Agricultural Tractor(LMV)'). | Agricultural Tractor(LMV) | — |
-| 14 | vehicle_class | Vehicle class code (more specific than category, e.g., 'TRUCK'). | TRACTOR_AGRICULTURE | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE123741 | — | USE |
+| 2 | vehicle_id | Unique internal identifier of a specific vehicle in the WheelsEye system. | 3533241 | — | USE |
+| 3 | vehicle_number | Vehicle registration / number plate (RTO number). | HR35X3108 | — | USE |
+| 4 | live_date | Date a vehicle went live on the GPS | 2025-05-24T07:04:13.000Z | — | USE |
+| 5 | deboarding_date | Date a vehicle was deboarded from the GPS | (NULL) | — | USE |
+| 6 | body_type | Body type of the vehicle (e.g., 'Open', 'Container', 'Trailer'). | Not Known | — | USE |
+| 7 | tyre_count | Tyre count of the specific vehicle.  [Same data as 'tyre' in fact_consigner_demands_lead_source — STANDARDIZE naming] | 0 | ⚠ TYRE_COUNT — should be 'tyre_count' | USE |
+| 8 | size_in_ft | Vehicle size in feet (length of the cargo body). | 0 | — | USE |
+| 9 | tonnage | Vehicle tonnage capacity in metric tons. | 0 | — | USE |
+| 10 | pricing_vt_id | Unique identifier of VT description aling with pricing logics. Joined with mp_analytics_core.dim_pricing_vt | -1 | — | USE |
+| 11 | supply_vt_id | Vehicle type ID — canonical identifier combining body type, size, and tyre count. Joined with mp_analytics_core.fact_demand_vt | -1 | — | USE |
+| 12 | vehicle_category | Coarse vehicle category code (e.g., 'LMV', 'HMV'). | LMV | — | USE |
+| 13 | vehicle_category_desc | Detailed description of the vehicle category (e.g., 'Agricultural Tractor(LMV)'). | Agricultural Tractor(LMV) | — | USE |
+| 14 | vehicle_class | Vehicle class code (more specific than category, e.g., 'TRUCK'). | TRACTOR_AGRICULTURE | — | USE |
 
 ## 5_fact_operators_onb
 
@@ -229,16 +229,16 @@ Operator onboarding / readiness fact. One row per operator capturing their subsc
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE212659 | — |
-| 2 | sub_date | Date the operator subscribed (took a paid plan). NULL if never subscribed. | (NULL) | — |
-| 3 | ready_date | Date the operator became 'MP Ready' (all readiness criteria met). | 2020-07-05T18:30:00.000Z | — |
-| 4 | mp_status | Marketplace status of the FO: 'MP Ready', 'MP Not Ready', etc. | MP Ready | — |
-| 5 | has_sub | 1 if the operator has an active subscription. (String '0'/'1' in onboarding table.) | 1 | — |
-| 6 | has_vt | 1 if the operator has at least one vehicle type registered. | 1 | — |
-| 7 | has_preferred_state | 1 if the operator has set a preferred operating state. | 1 | — |
-| 8 | readiness_source | Source of the operator readiness data — e.g., 'Self Input Attributes', 'Ops Verified'. | Self Input Attributes | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE212659 | — | USE |
+| 2 | sub_date | Date the operator subscribed (took a paid plan). NULL if never subscribed. | (NULL) | — | USE |
+| 3 | ready_date | Date the operator became 'MP Ready' (all readiness criteria met). | 2020-07-05T18:30:00.000Z | — | USE |
+| 4 | mp_status | Marketplace status of the FO: 'MP Ready', 'MP Not Ready', etc. | MP Ready | — | USE |
+| 5 | has_sub | 1 if the operator has an active subscription. (String '0'/'1' in onboarding table.) | 1 | — | USE |
+| 6 | has_vt | 1 if the operator has at least one vehicle type registered. | 1 | — | USE |
+| 7 | has_preferred_state | 1 if the operator has set a preferred operating state. | 1 | — | USE |
+| 8 | readiness_source | Source of the operator readiness data — e.g., 'Self Input Attributes', 'Ops Verified'. | Self Input Attributes | — | USE |
 
 ## 6_fact_demand_opsearch_summary
 
@@ -252,35 +252,35 @@ mp_analytics_core.fact_demand_opsearch_summary
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | demandid | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 4039447 | — |
-| 2 | demand_date | Date the demand was created (day-truncated from demand_time). | 2026-01-05 | — |
-| 3 | total_operators | Total FOs returned by opsearch within 120km of demand origin. | 1230 | — |
-| 4 | more_than_10l | Count of FOs with opsearch score > 10 lakh. | 111 | — |
-| 5 | more_than_20l | Count of FOs with opsearch score > 20 lakh. | 81 | — |
-| 6 | more_than_10l_and_60km | Count of FOs with score > 10L and within 60km of demand origin. | 90 | — |
-| 7 | more_than_20l_and_60km | Count of FOs with score > 20L and within 60km of demand origin. | 62 | — |
-| 8 | sub_operators | Count of subscribed FOs in the opsearch list. | 288 | — |
-| 9 | nonsub_operators | Count of non-subscribed FOs in the opsearch list. | 942 | — |
-| 10 | sub_more_than_10l | Count of subscribed FOs with opsearch score > 10L. | 82 | — |
-| 11 | sub_more_than_20l | Count of subscribed FOs with opsearch score > 20L. | 68 | — |
-| 12 | sub_more_than_10l_and_60km | Count of subscribed FOs with score > 10L and within 60km. | 62 | — |
-| 13 | sub_more_than_20l_and_60km | Count of subscribed FOs with score > 20L and within 60km. | 49 | — |
-| 14 | available_operators | Count of FOs with at least one vehicle marked available. | 30 | — |
-| 15 | sub_available_operators | Count of subscribed FOs with vehicle available. | 30 | — |
-| 16 | nonsub_available_operators | Count of non-subscribed FOs with vehicle available. | 0 | — |
-| 17 | va_operators | Count of FOs with a matching vehicle type available. | 30 | — |
-| 18 | sub_va_operators | Count of subscribed FOs with matching VT available. | 30 | — |
-| 19 | nonsub_va_operators | Count of non-subscribed FOs with matching VT available. | 0 | — |
-| 20 | ready_va_operators | Count of MP-ready FOs with matching VT available. | 24 | — |
-| 21 | sub_ready_va_operators | Count of subscribed MP-ready FOs with matching VT available. | 24 | — |
-| 22 | nonsub_ready_va_operators | Count of non-subscribed MP-ready FOs with matching VT available. | 0 | — |
-| 23 | matching_qualified_operators | Count of FOs qualified for notification by the matching engine. | 0 | — |
-| 24 | sub_matching_qualified_operators | Count of subscribed FOs qualified for notification. | 0 | — |
-| 25 | nonsub_matching_qualified_operators | Count of non-subscribed FOs qualified for notification. | 0 | — |
-| 26 | sub_available_matching_qualified_operators | Count of subscribed, available FOs qualified for notification. | 0 | — |
-| 27 | sub_va_matching_qualified_operators | Count of subscribed FOs with matching VT that qualified for notification. | 0 | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | demandid | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 4039447 | — | USE |
+| 2 | demand_date | Date the demand was created (day-truncated from demand_time). | 2026-01-05 | — | USE |
+| 3 | total_operators | Total FOs returned by opsearch within 120km of demand origin. | 1230 | — | USE |
+| 4 | more_than_10l | Count of FOs with opsearch score > 10 lakh. | 111 | — | USE |
+| 5 | more_than_20l | Count of FOs with opsearch score > 20 lakh. | 81 | — | USE |
+| 6 | more_than_10l_and_60km | Count of FOs with score > 10L and within 60km of demand origin. | 90 | — | USE |
+| 7 | more_than_20l_and_60km | Count of FOs with score > 20L and within 60km of demand origin. | 62 | — | USE |
+| 8 | sub_operators | Count of subscribed FOs in the opsearch list. | 288 | — | USE |
+| 9 | nonsub_operators | Count of non-subscribed FOs in the opsearch list. | 942 | — | USE |
+| 10 | sub_more_than_10l | Count of subscribed FOs with opsearch score > 10L. | 82 | — | USE |
+| 11 | sub_more_than_20l | Count of subscribed FOs with opsearch score > 20L. | 68 | — | USE |
+| 12 | sub_more_than_10l_and_60km | Count of subscribed FOs with score > 10L and within 60km. | 62 | — | USE |
+| 13 | sub_more_than_20l_and_60km | Count of subscribed FOs with score > 20L and within 60km. | 49 | — | USE |
+| 14 | available_operators | Count of FOs with at least one vehicle marked available. | 30 | — | USE |
+| 15 | sub_available_operators | Count of subscribed FOs with vehicle available. | 30 | — | USE |
+| 16 | nonsub_available_operators | Count of non-subscribed FOs with vehicle available. | 0 | — | USE |
+| 17 | va_operators | Count of FOs with a matching vehicle type available. | 30 | — | USE |
+| 18 | sub_va_operators | Count of subscribed FOs with matching VT available. | 30 | — | USE |
+| 19 | nonsub_va_operators | Count of non-subscribed FOs with matching VT available. | 0 | — | USE |
+| 20 | ready_va_operators | Count of MP-ready FOs with matching VT available. | 24 | — | USE |
+| 21 | sub_ready_va_operators | Count of subscribed MP-ready FOs with matching VT available. | 24 | — | USE |
+| 22 | nonsub_ready_va_operators | Count of non-subscribed MP-ready FOs with matching VT available. | 0 | — | USE |
+| 23 | matching_qualified_operators | Count of FOs qualified for notification by the matching engine. | 0 | — | USE |
+| 24 | sub_matching_qualified_operators | Count of subscribed FOs qualified for notification. | 0 | — | USE |
+| 25 | nonsub_matching_qualified_operators | Count of non-subscribed FOs qualified for notification. | 0 | — | USE |
+| 26 | sub_available_matching_qualified_operators | Count of subscribed, available FOs qualified for notification. | 0 | — | USE |
+| 27 | sub_va_matching_qualified_operators | Count of subscribed FOs with matching VT that qualified for notification. | 0 | — | USE |
 
 ## 7_fact_demand_opsearch_operator_summary
 
@@ -294,19 +294,19 @@ mp_analytics_core.fact_demand_opsearch_operator_summary
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | demandid | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 4508793 | — |
-| 2 | demand_date | Date the demand was created (day-truncated from demand_time). | 2026-05-25 11:31:00 | — |
-| 3 | opcode | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'.<br>Commonly refer as operator_code | WE3506795 | operator_code |
-| 4 | totalscore | This is model score and refered as probability of operator to place vehicle. | 3394.1 | — |
-| 5 | distance | Distance between operator and demand origin. | 23.81 | — |
-| 6 | latest_opsearch_date | Datetime at which latest opsearch executed wrt demand_id.<br>Opsearchruns again in case of backout. | 2026-05-25 11:31:00 | — |
-| 7 | opsearch_rnk | Rank of operator in opsearch on the basis of opsearch score. | 1331 | — |
-| 8 | subscription_status | Operator subsction status.<br>1 = Subscribed<br>0 = Not Subscribed | 1 | — |
-| 9 | fo_availability | Opeator's any vehicle is available for the day when opsearch executed<br>1 = Available<br>0 = Not Available | 0 | — |
-| 10 | veh_availability | Opeator's any vehicle matching with requested VT is available for the day when opsearch executed<br>1 = Available<br>0 = Not Available | 0 | — |
-| 11 | matching_qualified | Operator is qualified for notification<br>1 = Notification will be sent<br>0 = Notification will not be sent | 0 | — |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | demandid | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 4508793 | — | USE |
+| 2 | demand_date | Date the demand was created (day-truncated from demand_time). | 2026-05-25 11:31:00 | — | USE |
+| 3 | opcode | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'.<br>Commonly refer as operator_code | WE3506795 | operator_code | USE |
+| 4 | totalscore | This is model score and refered as probability of operator to place vehicle. | 3394.1 | — | USE |
+| 5 | distance | Distance between operator and demand origin. | 23.81 | — | USE |
+| 6 | latest_opsearch_date | Datetime at which latest opsearch executed wrt demand_id.<br>Opsearchruns again in case of backout. | 2026-05-25 11:31:00 | — | USE |
+| 7 | opsearch_rnk | Rank of operator in opsearch on the basis of opsearch score. | 1331 | — | USE |
+| 8 | subscription_status | Operator subsction status.<br>1 = Subscribed<br>0 = Not Subscribed | 1 | — | USE |
+| 9 | fo_availability | Opeator's any vehicle is available for the day when opsearch executed<br>1 = Available<br>0 = Not Available | 0 | — | USE |
+| 10 | veh_availability | Opeator's any vehicle matching with requested VT is available for the day when opsearch executed<br>1 = Available<br>0 = Not Available | 0 | — | USE |
+| 11 | matching_qualified | Operator is qualified for notification<br>1 = Notification will be sent<br>0 = Notification will not be sent | 0 | — | USE |
 
 ## 8_fact_operator_bidding
 
