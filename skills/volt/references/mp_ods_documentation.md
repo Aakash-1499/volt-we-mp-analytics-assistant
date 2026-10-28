@@ -1163,3 +1163,41 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 45 | l3 | Upper end of the price range shown to the consigner before vehicle search starts. Derived by multiplying l2 by a factor that may vary across ODVTs. |  | — | USE |
 | 46 | reference_id | This is not relevent columns. DNU |  | — | DNU |
 | 47 | tds_metadata | Consignment TDS details information exist here. Only relevent for finance use |  | — | DNU |
+
+## 28_fact_ptl_requirements
+
+**mp_analytics_core.fact_ptl_requirements:** Owner
+
+**Aniket:** Grain
+
+**browsing_id:** Short description
+
+PTL (part-load) requirement-to-delivery funnel fact. Each row is a price check (or manual requirement) by a consigner, flagged through requirement → demand → placement → pickup → trip → delivered.
+
+Columns (Description pulled from Glossary via VLOOKUP)
+
+| # | Column | Description | Sample | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | browsing_id | Unique identifier generated when a customer requests a PTL lane price quote. | 496714 |  | USE |
+| 2 | demand_id | Unique identifier of a demand created by a consigner. | 5192584 |  | USE |
+| 3 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE8308309 |  | USE |
+| 4 | channel | Entry channel of the price check. | APP· WEB PORTAL · ODIN |  | USE |
+| 5 | requirement_source | How the requirement was captured. | PRICE_CHECK (408,145) · MANUAL (936) · NO_PRICE_CHECK_LINK (66) · EXTRA_DEMAND (2) |  | USE |
+| 6 | booking_platform | Platform the booking was placed on. | CONSIGNER_APP (5,822) · IOS (1,128) · CONSIGNER_WEB (468) · WEB_PORTAL (201) |  | USE |
+| 7 | price_check_time | Timestamp of the price check. | 46322.37569444445 |  | USE |
+| 8 | month | YYYY-MM of price_check_time. | 46296 |  | USE |
+| 9 | pickup_pincode | 6-digit postal code (PIN) for the PTL pickup location | 302021 |  | USE |
+| 10 | drop_pincode | 6-digit postal code (PIN) for the PTL drop location | 201301 |  | USE |
+| 11 | requested_weight | Total weight of the PTL shipment in kg. | 15 |  | USE |
+| 12 | requirement_flag | 1 = genuine requirement. | 1 (127,475) · 0 (281,674) |  | USE |
+| 13 | demand_flag | 1 = demand created. | 1 (27,153) · 0 (380,262) · null (1,734) |  | USE |
+| 14 | demand_source | Attribution path from requirement to demand. | NOT_A_REQUIREMENT (281,674) · NO_DEMAND_SIGNAL (97,720) · BOOKED_OLD_FLOW (13,083) · EVENT_PRIMARY (7,876) · BACKEND_DEMAND (4,298) · NOT_MEASURABLE (1,734) · MANUAL_NO_PRICE_CHECK (1,002) · EVENT_FALLBACK (892) |  | USE |
+| 15 | coverage_tier | Supply-coverage confidence for the lane. | RELIABLE (288,388) · TOO_FEW_TO_JUDGE (100,623) · PARTIAL (12,650) · NOT_MEASURABLE (6,432) · NOT_APPLICABLE (1,004) · NO_OLD_FLOW_BOOKINGS (52) |  | USE |
+| 16 | use_for_demand_funnel | Analyst inclusion flag. | 1 (390,067) · 0 (19,082) |  | USE |
+| 17 | is_new_flow | 1 = new PTL booking flow. | null (282,676) · 0 (121,307) · 1 (5,166) |  | USE |
+| 18 | demand_time | Exact timestamp when the demand was created. | 46322.375925925924 |  | USE |
+| 19 | placement_flag | 1 = vehicle placed. | 15281 |  | USE |
+| 20 | pickup_flag | 1 = picked up. | 11283 |  | USE |
+| 21 | delivered_flag | 1 = delivered. | 10895 |  | USE |
+| 22 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) | 11131 |  | USE |
+| 23 | data_upto | DNU | 46322.415972222225 |  | DNU |
