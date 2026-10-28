@@ -1189,12 +1189,12 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 9 | pickup_pincode | 6-digit postal code (PIN) for the PTL pickup location | 302021 |  | USE |
 | 10 | drop_pincode | 6-digit postal code (PIN) for the PTL drop location | 201301 |  | USE |
 | 11 | requested_weight | Total weight of the PTL shipment in kg. | 15 |  | USE |
-| 12 | requirement_flag | 1 = genuine requirement. | 1 · 0 |  | USE |
-| 13 | demand_flag | 1 = demand created. | 1 · 0 |  | USE |
+| 12 | requirement_flag | 1 = genuine requirement. | 1 , 0 |  | USE |
+| 13 | demand_flag | 1 = demand created. | 1 , 0 |  | USE |
 | 14 | demand_source | Attribution path from requirement to demand. | NOT_A_REQUIREMENT · NO_DEMAND_SIGNAL  · BOOKED_OLD_FLOW · EVENT_PRIMARY  · BACKEND_DEMAND  · NOT_MEASURABLE  · MANUAL_NO_PRICE_CHECK  · EVENT_FALLBACK |  | USE |
 | 15 | coverage_tier | Supply-coverage confidence for the lane. | RELIABLE  · TOO_FEW_TO_JUDGE  · PARTIAL  · NOT_MEASURABLE  · NOT_APPLICABLE · NO_OLD_FLOW_BOOKINGS |  | USE |
-| 16 | use_for_demand_funnel | Analyst inclusion flag. | 1 (390,067) · 0 (19,082) |  | USE |
-| 17 | is_new_flow | 1 = new PTL booking flow. | null (282,676) · 0 (121,307) · 1 (5,166) |  | USE |
+| 16 | use_for_demand_funnel | Analyst inclusion flag. | 1  , 0 |  | USE |
+| 17 | is_new_flow | 1 = new PTL booking flow. | 1  , 0 |  | USE |
 | 18 | demand_time | Exact timestamp when the demand was created. | 46322.375925925924 |  | USE |
 | 19 | placement_flag | 1 = vehicle placed. | 15281 |  | USE |
 | 20 | pickup_flag | 1 = picked up. | 11283 |  | USE |
