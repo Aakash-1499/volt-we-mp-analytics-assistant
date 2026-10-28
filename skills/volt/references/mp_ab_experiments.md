@@ -10,7 +10,7 @@
 | Start Date | The date experiment went live on product | Yes |
 | Current Status | This is self explanatory (Live/ 100% Scaled/ Rolled Back) | Yes |
 | 100% Scaled Up Date<br>or<br>Rolled Back Date |  | No |
-| Config iD | Unique id attached to a variant of the experiment. It might repeat across experiments. | Yes |
+| Variant ID | Unique id attached to a variant of the experiment. It might repeat across experiments. | Yes |
 | Variant Name | Test /Control/ <User defined> | Yes |
 | Data Filters | Defines any hard filter that has to be used while calculating any metric for comparing variant performance eg. 'Demands where VT is Trailers' means we only have to consider demands where vehicle type is trailers | No |
 | Top of the Funnel | Defines the traffic metric for the experiment | Yes |
