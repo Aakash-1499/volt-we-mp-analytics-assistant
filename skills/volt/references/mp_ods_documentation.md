@@ -1182,17 +1182,17 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 2 | demand_id | Unique identifier of a demand created by a consigner. | 5192584 |  | USE |
 | 3 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE8308309 |  | USE |
 | 4 | channel | Entry channel of the price check. | APP· WEB PORTAL · ODIN |  | USE |
-| 5 | requirement_source | How the requirement was captured. | PRICE_CHECK (408,145) · MANUAL (936) · NO_PRICE_CHECK_LINK (66) · EXTRA_DEMAND (2) |  | USE |
-| 6 | booking_platform | Platform the booking was placed on. | CONSIGNER_APP (5,822) · IOS (1,128) · CONSIGNER_WEB (468) · WEB_PORTAL (201) |  | USE |
+| 5 | requirement_source | How the requirement was captured. | PRICE_CHECK · MANUAL · NO_PRICE_CHECK_LINK · EXTRA_DEMAND |  | USE |
+| 6 | booking_platform | Platform the booking was placed on. | CONSIGNER_APP  · IOS  · CONSIGNER_WEB  · WEB_PORTAL |  | USE |
 | 7 | price_check_time | Timestamp of the price check. | 46322.37569444445 |  | USE |
 | 8 | month | YYYY-MM of price_check_time. | 46296 |  | USE |
 | 9 | pickup_pincode | 6-digit postal code (PIN) for the PTL pickup location | 302021 |  | USE |
 | 10 | drop_pincode | 6-digit postal code (PIN) for the PTL drop location | 201301 |  | USE |
 | 11 | requested_weight | Total weight of the PTL shipment in kg. | 15 |  | USE |
-| 12 | requirement_flag | 1 = genuine requirement. | 1 (127,475) · 0 (281,674) |  | USE |
-| 13 | demand_flag | 1 = demand created. | 1 (27,153) · 0 (380,262) · null (1,734) |  | USE |
-| 14 | demand_source | Attribution path from requirement to demand. | NOT_A_REQUIREMENT (281,674) · NO_DEMAND_SIGNAL (97,720) · BOOKED_OLD_FLOW (13,083) · EVENT_PRIMARY (7,876) · BACKEND_DEMAND (4,298) · NOT_MEASURABLE (1,734) · MANUAL_NO_PRICE_CHECK (1,002) · EVENT_FALLBACK (892) |  | USE |
-| 15 | coverage_tier | Supply-coverage confidence for the lane. | RELIABLE (288,388) · TOO_FEW_TO_JUDGE (100,623) · PARTIAL (12,650) · NOT_MEASURABLE (6,432) · NOT_APPLICABLE (1,004) · NO_OLD_FLOW_BOOKINGS (52) |  | USE |
+| 12 | requirement_flag | 1 = genuine requirement. | 1 · 0 |  | USE |
+| 13 | demand_flag | 1 = demand created. | 1 · 0 |  | USE |
+| 14 | demand_source | Attribution path from requirement to demand. | NOT_A_REQUIREMENT · NO_DEMAND_SIGNAL  · BOOKED_OLD_FLOW · EVENT_PRIMARY  · BACKEND_DEMAND  · NOT_MEASURABLE  · MANUAL_NO_PRICE_CHECK  · EVENT_FALLBACK |  | USE |
+| 15 | coverage_tier | Supply-coverage confidence for the lane. | RELIABLE  · TOO_FEW_TO_JUDGE  · PARTIAL  · NOT_MEASURABLE  · NOT_APPLICABLE · NO_OLD_FLOW_BOOKINGS |  | USE |
 | 16 | use_for_demand_funnel | Analyst inclusion flag. | 1 (390,067) · 0 (19,082) |  | USE |
 | 17 | is_new_flow | 1 = new PTL booking flow. | null (282,676) · 0 (121,307) · 1 (5,166) |  | USE |
 | 18 | demand_time | Exact timestamp when the demand was created. | 46322.375925925924 |  | USE |
