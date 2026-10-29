@@ -1210,7 +1210,7 @@ mp_analytics_core.fact_dialer_transcripts
 
 **Grain:** recording_id
 
-**Short description:** Call recordings and their speech-to-text transcripts, from mCube (via LeadSquared), Exotel and Spark TG. Multiple rows per recording, carrying the transcription job lifecycle and their transcript.
+**Short description:** Call recordings and their speech-to-text transcripts, from mCube (via LeadSquared), Exotel and Spark TG. One row per recording,_id and recording_source carrying the transcription job lifecycle and their transcript.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
