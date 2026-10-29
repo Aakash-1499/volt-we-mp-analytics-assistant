@@ -1210,7 +1210,7 @@ mp_analytics_core.fact_dialer_transcripts
 
 **Grain:** recording_id
 
-**Short description:** Call recordings and their speech-to-text transcripts, from mCube (via LeadSquared), Exotel and Spark TG. One row per recording,_id and recording_source carrying the transcription job lifecycle and their transcript.
+**Short description:** Call recordings and their speech-to-text transcripts, from mCube (via LeadSquared), Exotel and Spark TG. One row per recording,_id+updated carrying the transcription job lifecycle and their transcript.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
@@ -1223,7 +1223,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 5 | transcript_storage_type | Where the transcript is stored. Only INLINE (stored in transcription) seen so far, and only on successful rows. Null otherwise — suggests it was designed to support external storage later. | INLINE | — | USE |
 | 6 | transcription | The transcript as JSON: {"segments": [{speaker_label, display_name, start_ms, end_ms, text}, ...]}. Speaker-diarised, in mixed Hindi and English. Populated only when status = SUCCESS. | speaker_0: Hello. \| speaker_1: हाँ बोलिए... | Speakers are numbered, not roled — which one is the agent is not recorded. Mixed Hindi/English means classification needs translate-then-classify. | USE |
 | 7 | stt_job_id | UUID of the job on stt-platform (ElevenLabs). Set once the recording has been submitted. | a651f4cd-21ae-48f6-82ac-b61629c8d780 | — | USE |
-| 8 | stt_job_status | The STT provider's job state as last polled (completed, failed). Null if never submitted. | completed (5,198) · failed (3) | — | USE |
+| 8 | stt_job_status | The STT provider's job state as last polled (retrying, completed, failed, etc.). Null if never submitted. | completed (5,198) · failed (3) | — | USE |
 | 9 | extra_data | JSON with pipeline metadata: recording_source_created (the actual call time), err_msg / err_detail (NO_RECORDING, STT_FAILED, elevenlabs_http_400), submission_attempts, submitted_at, audio_format, audio_bytes, audio_duration_s, poll_count, last_polled_at. Always populated. | {"recording_source_created": "2026-10-01T11:30:58", "audio_duration_s": 35.46, ...} | Holds the only true call timestamp and the call duration. Both need extracting from JSON to be queryable. | USE |
 | 10 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | SUCCESS (5,198) · TODO (2,149) · FAILED (3) | 149 SUCCESS rows carried an empty transcript. Filter on transcript length, not on status alone. | USE |
 | 11 | created | Epoch microseconds of source write. Basis of created_ts. | 46310.603472222225 | Identical across all 7,350 rows in the sample. Never use for time analysis. | USE |
