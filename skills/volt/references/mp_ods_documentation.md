@@ -1201,3 +1201,91 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 21 | delivered_flag | 1 = delivered. | 10895 |  | USE |
 | 22 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) | 11131 |  | USE |
 | 23 | data_upto | DNU | 46322.415972222225 |  | DNU |
+
+## 29_fact_dialer_transcripts
+
+mp_analytics_core.fact_dialer_transcripts
+
+**Owner:** Ekta
+
+**Grain:** recording_id
+
+**Short description:** Call recordings and their speech-to-text transcripts, from mCube (via LeadSquared), Exotel and Spark TG. Multiple rows per recording, carrying the transcription job lifecycle and their transcript.
+
+Columns (Description pulled from Glossary via VLOOKUP)
+
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | recording_source | Source system of the call. MCUBE_LSQ_PROSPECTACTIVITY_BASE = sales calls from mCube via LeadSquared. EXOTEL_GRAHAM_DIALPLAN_CALL_LOGS = Exotel dial-plan calls. | MCUBE_LSQ_PROSPECTACTIVITY_BASE (5,201) · EXOTEL_GRAHAM_DIALPLAN_CALL_LOGS (2,149) | In the 1 Oct sample 100% of Exotel rows were still TODO — only mCube is being transcribed. | USE |
+| 2 | recording_source_id | Primary key of the row in the source table. Call_id in graham_dialplan_call_log for Exotel, prospectactivityid in lsq_prospectactivity_base for mCube/LSQ. Use it to join back to the source table. | b7a472ee-bd8b-11f1-9913-06c00c075c11 | The only path to a customer — this table holds no user code, phone number or demand id. | USE |
+| 3 | recording_id | The provider's call/recording id: a 32-char hex Call SID for Exotel, a 20-digit id for mCube. Also the filename in recording_url. | 87969937381790854256 | — | USE |
+| 4 | recording_url | Public URL of the audio file (recordings.exotel.com/... or recordings.mcube.com/....wav). Null for rows not picked up yet and for Exotel calls that have no recording. | https://recordings.mcube.com/.../87969937381790854256.wav | — | USE |
+| 5 | transcript_storage_type | Where the transcript is stored. Only INLINE (stored in transcription) seen so far, and only on successful rows. Null otherwise — suggests it was designed to support external storage later. | INLINE | — | USE |
+| 6 | transcription | The transcript as JSON: {"segments": [{speaker_label, display_name, start_ms, end_ms, text}, ...]}. Speaker-diarised, in mixed Hindi and English. Populated only when status = SUCCESS. | speaker_0: Hello. \| speaker_1: हाँ बोलिए... | Speakers are numbered, not roled — which one is the agent is not recorded. Mixed Hindi/English means classification needs translate-then-classify. | USE |
+| 7 | stt_job_id | UUID of the job on stt-platform (ElevenLabs). Set once the recording has been submitted. | a651f4cd-21ae-48f6-82ac-b61629c8d780 | — | USE |
+| 8 | stt_job_status | The STT provider's job state as last polled (completed, failed). Null if never submitted. | completed (5,198) · failed (3) | — | USE |
+| 9 | extra_data | JSON with pipeline metadata: recording_source_created (the actual call time), err_msg / err_detail (NO_RECORDING, STT_FAILED, elevenlabs_http_400), submission_attempts, submitted_at, audio_format, audio_bytes, audio_duration_s, poll_count, last_polled_at. Always populated. | {"recording_source_created": "2026-10-01T11:30:58", "audio_duration_s": 35.46, ...} | Holds the only true call timestamp and the call duration. Both need extracting from JSON to be queryable. | USE |
+| 10 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | SUCCESS (5,198) · TODO (2,149) · FAILED (3) | 149 SUCCESS rows carried an empty transcript. Filter on transcript length, not on status alone. | USE |
+| 11 | created | Epoch microseconds of source write. Basis of created_ts. | 46310.603472222225 | Identical across all 7,350 rows in the sample. Never use for time analysis. | USE |
+| 12 | updated | DO NOT USE | 46316.606944444444 | — | DNU |
+| 13 | dpyear | DO NOT USE(Use for Partition) | 2026 | — | DNU |
+| 14 | dpmonth | DO NOT USE(Use for Partition) | 10 | — | DNU |
+| 15 | dpday | DO NOT USE(Use for Partition) | 1 | — | DNU |
+
+## 30_dim_consigners
+
+**mp_analytics_core.dim_consigners:** Owner
+
+**Ekta:** Grain
+
+**consigner_user_code:** Short description
+
+Latest snapshot of a consigner's geography, business category, sales ownership, tenure, lifetime value and compliance state. One row per consigner, overwritten each refresh — no history.
+
+Columns (Description pulled from Glossary via VLOOKUP)
+
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
+| --- | --- | --- | --- | --- |
+| 1 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE1002930 | — |
+| 2 | customer_type | Type of consigner: SME_HP / BROKER / TRANSPORTER / ENTERPRISE / SME | SME (1,231,638) · SME_HP (25,106) · TRANSPORTER (1,934) · BROKER (368) · ENTERPRISE (156) | — |
+| 3 | customer_flag | WE_Customer = consigner; Testing = internal test user. Consider WE_Customer by default. | WE_Customer (1,258,939) · Testing (263) | 263 'Testing' accounts. Exclude from any customer-facing metric. |
+| 4 | signup_source | Platform the consigner signed up on. | App (1,126,519) · Web (132,683) | — |
+| 5 | cx_segment | Consigner trip-bucket segment: 'New' (0 trips), '1-4' (1-4 lifetime trips), '4+' (4+ trips) | New (1,180,141) · 1-4 (23,430) · 4+ (10,298) | 45,333 nulls (3.6%). |
+| 6 | cx_potential | Consigner Potential as provided by Sales team |  | — |
+| 7 | app_potential | Trip potential provided by user during signup | 36597 | — |
+| 8 | potential_band | app_potential bucketed: 0 / 1-4 / 5-10 / 11-20 / >20 / NA. | 0 (328,108) · 1-4 (237,923) · 5-10 (141,164) · 11-20 (63,112) · >20 (9,207) | 478,769 nulls (38%). Band 'NA' (919) is distinct from null. |
+| 9 | cx_business_category | Business Category provided by user during signup like<br>MANUFACTURER, TRADER, INDIVIDUAL, SERVICE PROVIDER, etc. |  | — |
+| 10 | consigner_region | Consigner's resolved region (sales geography region).<br>It depicts the region of the consigner and can have three values :<br>R2 (Next 24 clusters)<br>R3 (ROI)<br>NCR<br>R1 (Top 5 clusters) | R3 (ROI) · R1 (TOP 5 CLUSTERS) · R2 (NEXT 24 CLUSTERS) · NCR | UPPERCASE here, Title case in demand_region on FCDLS. A filter written for one will not match the other. |
+| 11 | cx_region_district_only | Region derived from district alone, ignoring other signals. Diagnostic column. |  | — |
+| 12 | consigner_district | District the consigner is mapped to. |  | — |
+| 13 | cx_region_source | Which signal was used to assign the region. | EVENTS (398,797) · OTHERS (205,939) · VT (177,508) · DEMAND (85,650) | 391,308 nulls (31%) — region assigned with no recorded source. |
+| 14 | consigner_state | It depicts the state of the consigner |  | — |
+| 15 | consigner_city | Do Not Use |  | — |
+| 16 | sales_team | The sales team that was aligned with the consigner at a given point of time | FIELD SALES · INSIDE SALES | — |
+| 17 | first_sales_team | Sales team prospect was assigned to the first time: INSIDE SALES, FIELD SALES, etc. |  | — |
+| 18 | original_lead_source_detailed | This defines the first source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others |  | — |
+| 19 | signup_date | Date the consigner signed up. | 46095 | — |
+| 20 | signup_week | It defines the week of the signup date | 46090 | — |
+| 21 | signup_month | It defines the month of the signup date | 46082 | — |
+| 22 | acquisition_date | Date of first trip | 46102 | — |
+| 23 | first_login_date | Date of first app or web login. |  | — |
+| 24 | first_trip_date | First Trip date of FO |  | Appears to duplicate acquisition_date. Confirm which is canonical. |
+| 25 | active_app_version | App version on the most recent session. | 1780 | — |
+| 26 | last_platform | Platform of the most recent session. | android (1,046,323) · web (89,236) · ios (78,310) | 45,333 nulls — consigners who never logged in. |
+| 27 | last_login_date | Date of most recent login. |  | — |
+| 28 | last_demand_date | Date of most recent demand posted. |  | — |
+| 29 | last_plc_date | Date of most recent placement. |  | — |
+| 30 | last_trip_date | Date of the consigner's most recent completed trip. |  | — |
+| 31 | lifetime_trips | Count of completed trips, all time. Drives cx_segment. | 0, 7, 143 | — |
+| 32 | lifetime_demands | Count of demands posted, all time. | 0, 12 | — |
+| 33 | active_login_days | Distinct days with at least one login, all time. |  | — |
+| 34 | has_tripped | 1 if the consigner has ever completed a trip. | 0 / 1 | — |
+| 35 | days_since_signup | Days from signup_date to last_updated_date. |  | — |
+| 36 | days_since_last_login | Days since last_login_date. Recency measure. |  | — |
+| 37 | days_since_last_plc | Days since last_plc_date. |  | — |
+| 38 | days_since_last_trip | Days since last_trip_date. Primary churn-risk signal. |  | — |
+| 39 | active_30d | 1 if the consigner logged in within the last 30 days. | 0 / 1 | — |
+| 40 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. |  | Snapshot table, no history — yesterday's values are overwritten each run. |
+| 41 | compliance_status | KYC and compliance state. | PENDING (1,251,327) · VERIFIED (4,541) · BLACKLISTED (3,334) | 99.4% PENDING. Not yet a usable filter. |
+| 42 | is_blacklisted | 1 if the consigner is blacklisted. | 0 / 1 | Overlaps compliance_status = BLACKLISTED. Confirm which one leads. |
+| 43 | is_kyc_verified | 1 if KYC is verified. | 0 / 1 | Overlaps compliance_status = VERIFIED. Confirm which one leads. |
