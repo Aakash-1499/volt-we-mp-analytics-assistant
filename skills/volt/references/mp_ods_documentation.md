@@ -645,7 +645,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 5 | created_by | User who created the ticket. | bhim.singh@wheelseye.com | — | DNU |
 | 6 | updated_by | User who last updated the ticket. | ptl@wheelseye.com | — | DNU |
 | 7 | user_code | Consigner user code | WE8414272 | — | USE |
-| 8 | flow_type_config_id | Variant identifier per experiment. Used to tag Test and Control consigners in each experiment | 18 | — | USE |
+| 8 | variant_id | Variant identifier per experiment. Used to tag Test and Control consigners in each experiment | 18 | — | USE |
 | 9 | ts_ms | DO NOT USE | 1775736600873 | — | DNU |
 | 10 | lsn | DO NOT USE | 0 | — | DNU |
 | 11 | _event_time | DO NOT USE | 2026-04-09 06:40:00 | — | DNU |
