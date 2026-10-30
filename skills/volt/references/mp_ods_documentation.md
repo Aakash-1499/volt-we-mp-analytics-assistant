@@ -1244,57 +1244,57 @@ Latest snapshot of a consigner's geography, business category, sales ownership, 
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
-| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization |
-| --- | --- | --- | --- | --- |
-| 1 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE1002930 | — |
-| 2 | customer_type | Type of consigner: SME_HP / BROKER / TRANSPORTER / ENTERPRISE / SME | SME (1,231,638) · SME_HP (25,106) · TRANSPORTER (1,934) · BROKER (368) · ENTERPRISE (156) | — |
-| 3 | customer_flag | WE_Customer = consigner; Testing = internal test user. Consider WE_Customer by default. | WE_Customer (1,258,939) · Testing (263) | 263 'Testing' accounts. Exclude from any customer-facing metric. |
-| 4 | signup_source | Platform the consigner signed up on. | App (1,126,519) · Web (132,683) | — |
-| 5 | cx_segment | Consigner trip-bucket segment: 'New' (0 trips), '1-4' (1-4 lifetime trips), '4+' (4+ trips) | New (1,180,141) · 1-4 (23,430) · 4+ (10,298) | 45,333 nulls (3.6%). |
-| 6 | cx_potential | Consigner Potential as provided by Sales team |  | — |
-| 7 | app_potential | Trip potential provided by user during signup | 36597 | — |
-| 8 | potential_band | app_potential bucketed: 0 / 1-4 / 5-10 / 11-20 / >20 / NA. | 0 (328,108) · 1-4 (237,923) · 5-10 (141,164) · 11-20 (63,112) · >20 (9,207) | 478,769 nulls (38%). Band 'NA' (919) is distinct from null. |
-| 9 | cx_business_category | Business Category provided by user during signup like<br>MANUFACTURER, TRADER, INDIVIDUAL, SERVICE PROVIDER, etc. |  | — |
-| 10 | consigner_region | Consigner's resolved region (sales geography region).<br>It depicts the region of the consigner and can have three values :<br>R2 (Next 24 clusters)<br>R3 (ROI)<br>NCR<br>R1 (Top 5 clusters) | R3 (ROI) · R1 (TOP 5 CLUSTERS) · R2 (NEXT 24 CLUSTERS) · NCR | UPPERCASE here, Title case in demand_region on FCDLS. A filter written for one will not match the other. |
-| 11 | cx_region_district_only | Region derived from district alone, ignoring other signals. Diagnostic column. |  | — |
-| 12 | consigner_district | District the consigner is mapped to. |  | — |
-| 13 | cx_region_source | Which signal was used to assign the region. | EVENTS (398,797) · OTHERS (205,939) · VT (177,508) · DEMAND (85,650) | 391,308 nulls (31%) — region assigned with no recorded source. |
-| 14 | consigner_state | It depicts the state of the consigner |  | — |
-| 15 | consigner_city | Do Not Use |  | — |
-| 16 | sales_team | The sales team that was aligned with the consigner at a given point of time | FIELD SALES · INSIDE SALES | — |
-| 17 | first_sales_team | Sales team prospect was assigned to the first time: INSIDE SALES, FIELD SALES, etc. |  | — |
-| 18 | original_lead_source_detailed | This defines the first source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others |  | — |
-| 19 | signup_date | Date the consigner signed up. | 46095 | — |
-| 20 | signup_week | It defines the week of the signup date | 46090 | — |
-| 21 | signup_month | It defines the month of the signup date | 46082 | — |
-| 22 | acquisition_date | Date of first trip | 46102 | — |
-| 23 | first_login_date | Date of first app or web login. |  | — |
-| 24 | first_trip_date | First Trip date of FO |  | Appears to duplicate acquisition_date. Confirm which is canonical. |
-| 25 | active_app_version | App version on the most recent session. | 1780 | — |
-| 26 | last_platform | Platform of the most recent session. | android (1,046,323) · web (89,236) · ios (78,310) | 45,333 nulls — consigners who never logged in. |
-| 27 | last_login_date | Date of most recent login. |  | — |
-| 28 | last_demand_date | Date of most recent demand posted. |  | — |
-| 29 | last_plc_date | Date of most recent placement. |  | — |
-| 30 | last_trip_date | Date of the consigner's most recent completed trip. |  | — |
-| 31 | lifetime_trips | Count of completed trips, all time. Drives cx_segment. | 0, 7, 143 | — |
-| 32 | lifetime_demands | Count of demands posted, all time. | 0, 12 | — |
-| 33 | active_login_days | Distinct days with at least one login, all time. |  | — |
-| 34 | has_tripped | 1 if the consigner has ever completed a trip. | 0 / 1 | — |
-| 35 | days_since_signup | Days from signup_date to last_updated_date. |  | — |
-| 36 | days_since_last_login | Days since last_login_date. Recency measure. |  | — |
-| 37 | days_since_last_plc | Days since last_plc_date. |  | — |
-| 38 | days_since_last_trip | Days since last_trip_date. Primary churn-risk signal. |  | — |
-| 39 | active_30d | 1 if the consigner logged in within the last 30 days. | 0 / 1 | — |
-| 40 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. |  | Snapshot table, no history — yesterday's values are overwritten each run. |
-| 41 | compliance_status | KYC and compliance state. | PENDING (1,251,327) · VERIFIED (4,541) · BLACKLISTED (3,334) | 99.4% PENDING. Not yet a usable filter. |
-| 42 | is_blacklisted | 1 if the consigner is blacklisted. | 0 / 1 | Overlaps compliance_status = BLACKLISTED. Confirm which one leads. |
-| 43 | is_kyc_verified | 1 if KYC is verified. | 0 / 1 | Overlaps compliance_status = VERIFIED. Confirm which one leads. |
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE1002930 | — | USE |
+| 2 | customer_type | Type of consigner: SME_HP / BROKER / TRANSPORTER / ENTERPRISE / SME | SME (1,231,638) · SME_HP (25,106) · TRANSPORTER (1,934) · BROKER (368) · ENTERPRISE (156) | — | USE |
+| 3 | customer_flag | WE_Customer = consigner; Testing = internal test user. Consider WE_Customer by default. | WE_Customer (1,258,939) · Testing (263) | 263 'Testing' accounts. Exclude from any customer-facing metric. | USE |
+| 4 | signup_source | Platform the consigner signed up on. | App (1,126,519) · Web (132,683) | — | USE |
+| 5 | cx_segment | Consigner trip-bucket segment: 'New' (0 trips), '1-4' (1-4 lifetime trips), '4+' (4+ trips) | New (1,180,141) · 1-4 (23,430) · 4+ (10,298) | 45,333 nulls (3.6%). | USE |
+| 6 | cx_potential | Consigner Potential as provided by Sales team |  | — | USE |
+| 7 | app_potential | Trip potential provided by user during signup | 36597 | — | USE |
+| 8 | potential_band | app_potential bucketed: 0 / 1-4 / 5-10 / 11-20 / >20 / NA. | 0 (328,108) · 1-4 (237,923) · 5-10 (141,164) · 11-20 (63,112) · >20 (9,207) | 478,769 nulls (38%). Band 'NA' (919) is distinct from null. | USE |
+| 9 | cx_business_category | Business Category provided by user during signup like<br>MANUFACTURER, TRADER, INDIVIDUAL, SERVICE PROVIDER, etc. |  | — | USE |
+| 10 | consigner_region | Consigner's resolved region (sales geography region).<br>It depicts the region of the consigner and can have three values :<br>R2 (Next 24 clusters)<br>R3 (ROI)<br>NCR<br>R1 (Top 5 clusters) | R3 (ROI) · R1 (TOP 5 CLUSTERS) · R2 (NEXT 24 CLUSTERS) · NCR | UPPERCASE here, Title case in demand_region on FCDLS. A filter written for one will not match the other. | USE |
+| 11 | cx_region_district_only | Region derived from district alone, ignoring other signals. Diagnostic column. |  | — | USE |
+| 12 | consigner_district | District the consigner is mapped to. |  | — | USE |
+| 13 | cx_region_source | Which signal was used to assign the region. | EVENTS (398,797) · OTHERS (205,939) · VT (177,508) · DEMAND (85,650) | 391,308 nulls (31%) — region assigned with no recorded source. | USE |
+| 14 | consigner_state | It depicts the state of the consigner |  | — | USE |
+| 15 | consigner_city | Do Not Use |  | — | USE |
+| 16 | sales_team | The sales team that was aligned with the consigner at a given point of time | FIELD SALES · INSIDE SALES | — | USE |
+| 17 | first_sales_team | Sales team prospect was assigned to the first time: INSIDE SALES, FIELD SALES, etc. |  | — | USE |
+| 18 | original_lead_source_detailed | This defines the first source of any given lead: <br>App (Organic)<br>App (Paid)<br>Cold Visit<br>Web (Organic)<br>Web (Paid)<br>Others |  | — | USE |
+| 19 | signup_date | Date the consigner signed up. | 46095 | — | USE |
+| 20 | signup_week | It defines the week of the signup date | 46090 | — | USE |
+| 21 | signup_month | It defines the month of the signup date | 46082 | — | USE |
+| 22 | acquisition_date | Date of first trip | 46102 | — | USE |
+| 23 | first_login_date | Date of first app or web login. |  | — | USE |
+| 24 | first_trip_date | First Trip date of FO |  | Appears to duplicate acquisition_date. Confirm which is canonical. | USE |
+| 25 | active_app_version | App version on the most recent session. | 1780 | — | USE |
+| 26 | last_platform | Platform of the most recent session. | android (1,046,323) · web (89,236) · ios (78,310) | 45,333 nulls — consigners who never logged in. | USE |
+| 27 | last_login_date | Date of most recent login. |  | — | USE |
+| 28 | last_demand_date | Date of most recent demand posted. |  | — | USE |
+| 29 | last_plc_date | Date of most recent placement. |  | — | USE |
+| 30 | last_trip_date | Date of the consigner's most recent completed trip. |  | — | USE |
+| 31 | lifetime_trips | Count of completed trips, all time. Drives cx_segment. | 0, 7, 143 | — | USE |
+| 32 | lifetime_demands | Count of demands posted, all time. | 0, 12 | — | USE |
+| 33 | active_login_days | Distinct days with at least one login, all time. |  | — | USE |
+| 34 | has_tripped | 1 if the consigner has ever completed a trip. | 0 / 1 | — | USE |
+| 35 | days_since_signup | Days from signup_date to last_updated_date. |  | — | USE |
+| 36 | days_since_last_login | Days since last_login_date. Recency measure. |  | — | USE |
+| 37 | days_since_last_plc | Days since last_plc_date. |  | — | USE |
+| 38 | days_since_last_trip | Days since last_trip_date. Primary churn-risk signal. |  | — | USE |
+| 39 | active_30d | 1 if the consigner logged in within the last 30 days. | 0 / 1 | — | USE |
+| 40 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. |  | Snapshot table, no history — yesterday's values are overwritten each run. | USE |
+| 41 | compliance_status | KYC and compliance state. | PENDING (1,251,327) · VERIFIED (4,541) · BLACKLISTED (3,334) | 99.4% PENDING. Not yet a usable filter. | USE |
+| 42 | is_blacklisted | 1 if the consigner is blacklisted. | 0 / 1 | Overlaps compliance_status = BLACKLISTED. Confirm which one leads. | USE |
+| 43 | is_kyc_verified | 1 if KYC is verified. | 0 / 1 | Overlaps compliance_status = VERIFIED. Confirm which one leads. | USE |
 
 ## 31_aks_fact_nps
 
-**mp_analytics_core.dim_product_offerings:** Owner
+**mp_analytics_sandbox.aks_fact_nps:** Owner
 
-**Bharat:** Grain
+**Ekta:** Grain
 
 One row per survey response (user_code + timestamp). 39,676 rows, 12,984 respondents.
 
@@ -1304,7 +1304,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WEI23520 | — | USE |
+| 1 | user_code | Consigner user code | WEI23520 | — | USE |
 | 2 | user_type | Which side of the marketplace answered. Operator 39,315 rows / 12,636 users; Consigner 361 rows / 349 users. The survey is effectively FO-only today. | Operator | — | USE |
 | 3 | platform | Device platform the response came from. Only 'Android' present — no iOS or web coverage. | Android | Single value only | USE |
 | 4 | timestamp | When the response was submitted (IST). Range in the table: 2026-01-01 to 2026-10-30. | 46325.041550925926 | — | USE |
