@@ -1306,9 +1306,9 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | --- | --- | --- | --- | --- | --- |
 | 1 | user_code | Consigner user code | WEI23520 | — | USE |
 | 2 | user_type | Which side of the marketplace answered. Operator 39,315 rows / 12,636 users; Consigner 361 rows / 349 users. The survey is effectively FO-only today. | Operator | — | USE |
-| 3 | platform | Device platform the response came from. Only 'Android' present — no iOS or web coverage. | Android | Single value only | USE |
+| 3 | platform | App platform through whcih demand was created: App/Web | Android | Single value only | USE |
 | 4 | timestamp | When the response was submitted (IST). Range in the table: 2026-01-01 to 2026-10-30. | 46325.041550925926 | — | USE |
-| 5 | name | Free-text display name of the respondent, carried from the app profile. 9,965 distinct values. Personal data — do not expose in shared dashboards. | zuber | PII — avoid in reports | DNU |
+| 5 | name | Do not Use | zuber | PII — avoid in reports | DNU |
 | 6 | event_ep_nps_score | The rating given, on a 1–5 FACE scale. This is NOT a 0–10 NPS. 1–3 = would not recommend, 4–5 = would. Any 0–10 NPS formula applied to it is wrong. | 5 | Not a true NPS scale | USE |
 | 7 | event_ep_reason | Reason codes chosen on the follow-up screen, pipe-delimited and in Hindi. Multi-select, so one row can carry several reasons — split on '\|' before counting. Present on 39,470 of 39,676 rows. | सही भाड़ा नहीं मिलता है \| सर्विस में समस्या | Multi-value; needs split | USE |
 | 8 | event_ep_comment1 | Optional free-text comment. Present on 3,693 rows (9%). The only verbatim in the table. | (free text, Hindi/English) | Sparse — 9% filled | USE |
