@@ -1181,10 +1181,10 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 1 | browsing_id | Unique identifier generated when a customer requests a PTL lane price quote. | 496714 |  | USE |
 | 2 | demand_id | Unique identifier of a demand created by a consigner. | 5192584 |  | USE |
 | 3 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE8308309 |  | USE |
-| 4 | channel | Entry channel of the price check. | APP· WEB PORTAL · ODIN |  | USE |
-| 5 | requirement_source | How the requirement was captured. | PRICE_CHECK · MANUAL · NO_PRICE_CHECK_LINK · EXTRA_DEMAND |  | USE |
-| 6 | booking_platform | Platform the booking was placed on. | CONSIGNER_APP  · IOS  · CONSIGNER_WEB  · WEB_PORTAL |  | USE |
-| 7 | price_check_time | Timestamp of the price check. | 46322.37569444445 |  | USE |
+| 4 | channel | APP (includes consignor web), WEB PORTAL, ODIN, BULK_UPLOAD, UNKNOWN. | APP· WEB PORTAL · ODIN |  | USE |
+| 5 | requirement_source | PRICE_CHECK, MANUAL, NO_PRICE_CHECK_LINK, EXTRA_DEMAND. | PRICE_CHECK · MANUAL · NO_PRICE_CHECK_LINK · EXTRA_DEMAND |  | USE |
+| 6 | booking_platform | Platform the booking was placed on. Blank when there is no booking, so it can’t split unbooked rows. | CONSIGNER_APP  · IOS  · CONSIGNER_WEB  · WEB_PORTAL |  | USE |
+| 7 | price_check_time | Price-check time, in IST. | 46322.37569444445 |  | USE |
 | 8 | month | YYYY-MM of price_check_time. | 46296 |  | USE |
 | 9 | pickup_pincode | 6-digit postal code (PIN) for the PTL pickup location | 302021 |  | USE |
 | 10 | drop_pincode | 6-digit postal code (PIN) for the PTL drop location | 201301 |  | USE |
