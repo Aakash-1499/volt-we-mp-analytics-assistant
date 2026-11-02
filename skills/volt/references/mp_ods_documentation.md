@@ -1292,6 +1292,10 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 ## 31_aks_fact_nps
 
+#REF! (Cannot find range or sheet for imported range.)
+
+## 31_dim_product_offerings
+
 **mp_analytics_sandbox.aks_fact_nps:** Owner
 
 **Ekta:** Grain
