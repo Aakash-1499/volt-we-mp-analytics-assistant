@@ -1170,9 +1170,9 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 **Aniket:** Grain
 
-one row per PTL price check (from Jan 2026)
+**browsing_id (one price check; unique):** Short description
 
-**Short description:** PTL (part-load) requirement-to-delivery funnel fact. Each row is a price check (or manual requirement) by a consigner, flagged through requirement → demand → placement → pickup → trip → delivered.
+PTL funnel fact from price check to delivery. There is one row per PTL price check (from Jan 2026), plus extra rows for ODIN demands that had no price check (browsing_id = D/<demand_id>). Each row is flagged through requirement → demand (including would-be demands, B/ ids) → placement → pickup → trip → delivered. This is the canonical source for PTL requirement and conversion metrics, so use it instead of rebuilding from fact_ptl_browsing. Count requirements with sum(requirement_flag), never by counting rows. Funnel flags are filled only where requirement_flag = 1. Apply use_for_demand_funnel = 1 to the demand steps, always split by channel, and exclude BULK_UPLOAD from conversion rates.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
