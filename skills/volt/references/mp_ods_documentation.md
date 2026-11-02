@@ -1170,9 +1170,9 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 **Aniket:** Grain
 
-**browsing_id:** Short description
+one row per PTL price check (from Jan 2026)
 
-PTL (part-load) requirement-to-delivery funnel fact. Each row is a price check (or manual requirement) by a consigner, flagged through requirement → demand → placement → pickup → trip → delivered.
+**Short description:** PTL (part-load) requirement-to-delivery funnel fact. Each row is a price check (or manual requirement) by a consigner, flagged through requirement → demand → placement → pickup → trip → delivered.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
@@ -1189,18 +1189,18 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 9 | pickup_pincode | 6-digit postal code (PIN) for the PTL pickup location | 302021 |  | USE |
 | 10 | drop_pincode | 6-digit postal code (PIN) for the PTL drop location | 201301 |  | USE |
 | 11 | requested_weight | Total weight of the PTL shipment in kg. | 15 |  | USE |
-| 12 | requirement_flag | 1 = genuine requirement. | 1 , 0 |  | USE |
-| 13 | demand_flag | 1 = demand created. | 1 , 0 |  | USE |
-| 14 | demand_source | Attribution path from requirement to demand. | NOT_A_REQUIREMENT · NO_DEMAND_SIGNAL  · BOOKED_OLD_FLOW · EVENT_PRIMARY  · BACKEND_DEMAND  · NOT_MEASURABLE  · MANUAL_NO_PRICE_CHECK  · EVENT_FALLBACK |  | USE |
-| 15 | coverage_tier | Supply-coverage confidence for the lane. | RELIABLE  · TOO_FEW_TO_JUDGE  · PARTIAL  · NOT_MEASURABLE  · NOT_APPLICABLE · NO_OLD_FLOW_BOOKINGS |  | USE |
-| 16 | use_for_demand_funnel | Analyst inclusion flag. | 1  , 0 |  | USE |
-| 17 | is_new_flow | 1 = new PTL booking flow. | 1  , 0 |  | USE |
+| 12 | requirement_flag | 1 on exactly one row per requirement. A requirement is a consignor’s price checks on the same lane with gaps under 30 minutes, kept only if it was booked, came from portal/bulk/ODIN, changed the prefill, or tapped continue. 0 = edit trail or idle visit. | 1 , 0 |  | USE |
+| 13 | demand_flag | 1 = actual or would-be demand (always trustworthy). 0 = no demand, trustworthy only where use_for_demand_funnel = 1. NULL = can’t tell. For real demands only, add demand_id not like 'B/%'. | 1 , 0 |  | USE |
+| 14 | demand_source | How the demand is known. BACKEND_DEMAND and BOOKED_OLD_FLOW are real demands; EVENT_PRIMARY and EVENT_FALLBACK are backfilled from app events. | NOT_A_REQUIREMENT · NO_DEMAND_SIGNAL  · BOOKED_OLD_FLOW · EVENT_PRIMARY  · BACKEND_DEMAND  · NOT_MEASURABLE  · MANUAL_NO_PRICE_CHECK  · EVENT_FALLBACK |  | USE |
+| 15 | coverage_tier | How completely the would-be-demand event was tracked for this channel and month (RELIABLE ≥90%, PARTIAL 60–90%, NOT_MEASURABLE <60%). Not a supply metric. | RELIABLE  · TOO_FEW_TO_JUDGE  · PARTIAL  · NOT_MEASURABLE  · NOT_APPLICABLE · NO_OLD_FLOW_BOOKINGS |  | USE |
+| 16 | use_for_demand_funnel | 1 = demand 0s are reliable. Apply it only to requirement → demand → placement steps. Today it excludes app Jan–May. | 1  , 0 |  | USE |
+| 17 | is_new_flow | 1 = demand created at transporter select (new flow); 0 = created at Pay & Book (old flow). | 1  , 0 |  | USE |
 | 18 | demand_time | Exact timestamp when the demand was created. | 46322.375925925924 |  | USE |
 | 19 | placement_flag | 1 = vehicle placed. | 15281 |  | USE |
-| 20 | pickup_flag | 1 = picked up. | 11283 |  | USE |
-| 21 | delivered_flag | 1 = delivered. | 10895 |  | USE |
+| 20 | pickup_flag | 1 = picked up; this is how the POD defines PTL acquisition. | 11283 |  | USE |
+| 21 | delivered_flag | 1 = trip ended. | 10895 |  | USE |
 | 22 | trip_flag | Indicates if the demand resulted in a trip (1 = Yes, 0 = No) | 11131 |  | USE |
-| 23 | data_upto | DNU | 46322.415972222225 |  | DNU |
+| 23 | data_upto | Data is complete up to this time. Use it only to check freshness. | 46322.415972222225 |  | DNU |
 
 ## 29_fact_dialer_transcripts
 
