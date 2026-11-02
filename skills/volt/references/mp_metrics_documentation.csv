@@ -1603,10 +1603,10 @@ where
     else current_date - interval '14 days' 
   end
 [[and (case 
-	when browsing_time<=first_trip_time 
-	or first_trip_time is null then 'New'
-	when browsing_time<=third_trip_time  then '1-3'
-	when browsing_time>third_trip_time then '3+' else null end)
+        when browsing_time<=first_trip_time 
+        or first_trip_time is null then 'New'
+        when browsing_time<=third_trip_time  then '1-3'
+        when browsing_time>third_trip_time then '3+' else null end)
 in ({{cx_segment_ptl}})
 ]]
 [[and (
