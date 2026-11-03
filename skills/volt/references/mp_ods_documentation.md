@@ -1296,11 +1296,11 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 ## 31_dim_product_offerings
 
-**mp_analytics_sandbox.aks_fact_nps:** Owner
+mp_analytics_sandbox.dim_product_offerings
 
-**Ekta:** Grain
+**Owner:** Ekta
 
-One row per survey response (user_code + timestamp). 39,676 rows, 12,984 respondents.
+**Grain:** One row per survey response (user_code + timestamp). 39,676 rows, 12,984 respondents.
 
 **Short description:** In-app satisfaction responses from the 1–5 face-scale prompt, for both operators and consigners. One row per submitted response — the prompt impression is NOT stored, so the table has no denominator and a response rate cannot be computed from it. Sandbox table, FO-dominated (99% of rows). Despite the name this is not a 0–10 NPS instrument.
 
