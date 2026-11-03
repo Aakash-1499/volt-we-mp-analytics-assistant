@@ -1289,6 +1289,48 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 41 | compliance_status | KYC and compliance state. | PENDING (1,251,327) · VERIFIED (4,541) · BLACKLISTED (3,334) | 99.4% PENDING. Not yet a usable filter. | USE |
 | 42 | is_blacklisted | 1 if the consigner is blacklisted. | 0 / 1 | Overlaps compliance_status = BLACKLISTED. Confirm which one leads. | USE |
 | 43 | is_kyc_verified | 1 if KYC is verified. | 0 / 1 | Overlaps compliance_status = VERIFIED. Confirm which one leads. | USE |
+| 44 | acquisition_date_ftl | Date of first FTL trip. |  |  |  |
+| 45 | acquisition_date_ptl | Date of first PTL trip. |  |  |  |
+| 46 | last_demand_date_ftl | Date of most recent FTL demand posted. |  |  |  |
+| 47 | last_demand_date_ptl | Date of most recent PTL demand posted. |  |  |  |
+| 48 | last_plc_date_ftl | Date of most recent FTL placement. |  |  |  |
+| 49 | last_plc_date_ptl | Date of most recent PTL placement. |  |  |  |
+| 50 | last_trip_date_ftl | Date of most recent completed FTL trip. |  |  |  |
+| 51 | last_trip_date_ptl | Date of most recent completed PTL trip. |  |  |  |
+| 52 | lifetime_trips_ftl | Count of completed FTL trips, all time. |  |  |  |
+| 53 | lifetime_trips_ptl | Count of completed PTL trips, all time. |  |  |  |
+| 54 | lifetime_demands_ftl | Count of FTL demands posted, all time. |  |  |  |
+| 55 | lifetime_demands_ptl | Count of PTL demands posted, all time. |  |  |  |
+| 56 | has_tripped_ftl | 1 if the consigner has ever completed an FTL trip. |  |  |  |
+| 57 | has_tripped_ptl | 1 if the consigner has ever completed a PTL trip. |  |  |  |
+| 58 | days_since_last_demand_ftl | Days since last_demand_date_ftl. |  |  |  |
+| 59 | days_since_last_demand_ptl | Days since last_demand_date_ptl. |  |  |  |
+| 60 | days_since_last_plc_ftl | Days since last_plc_date_ftl. |  |  |  |
+| 61 | days_since_last_plc_ptl | Days since last_plc_date_ptl. |  |  |  |
+| 62 | days_since_last_trip_ftl | Days since last_trip_date_ftl. |  |  |  |
+| 63 | days_since_last_trip_ptl | Days since last_trip_date_ptl. |  |  |  |
+| 64 | first_demand_date | Date the consigner posted their first demand. |  |  |  |
+| 65 | first_dr_date | Date vehicle search was first started on any of the consigner’s demands. |  |  |  |
+| 66 | first_plc_date | Date the consigner’s first demand was placed with a vehicle. |  |  |  |
+| 67 | second_trip_date | Date of the consigner’s second completed trip. Used for early-retention cohorts. |  |  |  |
+| 68 | third_trip_date | Date of the consigner’s third completed trip. |  |  |  |
+| 69 | has_manual_placement | 1 if at least one of the consigner’s placements was done manually by ops rather than by the system. |  |  |  |
+| 70 | days_since_last_demand | Days since last_demand_date. |  |  |  |
+| 71 | credit_limit | Sanctioned credit limit (₹). 0 for consigners with no credit; populated for ~4,900. |  |  |  |
+| 72 | credit_limit_stage | credit limit stage its depend on Current credit limit assigned |  |  |  |
+| 73 | cx_active_payment_plan | Current billing plan in human-readable form — ADVANCE (default, 99.6%) or an invoicing-plus-credit combination such as ‘Trip End Invoicing With 7 days credit’. |  |  |  |
+| 74 | latest_restriction_status | Current account restriction state: UNRESTRICTED / RESTRICTED / NA. |  |  |  |
+| 75 | latest_restriction_substatus | Reason detail behind the status: DUES_PAID / PENDING_DUES / LIMIT_EXHAUSTED / LIMIT_INCREASED / DAMAGED_TICKET / AVAILED_EXTENSION / NA. |  |  |  |
+| 76 | latest_restriction_reason | Free-text override reason where ops lifted or applied a restriction manually. NA for 99.98%. |  |  |  |
+| 77 | credit_kyc_status | Current status of the consigner's credit KYC (e.g., 'Approved', 'Pending', 'Rejected'). |  |  |  |
+| 78 | kyc_time | Timestamp when KYC was completed. |  |  |  |
+| 79 | kyc_verification_channel | How KYC was verified: Through OTP / Through Certified / Through Bank. |  |  |  |
+| 80 | restriction_profile | 1 if the consigner’s behaviour is driven by account restrictions. |  |  |  |
+| 81 | new_restriction_profile | Revised version of restriction_profile under the newer classification logic. Use this one; keep the old for back-compatibility. |  |  |  |
+| 82 | payment_profile | 1 if the consigner’s behaviour is driven by payment issues. |  |  |  |
+| 83 | npa_profile | 1 if the consigner falls in the NPA (non-performing) population. |  |  |  |
+| 84 | inactive_profile | 1 if the consigner is classified inactive. |  |  |  |
+| 85 | advance_profile | 1 if the consigner operates on advance payment. |  |  |  |
 
 ## 31_aks_fact_nps
 
