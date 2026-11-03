@@ -1296,25 +1296,36 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 ## 31_dim_product_offerings
 
-mp_analytics_sandbox.dim_product_offerings
+**mp_analytics_core.dim_product_offerings:** Owner
 
-**Owner:** Ekta
+**Bharat:** Grain
 
-**Grain:** One row per survey response (user_code + timestamp). 39,676 rows, 12,984 respondents.
+**product_offering_id:** Short description
 
-**Short description:** In-app satisfaction responses from the 1–5 face-scale prompt, for both operators and consigners. One row per submitted response — the prompt impression is NOT stored, so the table has no denominator and a response rate cannot be computed from it. Sandbox table, FO-dominated (99% of rows). Despite the name this is not a 0–10 NPS instrument.
+A dimension table of purchasable product offerings (currently VIP Passes: Silver / Gold / Gold Plus / Enterprise, including legacy variants). One row per offering, carrying its code, name, category, price (INR), validity in days, benefit type and config, and active / purchasable / deleted flags. Source is vasooli_plan (Debezium CDC), refreshed in full on every run; replaces mp_analytics_sandbox.bb_pass_plan. Use it to look up price, validity and benefit for any pass/plan id.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | user_code | Consigner user code | WEI23520 | — | USE |
-| 2 | user_type | Which side of the marketplace answered. Operator 39,315 rows / 12,636 users; Consigner 361 rows / 349 users. The survey is effectively FO-only today. | Operator | — | USE |
-| 3 | platform | App platform through whcih demand was created: App/Web | Android | Single value only | USE |
-| 4 | timestamp | When the response was submitted (IST). Range in the table: 2026-01-01 to 2026-10-30. | 46325.041550925926 | — | USE |
-| 5 | name | Do not Use | zuber | PII — avoid in reports | DNU |
-| 6 | event_ep_nps_score | The rating given, on a 1–5 FACE scale. This is NOT a 0–10 NPS. 1–3 = would not recommend, 4–5 = would. Any 0–10 NPS formula applied to it is wrong. | 5 | Not a true NPS scale | USE |
-| 7 | event_ep_reason | Reason codes chosen on the follow-up screen, pipe-delimited and in Hindi. Multi-select, so one row can carry several reasons — split on '\|' before counting. Present on 39,470 of 39,676 rows. | सही भाड़ा नहीं मिलता है \| सर्विस में समस्या | Multi-value; needs split | USE |
-| 8 | event_ep_comment1 | Optional free-text comment. Present on 3,693 rows (9%). The only verbatim in the table. | (free text, Hindi/English) | Sparse — 9% filled | USE |
-| 9 | event_ct_app_version | App version at the time of the response. Use it to separate a score change from a release. | 25.1.0 | — | USE |
-| 10 | event_ct_source | Capture source of the event. Only 'Mobile' present. | Mobile | Single value only | USE |
+| 1 | product_offering_id | <missing in Glossary> | 5 | Renamed from id | USE |
+| 2 | product_offering_code | <missing in Glossary> | VIP_PASS_SILVER | Renamed from code | USE |
+| 3 | product_offering_name | <missing in Glossary> | Silver VIP Pass | Renamed from name | USE |
+| 4 | product_category | <missing in Glossary> | VIP_PASS | Renamed from category | USE |
+| 5 | business_category | <missing in Glossary> | RETENTION | — | USE |
+| 6 | price_amount | <missing in Glossary> | 3000 | Renamed from price; amount columns use _amount | USE |
+| 7 | validity_days | <missing in Glossary> | 90 | Renamed from duration_days; durations use _days | USE |
+| 8 | benefit_type | <missing in Glossary> | COUPON | — | USE |
+| 9 | benefit_config_json | <missing in Glossary> | {"couponId": 2008} | Renamed from benefit_config; JSON-in-string uses _json | USE |
+| 10 | is_active | <missing in Glossary> | True | — | USE |
+| 11 | is_purchasable |  | True | — | USE |
+| 12 | display_order |  | 1 | — | USE |
+| 13 | metadata_json |  | {"tier": "SILVER"} | Renamed from metadata; JSON-in-string uses _json | USE |
+| 14 | is_deleted |  | False | Renamed from deleted; booleans use is_ prefix | USE |
+| 15 | created_at |  | 46265.24851851852 | Renamed from created; timestamps use _at | USE |
+| 16 | updated_at |  | 46265.24851851852 | Renamed from updated; timestamps use _at | USE |
+| 17 | created_by |  | (NULL) | — | USE |
+| 18 | updated_by |  | (NULL) | — | USE |
+| 19 | cdc_ts_ms |  | 1788175672989 | Renamed from ts_ms; pipeline columns use cdc_ prefix | DNU |
+| 20 | cdc_lsn |  | 14366803663336 | Renamed from lsn; pipeline columns use cdc_ prefix | DNU |
+| 21 | cdc_event_at |  | 46265.24851851852 | Renamed from _event_time; pipeline columns use cdc_ prefix | DNU |
