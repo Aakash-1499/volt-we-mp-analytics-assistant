@@ -601,7 +601,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 11 | origin_place_id | DO NOT USE | ChIJ9fKGzFLwDDkRpIRCk-KlO84 | — | DNU |
 | 12 | demand_address_id | DO NOT USE | 1001 | — | DNU |
 | 13 | price_browsing_id | 32-char hex UUID of the pricing-browse request. 2,943,311 distinct — the join key to downstream pricing/conversion. | df190fae1289493c805c883c3f0ca3b7 | — | USE |
-| 14 | deleted | DO NOT USE | false | — | DNU |
+| 14 | deleted | Filter is_deleted = false for live rows. | false | — | DNU |
 | 15 | created | Epoch microseconds of source write. Basis of created_ts. | 1787131793844000 | — | USE |
 | 16 | updated | DO NOT USE | 1784814204057000 | — | DNU |
 | 17 | created_by | User who created the ticket. | abhishek.patel@wheelseye.com | — | USE |
@@ -641,7 +641,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 1 | id | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 311681 | — | USE |
 | 2 | created | Epoch microseconds of source write. Basis of created_ts. | 1774027274257000 | — | USE |
 | 3 | updated | DO NOT USE | 1774088180961936 | — | DNU |
-| 4 | deleted | DO NOT USE | false | — | DNU |
+| 4 | deleted | Filter is_deleted = false for live rows. | false | — | DNU |
 | 5 | created_by | User who created the ticket. | bhim.singh@wheelseye.com | — | DNU |
 | 6 | updated_by | User who last updated the ticket. | ptl@wheelseye.com | — | DNU |
 | 7 | user_code | Consigner user code | WE8414272 | — | USE |
