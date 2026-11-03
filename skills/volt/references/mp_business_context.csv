@@ -46,7 +46,7 @@ Pricing,The price at which we found the vehicle is known as Supply Fare (supply_
 FO Backout,Mohit Kumar
 ,
 ,
-Line of Business,Trucking Logistics - Part Truck Load (PTL)
+Line of Business (PTL),Trucking Logistics - Part Truck Load (PTL)
 Our Offering,"A PTL aggregator on the WheelsEye marketplace: the consigner enters a lane (pickup + drop pincode), weight and box size, and compares rates, TAT and on-time performance from 100+ PTL transporters in one place, then books, pays and tracks the shipment.
 PTL is built on top of the FTL (MP) consigner base. It is wallet-share expansion for existing FTL consigners, not a new-logo business: ~35-40% of FTL consigners also have PTL needs.
 PTL is NOT defined by weight. It is defined by the product flow (Part Load tab / web portal / ops entry). Never filter by weight to separate PTL from FTL. Weight is only a reporting band: 0-300 / 300-1000 / 1000+ kg."
