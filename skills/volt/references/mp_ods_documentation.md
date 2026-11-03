@@ -1269,7 +1269,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 21 | signup_month | It defines the month of the signup date | 46082 | — | USE |
 | 22 | acquisition_date | Date of first trip | 46102 | — | USE |
 | 23 | first_login_date | Date of first app or web login. |  | — | USE |
-| 24 | first_trip_date | First Trip date of FO |  | Appears to duplicate acquisition_date. Confirm which is canonical. | USE |
+| 24 | first_trip_date | First Trip date of FO |  | Appears to duplicate acquisition_date. Confirm which is canonical. | DNU |
 | 25 | active_app_version | App version on the most recent session. | 1780 | — | USE |
 | 26 | last_platform | Platform of the most recent session. | android (1,046,323) · web (89,236) · ios (78,310) | 45,333 nulls — consigners who never logged in. | USE |
 | 27 | last_login_date | Date of most recent login. |  | — | USE |
