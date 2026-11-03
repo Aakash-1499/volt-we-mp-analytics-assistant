@@ -1329,3 +1329,45 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 19 | cdc_ts_ms | CDC event timestamp in epoch milliseconds. Pipeline lineage only. | 1788175672989 | Renamed from ts_ms; pipeline columns use cdc_ prefix | DNU |
 | 20 | cdc_lsn | CDC log sequence number. Pipeline lineage only. | 14366803663336 | Renamed from lsn; pipeline columns use cdc_ prefix | DNU |
 | 21 | cdc_event_at | CDC event time. Pipeline lineage only. | 46265.24851851852 | Renamed from _event_time; pipeline columns use cdc_ prefix | DNU |
+
+## 32_fact_cx_product_subscriptions
+
+mp_analytics_core.fact_cx_product_subscriptions
+
+**Owner:** Bharat
+
+**Grain:** subscription_id
+
+**Short description:** A subscription-level fact table of consigner (CX) product purchases, currently VIP Passes. It carries the product (code, name, tier, category, list price, validity), the subscription lifecycle (start, end, status), payment and invoice linkage (fee, GST, TDS, payable amount, settlement status and time) and pass cap usage (initial, consumed, remaining, utilisation %). Serves pass sales, active/expired/exhausted pass, revenue and cap-utilisation reporting.
+
+Columns (Description pulled from Glossary via VLOOKUP)
+
+| # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | subscription_id | Unique identifier of the subscription. | 3661 | — | USE |
+| 2 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE7103190 | — | USE |
+| 3 | product_id | Identifier of the product offering purchased. Joined with product_offering_id in mp_analytics_sandbox.dim_product_offerings. | 6 | — | USE |
+| 4 | product_code | Business code of the product. VIP_PASS_LEGACY_* are older plans. | VIP_PASS_GOLD | — | USE |
+| 5 | product_name | Display name of the product. | Gold VIP Pass | — | USE |
+| 6 | product_tier | Tier of the pass (SILVER / GOLD). Legacy codes do not always match their name (e.g. VIP_PASS_LEGACY_SILVER is tier GOLD) — use product_code for plan-level logic. | GOLD | — | USE |
+| 7 | product_category | Product family of the offering. | VIP_PASS | — | USE |
+| 8 | benefit_coupon_id | Identifier of the coupon that delivers the pass benefit. | 2009 | — | USE |
+| 9 | validity_days | Number of days the offering stays valid after purchase. | 90 | — | USE |
+| 10 | list_price | List price of the product in INR, before GST. | 10500 | — | USE |
+| 11 | start_at | Timestamp when the subscription started (UTC). | 46329.41420138889 | — | USE |
+| 12 | end_at | Timestamp when the subscription ends (start_at + validity_days). | 46419.41420138889 | — | USE |
+| 13 | settled_at | Timestamp when payment was settled. NULL if not yet settled. | 46329.41559027778 | — | USE |
+| 14 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | ACTIVE | — | USE |
+| 15 | is_deleted | Soft-delete flag (1 = Yes, 0 = No). Filter is_deleted = false for live rows. | 0 | — | USE |
+| 16 | payment_settlement_status | Payment state of the subscription: SETTLED or PENDING. | SETTLED | — | USE |
+| 17 | consigner_invoice_id | Identifier of the invoice raised for the subscription. NULL until settled. Joined with id in vasooli_consigner_invoice. | 1510 | — | USE |
+| 18 | consigner_transaction_id | Identifier of the payment transaction for the subscription. NULL until settled. | 1702 | — | USE |
+| 19 | fee_amount | Pass fee charged to the consigner before GST (INR). | 10500 | — | USE |
+| 20 | payable_amount | Total payable by the consigner = fee_amount + gst_amount (INR). | 12390 | — | USE |
+| 21 | gst_amount | GST amount levied on this demand (₹). | 1890 | — | USE |
+| 22 | tds_amount | Tax Deducted at Source amount (₹). | (NULL) | — | USE |
+| 23 | initial_cap | Total benefit cap granted with the pass (INR). | 21000 | — | USE |
+| 24 | remaining_cap | Benefit cap still unused (INR). | 19410 | — | USE |
+| 25 | cap_consumed | Benefit cap used so far = initial_cap − remaining_cap (INR). | 1590 | — | USE |
+| 26 | cap_utilisation_pct | Share of the cap used = cap_consumed / initial_cap × 100. | 7.57 | — | USE |
+| 27 | created_by_user | User who created the subscription; usually the consigner's own code. | WE7103190 | — | USE |
