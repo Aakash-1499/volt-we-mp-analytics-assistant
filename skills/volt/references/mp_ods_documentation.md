@@ -1308,24 +1308,24 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | product_offering_id | <missing in Glossary> | 5 | Renamed from id | USE |
-| 2 | product_offering_code | <missing in Glossary> | VIP_PASS_SILVER | Renamed from code | USE |
-| 3 | product_offering_name | <missing in Glossary> | Silver VIP Pass | Renamed from name | USE |
-| 4 | product_category | <missing in Glossary> | VIP_PASS | Renamed from category | USE |
-| 5 | business_category | <missing in Glossary> | RETENTION | — | USE |
-| 6 | price_amount | <missing in Glossary> | 3000 | Renamed from price; amount columns use _amount | USE |
-| 7 | validity_days | <missing in Glossary> | 90 | Renamed from duration_days; durations use _days | USE |
-| 8 | benefit_type | <missing in Glossary> | COUPON | — | USE |
-| 9 | benefit_config_json | <missing in Glossary> | {"couponId": 2008} | Renamed from benefit_config; JSON-in-string uses _json | USE |
-| 10 | is_active | <missing in Glossary> | True | — | USE |
-| 11 | is_purchasable |  | True | — | USE |
-| 12 | display_order |  | 1 | — | USE |
-| 13 | metadata_json |  | {"tier": "SILVER"} | Renamed from metadata; JSON-in-string uses _json | USE |
-| 14 | is_deleted |  | False | Renamed from deleted; booleans use is_ prefix | USE |
-| 15 | created_at |  | 46265.24851851852 | Renamed from created; timestamps use _at | USE |
-| 16 | updated_at |  | 46265.24851851852 | Renamed from updated; timestamps use _at | USE |
-| 17 | created_by |  | (NULL) | — | USE |
-| 18 | updated_by |  | (NULL) | — | USE |
-| 19 | cdc_ts_ms |  | 1788175672989 | Renamed from ts_ms; pipeline columns use cdc_ prefix | DNU |
-| 20 | cdc_lsn |  | 14366803663336 | Renamed from lsn; pipeline columns use cdc_ prefix | DNU |
-| 21 | cdc_event_at |  | 46265.24851851852 | Renamed from _event_time; pipeline columns use cdc_ prefix | DNU |
+| 1 | product_offering_id | Unique identifier of the product offering (primary key). | 5 | Renamed from id | USE |
+| 2 | product_offering_code | Unique business code of the offering. VIP_PASS_LEGACY_* are older plans; prefer this over name for joins/logic. | VIP_PASS_SILVER | Renamed from code | USE |
+| 3 | product_offering_name | Display name of the offering. Not unique — legacy and current plans can share a name. | Silver VIP Pass | Renamed from name | USE |
+| 4 | product_category | Product family of the offering. | VIP_PASS | Renamed from category | USE |
+| 5 | business_category | Business line owning the offering. NULL on newer rows. | RETENTION | — | USE |
+| 6 | price_amount | List price of the offering in INR. Decoded from Debezium binary decimal (scale 2). | 3000 | Renamed from price; amount columns use _amount | USE |
+| 7 | validity_days | Number of days the offering stays valid after purchase. | 90 | Renamed from duration_days; durations use _days | USE |
+| 8 | benefit_type | Mechanism through which the benefit is delivered. | COUPON | — | USE |
+| 9 | benefit_config_json | JSON configuration of the benefit (e.g. coupon id). | {"couponId": 2008} | Renamed from benefit_config; JSON-in-string uses _json | USE |
+| 10 | is_active | Offering is enabled (1 = Yes, 0 = No). | True | — | USE |
+| 11 | is_purchasable | Offering can currently be bought (1 = Yes, 0 = No). Legacy plans are false. | True | — | USE |
+| 12 | display_order | Sort order in which the offering is shown in the app. | 1 | — | USE |
+| 13 | metadata_json | JSON extras for the offering, e.g. the tier (SILVER / GOLD). Tier labels do not always match the name. | {"tier": "SILVER"} | Renamed from metadata; JSON-in-string uses _json | USE |
+| 14 | is_deleted | Soft-delete flag (1 = Yes, 0 = No). Filter is_deleted = false for live rows. | False | Renamed from deleted; booleans use is_ prefix | USE |
+| 15 | created_at | Datetime when row of the table is created | 46265.24851851852 | Renamed from created; timestamps use _at | USE |
+| 16 | updated_at | Last modification — seconds later for auto-approved, over an hour for manual/fraud review. | 46265.24851851852 | Renamed from updated; timestamps use _at | USE |
+| 17 | created_by | User who created the ticket. | (NULL) | — | USE |
+| 18 | updated_by | User who last updated the ticket. | (NULL) | — | USE |
+| 19 | cdc_ts_ms | CDC event timestamp in epoch milliseconds. Pipeline lineage only. | 1788175672989 | Renamed from ts_ms; pipeline columns use cdc_ prefix | DNU |
+| 20 | cdc_lsn | CDC log sequence number. Pipeline lineage only. | 14366803663336 | Renamed from lsn; pipeline columns use cdc_ prefix | DNU |
+| 21 | cdc_event_at | CDC event time. Pipeline lineage only. | 46265.24851851852 | Renamed from _event_time; pipeline columns use cdc_ prefix | DNU |
