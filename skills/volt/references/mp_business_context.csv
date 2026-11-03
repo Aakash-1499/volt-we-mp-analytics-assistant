@@ -44,3 +44,116 @@ Bidding,"After Consigner gives DR, demand is open for all operator for bidding. 
 Operator Support,Mohit Kumar
 Pricing,The price at which we found the vehicle is known as Supply Fare (supply_fare in table). We deduct FO commission (fo_commission in table) from this amount and so we get the net payable to FO. We add a markup over Supply Fare (also known as middle share) and show it to the consigner. This price is known as Base Price (base_price in table). This price is might be anywhere in or outside the range shown to the consigner before we search for the vehcile ; range shown is from base_rate1 to base_rate3. We then add a service charge to the Base Price and get Consigner Freight Fare (consigner_freight_fare in table). We now deduct discounts (if appicable) to the Consigner Freight Fare to get the Final Price that is payable by the consigner to us.\
 FO Backout,Mohit Kumar
+,
+,
+Line of Business,Trucking Logistics - Part Truck Load (PTL)
+Our Offering,"A PTL aggregator on the WheelsEye marketplace: the consigner enters a lane (pickup + drop pincode), weight and box size, and compares rates, TAT and on-time performance from 100+ PTL transporters in one place, then books, pays and tracks the shipment.
+PTL is built on top of the FTL (MP) consigner base. It is wallet-share expansion for existing FTL consigners, not a new-logo business: ~35-40% of FTL consigners also have PTL needs.
+PTL is NOT defined by weight. It is defined by the product flow (Part Load tab / web portal / ops entry). Never filter by weight to separate PTL from FTL. Weight is only a reporting band: 0-300 / 300-1000 / 1000+ kg."
+PTL vs FTL,"Different product, unit economics, SLAs, supply and ops flow. Do not transfer FTL logic to PTL.
+- FTL: a whole truck (vehicle type) is matched/bid by an FO; price = supply_fare + markup; demand key = ODVT.
+- PTL: the consigner buys space by chargeable weight (₹/kg) from a transporter's network; price comes from transporter rate cards; demand key = requirement (see Key Terms).
+- FTL is the core business. PTL must not cannibalise FTL (see FTL Guardrail)."
+POD scope (how to read every PTL question),"1. FTL -> PTL conversion: getting existing FTL consigners to use PTL too.
+2. Consigner experience / churn: churn driven by PTL pickup and delivery delays.
+If a question fits neither, ask which bucket before going deep. PTL supply product design is out of scope for the Demand POD, but supply performance feeds the churn metric."
+Consigner Platforms / Channels,"PTL demand reaches us through 4 channels. Always split metrics by channel (fact_ptl_requirements.channel).
+1. APP: the 'Book Truck' consigner app (Android, iOS) plus consigner web (app_platform = 'CONSIGNER_WEB', web/mweb events from Jun 2026). PTL sits in the 'Part Load' tab next to 'Full truck'. Shown only to consigners allocated SHOW_PTL (see Experiments).
+2. WEB PORTAL: a separate PTL web portal (not the same as consigner web). Not gated by the app experiment flag. Converts 2-3x better than the app.
+3. ODIN: manual / ops-created demands (no price check).
+4. BULK_UPLOAD: from 15 Oct 2026, price check + demand created together by an upload. Often back-entered after delivery: keep in volume counts, exclude from conversion rates."
+Consigner Acquisition (PTL),"PTL consigners are existing FTL consigners, so acquisition means 'first PTL use', not signup. Motions:
+- In-app cross-sell to FTL consigners (Part Load tab, banner, tutorial, bottom sheet) behind the SHOW_PTL flag.
+- CRM: WhatsApp + app push + email.
+- KAM / inside-sales calling on inbound leads (lead tiers A1-A5, D1-D2, X; A1 = price check but no demand).
+- New FTL-intent app signups allocated SHOW_PTL within 1 day of signup.
+PTL acquisition = first pickup_done_time per consigner (see Key Terms)."
+Key Terms,"Consigner / Cx: user with a shipment requirement (demand side). Never conflate with FO or transporter (supply side).
+Transporter / TPT: PTL supply - a 3PL or local transporter that carries the shipment. Not an FO.
+Price check: one rate-API call = one row in fact_ptl_browsing (browsing_id). Includes automatic re-quotes from the transporter screen, so rows are NOT user searches. ~3x more price checks than requirements.
+Requirement: the PTL equivalent of a real shipment need (closest analogue to FTL CODVT). = one consigner x one lane (pickup + drop pincode), grouping price checks with < 30 min gap (datediff in seconds < 1800). It counts as a requirement only if: booked, OR channel is web portal / bulk upload / ODIN, OR (app) at least 1 change from the prefill (drop != 560001, weight != 200, or dimensions entered), OR the continue / transporter-select event or a later booking step fired. Count with sum(requirement_flag).
+Demand (demand_id): created when the consigner selects a transporter and taps continue (new flow: Android 1770+, iOS 1080+, consigner web 2.4.0+; web portal from 16 Oct 2026 15:48 IST at 'Create Pickup Request'). Before the new flow, a demand existed only after 'Pay and book', so demand ~= placement.
+Would-be demand: a demand the old flow would have created, backfilled from events. demand_id = 'B/<browsing_id>'. Included in demand_flag.
+Placement / Booking: demand booked and paid (placement_flag).
+Pickup: pickup_done_time not null (pickup_flag). In-transit comes ~12 h later.
+PTL acquisition: first pickup_done_time per consigner. dim_consigners.acquisition_date_ptl is the DEMAND date of the first PTL trip, not the pickup date.
+Trip (fact_ptl_requirements.trip_flag): trip_end OR in_transit OR pickup_done not null, AND not cancelled/expired.
+Delivered: trip_end_time not null (delivered_flag).
+PTL-live consigner: allocated SHOW_PTL (variant 17) with deleted = false.
+Dual user: consigner with both FTL and PTL trips. Dual users share an origin ~84% of the time but the full lane only ~16% - map lanes from pincode, never by city strings."
+Consigner Attributes,"Region: fact_consigner_demands_lead_source.consigner_region = NCR / R1 (top 5 clusters) / R2 (next 24 clusters) / R3 (rest of India); fallback fact_leads. Do not use fact_lead_state (disagrees for ~40%). dim_consigners region differs for ~8.5% of PTL booking consigners.
+Business category (cx_business_category): the PTL targeting signal. MANUFACTURER + TRADER convert to PTL ~4x the rest.
+Potential (app_potential): predicts FTL but NOT PTL. Do not reuse FTL scoring for PTL.
+Recency: max(login_date) from fact_consigner_demands_lead_source. Recency behaves as a cliff at day 7 (fresh / not fresh), not a graded score.
+FTL history: dim_consigners.acquisition_date_ftl (FTL first trip, history from 2019), lifetime_trips_ftl / _ptl, last_trip_date_ftl / _ptl, has_tripped_ftl / _ptl. dim_consigners.first_trip_date covers any load type (for PTL-only consigners it is their first PTL trip) - do not use it as 'first FTL trip'.
+PTL demand is episodic and destination changes nearly every shipment (origin is a warehouse, drop is a different customer each time)."
+Consigner Journey (App),"Lands on app > taps 'Part Load' tab (or banner / popular-lane card) > PTL home (lane input: pickup pincode prefilled, drop, weight, service type, optional dimensions; or a popular-lane card) > taps Compare / Check rates (price check) > Rate screen / transporter list (ptl_select_transporter: transporters with ₹/kg, TAT, on-time pickup and delivery %) > selects a transporter + pickup slot > Continue (demand created on the new flow) > pickup address > preview / price breakup > Pay and book (placement) > Pickup (pickup_done) > In transit > Delivered (trip_end) > POD.
+The biggest drop is at the rate screen: most consigners who see rates never select a transporter. Most bookings happen on a re-quote, not the first quote."
+Consigner Journey (Web Portal),ptl_rate_estimate_page: rate estimate view > submit > success > 'Create Pickup Request' (v1_create_prq; demand created here from 16 Oct 2026) > insufficient-balance modal / payment link > booking.
+Service Types,"D2D (door to door), W2W (warehouse to warehouse), D2W, W2D. ~80%+ of bookings are D2D. Base ₹/kg does not vary by service type; service type changes first-mile / last-mile / ODA charges and serviceability."
+"PTL Supply (context, not Demand POD scope)","Transporter types:
+- 3PL (organized): Delhivery, DP World, Xpressbees (V-Trans is organized too). Best priced at 0-300 kg.
+- Local transporters: everyone else; separate first-mile + last-mile and lower base freight. Best priced at 300-1000 / 1000+ kg.
+No flag in data - classify by the name list.
+Our mix today: 3PL ~80-90%, local ~10-20% (industry is roughly inverted). Expected to drift toward local as we scale.
+Supply modes: Spot (tentative rate), Testing-contractual, Contractual (fixed rate). Contractual is ~0 today.
+Serviceability: a transporter serves a lane if it covers the loading pincode (pickup_available = true) and the unloading pincode and has an active zonal rate for that zone pair. Supply comes from the rate engine tables, not Google sheets.
+Transporter attribution = who ACTUALLY carried it (consignment operator), not selected_tpt.
+SLA adherence on pickup, delivery and visibility is currently weak across both 3PL and local. 'SLAs improve once we route enough volume to a transporter' is a hypothesis to validate, not a fact."
+Pricing,"Price is computed per transporter on the lane (backend PriceCheckService):
+1. Chargeable weight (CW) = max(min chargeable weight, volumetric weight, actual weight). Volumetric = (L x W x H / volumetric factor) x qty x CFT from the transporter's rate metadata. Bulky-light cargo is priced on volume.
+2. Base freight = max(base ₹/kg (zonal rate + to-pincode additional rate) x CW, min base freight).
+3. Add: fuel surcharge (% of base freight), handling, docket (flat), FOV, labour, appointment, pickup / delivery ODA, first-mile and last-mile (by service type), special/odd-dimension charges.
+4. Less discounts (e.g. first-booking discount, ADVANCE payment-plan discount).
+5. GST 18% on top (0 when to-pay).
+What the consigner sees: base ₹/kg (ex GST) as the headline per transporter, then the all-in total once weight and box size are entered.
+Take rate (all-inclusive, matches the PnL dashboard) = (consigner fare - operator fare) / consigner fare, GST excluded, where fare = base freight + expenses. Attribute by actual operator; exclude internal test accounts WE180649, WE5273773, WE6413979."
+Payment,Consigner pays at booking (Pay and book = placement); insufficient wallet balance shows a top-up / payment link. Many PTL consigners are used to to-pay (consignee pays the transporter on delivery) - a known adoption barrier. Payment-flow experiment: variants 36 PTL_DEFAULT_PAYMENT_FLOW / 37 PTL_DIVIDE_PAYMENT_FLOW.
+ETA / SLA,"Shipper-facing ETA = the transporter's ETA padded by that transporter's historical performance (eta_date); tpt_eta_date = raw transporter ETA.
+Late = done on a later calendar day than the ETA (*_eta_diff > 0).
+For the customer promise use the ORIGINAL delivery ETA and the REQUESTED pickup ETA (the latest ETA is re-baselined).
+Check the denominator (placed vs picked up) before comparing SLA metrics.
+Delay types: blank = on time, BREACH BY 1-2d, BREACH BY >2d, LOCATION_NOT_UPDATED, ETA_CHANGED."
+POD,Proof of delivery uploaded after trip end. pod_validity: OK / SUBJECT_TO_VERIFICATION / NOT_OKAY_DAMAGED / NOT_OKAY_SHORTAGE / WRONG_DOCUMENT / STAMP_AND_SIGN_MISSING. Damage fear is a stated PTL adoption barrier.
+Experiments (PTL),"Table: mp_analytics_core.fact_experiment_user_allocation, column variant_id (flow_type_config_id no longer exists). Only deleted = false is live; deleted = true means PTL is NOT shown.
+- 17 SHOW_PTL (test: PTL visible in app) / 18 DISABLE_PTL (control: FTL only). The cross-sell experiment.
+- 36 PTL_DEFAULT_PAYMENT_FLOW / 37 PTL_DIVIDE_PAYMENT_FLOW.
+- 44 PTL_BROWSING_FLOW_DEFAULT / 45 PTL_BROWSING_FLOW_V2.
+Rules:
+- If a consigner has both 17 and 18, do not count them in both arms.
+- Known contamination: some DISABLE_PTL consigners still reach the PTL page and book PTL in the app. Never report SHOW vs DISABLE app lift without this caveat.
+- Lift is app-only: web portal and ODIN are not gated by the flag.
+- For FTL guardrails compare only consigners allocated within 1 day of signup (the randomised split); SHOW also contains a hand-picked NCR FTL-retention base."
+FTL Guardrail,"PTL interventions must not reduce FTL conversion or FTL trips per consigner in the test arm. Additive PTL surfaces are fine; replacing FTL surfaces (e.g. PTL as the default tab) is ruled out. Pair every PTL intervention with an FTL trips/consigner read, test vs control."
+Acquisition numbers - never mix,"(a) Business number: all PTL acquisitions (first pickup), by channel.
+(b) Experiment number: incremental app-flag acquisitions in NCR (SHOW vs DISABLE).
+Dashboard 3023 shows only (b). Cohorts that went 'PTL live later' are survivorship-biased, not a targeting segment."
+Canonical tables,"PTL funnel (price check > requirement > demand > placement > pickup > trip > delivered): mp_analytics_core.fact_ptl_requirements.
+PTL demand / trip / SLA detail: mp_analytics_core.fact_ptl_bookings (ptl_trip_rank 0 = not a trip, 1 = first trip; its trip_flag is set while in transit).
+Price checks (raw): mp_analytics_core.fact_ptl_browsing (requested_weight; join on browsing_id).
+Demand status metadata: mp_analytics_sandbox.as_vibheeshan_demand_status (one row per demand; updated_at = epoch micros).
+Pincode > city: mp_analytics_sandbox.as_vibheeshan_city_pincodes (filter deleted = false). Map both FTL and PTL sides from pincode.
+FTL demands / trips: mp_analytics_core.fact_demands where load_type = 'FTL' (from Oct 2025) or fact_consigner_demands_lead_source trip_flag = 1 (clean FTL, from Jan 2024).
+App events: mp_analytics_core.fact_cx_events_l24m (has event_platform and history).
+Do NOT use: fact_ptl_demands (goes stale), analytics.ptl_demands / analytics.ptl_ops_funnel / trucking.vibheeshan_* / trucking.dpdvib_demand_status (stale or permission denied), mp_demand_details as FTL (it contains every PTL demand), fact_cx_events_l3m for recency (rolling 3-month window)."
+fact_ptl_requirements - usage rules,"Grain: one row per price check, plus 'D/<demand_id>' rows for ODIN / manual demands. Rows are NOT requirements - count sum(requirement_flag), never count(*).
+demand_flag: 1 = actual or would-be demand. Real demands only: demand_id not like 'B/%' and demand_id <> ''. Text NULLs may load as '' - never count(demand_id).
+Requirement > demand > placement: filter use_for_demand_funnel = 1 (app Jan-May 2026 demand 0s are unreliable). A demand_flag of 1 is always trustworthy.
+Placement / pickup / trip / delivered have no recency window: exclude the last 7-14 days or use fixed, matured windows.
+coverage_tier = how complete event tracking is for that channel-month. It is NOT supply coverage.
+Join to bookings: exclude 'B/' and 'D/' ids, then cast(demand_id as bigint).
+Calling list (requirement with no booking): requirement_flag = 1 and placement_flag = 0.
+Freshness: check max(data_upto) before trusting the latest period. Rebuilt hourly; event-based would-be demands land next day."
+PTL app events - traps,"v1_ptl_submit fires on 5 screens and is tagged with the NEXT screen. Only miscellaneous containing 'tpt' = continue from transporter list (app would-be demand); '::st:' = rate request. Keying on screen_name overstates continue ~8x.
+Price check <> event join: payload pcId = fact_ptl_browsing.browsing_id; parse with regexp_substr(miscellaneous,'pcid[^0-9]*([0-9]+)',1,1,'ie').
+Web portal events: event_platform = '' and user_code blank; take the consigner from payload ""uc"":""WE..."". Web portal would-be demand event = v1_create_prq.
+Never filter event_name ilike '%ptl%' (catches the PTL tab firing on the FTL home page).
+v1_ptl_home_page double-fires: count distinct users or user-days, never events.
+v1_pickup = tapped the field, not changed the value.
+Booking-flow events exist only from ~22 May 2026 (new booking flow); entry-point click events broke with the Jul 2026 UI change.
+Event times are UTC epoch microseconds; price_check_time / demand_time / trip_end_time are IST (+5.5 h)."
+Metric conventions,"State the observation window for every day-N metric ('% by day 30' can swing from 86% to 11% by window). Use matured cohorts (D30 only for cohorts at least 30 days old).
+Do not quote a percentage whose numerator is under 20.
+Currency in INR with Indian formatting (lakhs, crores).
+Volt refuses person-level output; consigner calling lists come from a direct query."
+Open items (not yet documented for PTL),Consigner rating flow for PTL trips; PTL consigner support / ticket flow; contractual supply list; fact_lead_state vs lead_source region reconciliation; app placement > trip leak root cause.
