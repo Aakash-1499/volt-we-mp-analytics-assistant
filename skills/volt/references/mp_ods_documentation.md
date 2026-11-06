@@ -1416,84 +1416,123 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 ## 33_sanchar_ivr
 
-mp_analytics_core.fact_cx_product_subscriptions
+**mp_analytics_core.sanchar_ivr:** Owner
 
-**Owner:** Bharat
+**Ekta:** Grain
 
-**Grain:** subscription_id
+**id (one row per IVR call request):** Short description
 
-**Short description:** A subscription-level fact table of consigner (CX) product purchases, currently VIP Passes. It carries the product (code, name, tier, category, list price, validity), the subscription lifecycle (start, end, status), payment and invoice linkage (fee, GST, TDS, payable amount, settlement status and time) and pass cap usage (initial, consumed, remaining, utilisation %). Serves pass sales, active/expired/exhausted pass, revenue and cap-utilisation reporting.
+A call-level table of automated IVR (Sanchar AI) calls made to consigners about a specific demand / consignment. It carries who was called, OD city, whether the request reached the IVR vendor (status, http_status, api_status), the final call outcome and talk time. Use it for IVR reach and connect-rate analysis, and to link IVR calls to demand / trip outcomes. Source: data_platform.sanchar_ai_call_history (S3), loaded incrementally daily; phone_number is SHA-256 hashed and transcript is dropped (PII). Data from 21 May 2026.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | subscription_id | Unique identifier of the subscription. | 3661 | — | USE |
-| 2 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE7103190 | — | USE |
-| 3 | product_id | Identifier of the product offering purchased. Joined with product_offering_id in mp_analytics_sandbox.dim_product_offerings. | 6 | — | USE |
-| 4 | product_code | Business code of the product. VIP_PASS_LEGACY_* are older plans. | VIP_PASS_GOLD | — | USE |
-| 5 | product_name | Display name of the product. | Gold VIP Pass | — | USE |
-| 6 | product_tier | Tier of the pass (SILVER / GOLD). Legacy codes do not always match their name (e.g. VIP_PASS_LEGACY_SILVER is tier GOLD) — use product_code for plan-level logic. | GOLD | — | USE |
-| 7 | product_category | Product family of the offering. | VIP_PASS | — | USE |
-| 8 | benefit_coupon_id | Identifier of the coupon that delivers the pass benefit. | 2009 | — | USE |
-| 9 | validity_days | Number of days the offering stays valid after purchase. | 90 | — | USE |
-| 10 | list_price | List price of the product in INR, before GST. | 10500 | — | USE |
-| 11 | start_at | Timestamp when the subscription started (UTC). | 46329.41420138889 | — | USE |
-| 12 | end_at | Timestamp when the subscription ends (start_at + validity_days). | 46419.41420138889 | — | USE |
-| 13 | settled_at | Timestamp when payment was settled. NULL if not yet settled. | 46329.41559027778 | — | USE |
-| 14 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | ACTIVE | — | USE |
-| 15 | is_deleted | Soft-delete flag (1 = Yes, 0 = No). Filter is_deleted = false for live rows. | 0 | — | USE |
-| 16 | payment_settlement_status | Payment state of the subscription: SETTLED or PENDING. | SETTLED | — | USE |
-| 17 | consigner_invoice_id | Identifier of the invoice raised for the subscription. NULL until settled. Joined with id in vasooli_consigner_invoice. | 1510 | — | USE |
-| 18 | consigner_transaction_id | Identifier of the payment transaction for the subscription. NULL until settled. | 1702 | — | USE |
-| 19 | fee_amount | Pass fee charged to the consigner before GST (INR). | 10500 | — | USE |
-| 20 | payable_amount | Total payable by the consigner = fee_amount + gst_amount (INR). | 12390 | — | USE |
-| 21 | gst_amount | GST amount levied on this demand (₹). | 1890 | — | USE |
-| 22 | tds_amount | Tax Deducted at Source amount (₹). | (NULL) | — | USE |
-| 23 | initial_cap | Total benefit cap granted with the pass (INR). | 21000 | — | USE |
-| 24 | remaining_cap | Benefit cap still unused (INR). | 19410 | — | USE |
-| 25 | cap_consumed | Benefit cap used so far = initial_cap − remaining_cap (INR). | 1590 | — | USE |
-| 26 | cap_utilisation_pct | Share of the cap used = cap_consumed / initial_cap × 100. | 7.57 | — | USE |
-| 27 | created_by_user | User who created the subscription; usually the consigner's own code. | WE7103190 | — | USE |
+| 1 | id | Unique ID of the IVR call request (primary key of sanchar_ivr). One row per call attempt. | 228598 | — | USE |
+| 2 | deleted | Soft-delete flag from source. Currently always FALSE. | False | — | DNU |
+| 3 | phone_number | Phone number called - SHA-256 hash of the last 10 digits (PII masked). Joinable to other hashed phones, not readable. | aa37b724…2090880 (64-char hash) | — | USE |
+| 4 | origin | Origin city of the demand the call was about (e.g. sonipat). | north delhi | — | USE |
+| 5 | destination | Destination city of the demand the call was about (e.g. mumbai city). | mehsana | — | USE |
+| 6 | user_code | Consigner code (WE…) who was called. Filled for 100% of rows. | WE9475653 | Same data as consigner_user_code - canonical name: consigner_user_code | USE |
+| 7 | service_name | Internal service that triggered the call. Always 'vasooli' (consigner service); ignore 1 test row. | vasooli | — | USE |
+| 8 | analytics_label | JSON context of the call: demandId and consignmentId, e.g. {"demandId": "5224809", "consignmentId": "2797853"}. Present on ~100% of rows. | {"demandId": "5258275", "consignmentId": "2811535"} | — | USE |
+| 9 | callback_topic | Callback topic configured for the call. Always NULL in practice - not used. | (NULL) | — | DNU |
+| 10 | status | Whether the call request was handed to the IVR vendor: SENT (98.3%) / FAILED (1.7%) / PENDING. Not the call outcome - see response_status. | SENT | — | USE |
+| 11 | http_status | HTTP code returned by the IVR vendor API: 200 (98.3%), 404 (1.7%), 0/400/502 (rare). | 200 | — | USE |
+| 12 | api_status | Vendor API acknowledgement status: queued, or NULL when the request failed. | queued | — | USE |
+| 13 | response_message | Vendor API response message (e.g. done). | done | — | USE |
+| 14 | execution_id | Vendor execution / run ID of the call. Use to trace a call with the IVR vendor. | 24bdbdb2-6f5c-4a40-a9e2-d513a89dba75 | — | USE |
+| 15 | error_message | Error text when the call request failed (status = FAILED); NULL otherwise. | (NULL) | — | USE |
+| 16 | raw_response | Full JSON response returned by the IVR vendor API (status, message, execution_id, run_id). No PII. | {"status":"queued","message":"done","execution_id":"24bdbdb2-…","run_id":"24bdbdb2-…"} | — | USE |
+| 17 | created_at | Call request creation time as epoch MICROseconds (16 digits). Use created_ts for a readable timestamp. | 1793916455372758 | — | DNU |
+| 18 | updated_at | Last update time as epoch MICROseconds (16 digits). | 1793916755461852 | — | DNU |
+| 19 | agent_id | ID of the IVR voice agent / flow used for the call (3 distinct agents). | 07354461-46bd-4c41-9411-3f058068553e | — | USE |
+| 20 | ts_ms | Source change-capture time in epoch milliseconds. Technical - drives the incremental load. | 1793916755462 | — | DNU |
+| 21 | lsn | Source database log sequence number. Technical CDC column. | 169315083519912 | — | DNU |
+| 22 | _event_time | Timestamp of the source change event. Technical CDC column. | 46331.925405092596 | — | DNU |
+| 23 | created_ts | Call request creation timestamp (readable). Use this for date filters. Data from 21 May 2026. | 46331.92193287037 | — | USE |
+| 24 | dpyear | Partition year of the source data. Technical. | 2026 | — | DNU |
+| 25 | dpmonth | Partition month of the source data. Technical. | 11 | — | DNU |
+| 26 | response_status | Final call outcome: completed (43%), busy (36%), no-answer (14%), failed, call-disconnected, in-progress states; NULL/blank ~6%. Use this for connect rate. | completed | — | USE |
+| 27 | duration | Call duration in seconds (0 when not connected; max 50, avg ~14 s on connected calls). | 11 | — | USE |
 
 ## 34_fact_trip_itinerary
 
-mp_analytics_core.fact_cx_product_subscriptions
+**mp_analytics_core.fact_trip_itinerary:** Owner
 
-**Owner:** Bharat
+**Ekta:** Grain
 
-**Grain:** subscription_id
+**consignment_id:** Short description
 
-**Short description:** A subscription-level fact table of consigner (CX) product purchases, currently VIP Passes. It carries the product (code, name, tier, category, list price, validity), the subscription lifecycle (start, end, status), payment and invoice linkage (fee, GST, TDS, payable amount, settlement status and time) and pass cap usage (initial, consumed, remaining, utilisation %). Serves pass sales, active/expired/exhausted pass, revenue and cap-utilisation reporting.
+A trip-level fact table that shows where the vehicle actually was at each trip status, compared with the demand's loading (LA) and unloading (ULA) addresses. For every trip it carries the 6 status times (placement, GTL, at loading, in transit, at unloading, trip end), the GPS lat/long of the vehicle at each of them, the longest GPS stoppage between at-loading and in-transit (likely real loading spot) and between at-unloading and trip end (likely real unloading spot), and straight-line km from each of these points to LA / ULA. Use it for status-marking accuracy (e.g. 'at loading' marked far from site), address-pin accuracy, placement distance and actual loading/unloading duration. Sources: fact_consignments, fact_demands, fact_vehicle_info, deanalytics.fact_gps_itinerary. Rolling last 150 days by consignment_time; last 45 days rebuilt daily. Times are IST.
 
 Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | subscription_id | Unique identifier of the subscription. | 3661 | — | USE |
-| 2 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE7103190 | — | USE |
-| 3 | product_id | Identifier of the product offering purchased. Joined with product_offering_id in mp_analytics_sandbox.dim_product_offerings. | 6 | — | USE |
-| 4 | product_code | Business code of the product. VIP_PASS_LEGACY_* are older plans. | VIP_PASS_GOLD | — | USE |
-| 5 | product_name | Display name of the product. | Gold VIP Pass | — | USE |
-| 6 | product_tier | Tier of the pass (SILVER / GOLD). Legacy codes do not always match their name (e.g. VIP_PASS_LEGACY_SILVER is tier GOLD) — use product_code for plan-level logic. | GOLD | — | USE |
-| 7 | product_category | Product family of the offering. | VIP_PASS | — | USE |
-| 8 | benefit_coupon_id | Identifier of the coupon that delivers the pass benefit. | 2009 | — | USE |
-| 9 | validity_days | Number of days the offering stays valid after purchase. | 90 | — | USE |
-| 10 | list_price | List price of the product in INR, before GST. | 10500 | — | USE |
-| 11 | start_at | Timestamp when the subscription started (UTC). | 46329.41420138889 | — | USE |
-| 12 | end_at | Timestamp when the subscription ends (start_at + validity_days). | 46419.41420138889 | — | USE |
-| 13 | settled_at | Timestamp when payment was settled. NULL if not yet settled. | 46329.41559027778 | — | USE |
-| 14 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | ACTIVE | — | USE |
-| 15 | is_deleted | Soft-delete flag (1 = Yes, 0 = No). Filter is_deleted = false for live rows. | 0 | — | USE |
-| 16 | payment_settlement_status | Payment state of the subscription: SETTLED or PENDING. | SETTLED | — | USE |
-| 17 | consigner_invoice_id | Identifier of the invoice raised for the subscription. NULL until settled. Joined with id in vasooli_consigner_invoice. | 1510 | — | USE |
-| 18 | consigner_transaction_id | Identifier of the payment transaction for the subscription. NULL until settled. | 1702 | — | USE |
-| 19 | fee_amount | Pass fee charged to the consigner before GST (INR). | 10500 | — | USE |
-| 20 | payable_amount | Total payable by the consigner = fee_amount + gst_amount (INR). | 12390 | — | USE |
-| 21 | gst_amount | GST amount levied on this demand (₹). | 1890 | — | USE |
-| 22 | tds_amount | Tax Deducted at Source amount (₹). | (NULL) | — | USE |
-| 23 | initial_cap | Total benefit cap granted with the pass (INR). | 21000 | — | USE |
-| 24 | remaining_cap | Benefit cap still unused (INR). | 19410 | — | USE |
-| 25 | cap_consumed | Benefit cap used so far = initial_cap − remaining_cap (INR). | 1590 | — | USE |
-| 26 | cap_utilisation_pct | Share of the cap used = cap_consumed / initial_cap × 100. | 7.57 | — | USE |
-| 27 | created_by_user | User who created the subscription; usually the consigner's own code. | WE7103190 | — | USE |
+| 1 | consignment_id | Unique ID of the consignment (trip). Primary key of fact_trip_itinerary: one row per consignment that reached IN_TRANSIT. | 2767578 | — | USE |
+| 2 | consignment_code | Human-readable consignment code, e.g. WE35392-2774827. | WE35392-2767578 | — | USE |
+| 3 | demand_id | Demand the consignment was placed against. Join key to fact_demands. | 5147643 | — | USE |
+| 4 | operator_code | Fleet operator (FO) who ran the trip. | WE7126970 | — | USE |
+| 5 | vehicle_id | Vehicle that ran the trip. Used to match GPS from fact_gps_itinerary. | 4220432 | — | USE |
+| 6 | vehicle_number | Registration number of the vehicle (from fact_vehicle_info). | UP16PT1202 | — | USE |
+| 7 | consignment_state | Current state of the consignment (e.g. COMPLETED, IN_TRANSIT). | TRIP_END | — | USE |
+| 8 | placement_type | How the vehicle was placed on the demand (system / manual). | Automation | — | USE |
+| 9 | consignment_time | Placement time (IST) - when the vehicle was placed on the demand. Whiteboard point A (PLC). Table keeps a rolling 150 days on this column. | 46315.46255787037 | — | USE |
+| 10 | gtl_time | Time (IST) the trip was marked Going To Loading. Whiteboard point B. | 46315.471354166664 | — | USE |
+| 11 | at_loading_time | Time (IST) the vehicle was marked At Loading. Whiteboard point C. | 46315.55871527778 | — | USE |
+| 12 | in_transit_time | Time (IST) the trip was marked In Transit (loading done). Whiteboard point D. | 46315.60928240741 | — | USE |
+| 13 | at_unloading_time | Time (IST) the vehicle was marked At Unloading. Whiteboard point E. | 46315.81743055556 | — | USE |
+| 14 | trip_end_time | Time (IST) the trip was marked Trip End. Whiteboard point F. | 46315.85 | — | USE |
+| 15 | loading_lat | Latitude of the demand's loading address (LA). | 29 | Same data as fact_demands.from_lat - canonical name: from_lat | USE |
+| 16 | loading_long | Longitude of the demand's loading address (LA). | 78 | Same data as fact_demands.from_long - canonical name: from_long | USE |
+| 17 | unloading_lat | Latitude of the demand's unloading address (ULA). | 29 | Same data as fact_demands.to_lat - canonical name: to_lat | USE |
+| 18 | unloading_long | Longitude of the demand's unloading address (ULA). | 79 | Same data as fact_demands.to_long - canonical name: to_long | USE |
+| 19 | plc_lat | GPS latitude of the vehicle at placement (consignment_time). Nearest GPS point within ±30 min of the status time (interpolated inside a segment). NULL if no GPS in that window (~19-20% of trips). Whiteboard point A. | 29 | — | USE |
+| 20 | plc_long | GPS longitude of the vehicle at placement (consignment_time). Same logic as plc_lat. | 77 | — | USE |
+| 21 | plc_gps_time | Timestamp (IST) of the GPS point used for plc_lat / plc_long. Gap vs the status time shows how fresh the position is (max 30 min). | 46315.46255787037 | — | USE |
+| 22 | gtl_lat | GPS latitude of the vehicle at Going To Loading (gtl_time). Nearest GPS point within ±30 min of the status time (interpolated inside a segment). NULL if no GPS in that window (~19-20% of trips). Whiteboard point B. | 29 | — | USE |
+| 23 | gtl_long | GPS longitude of the vehicle at Going To Loading (gtl_time). Same logic as gtl_lat. | 77 | — | USE |
+| 24 | gtl_gps_time | Timestamp (IST) of the GPS point used for gtl_lat / gtl_long. Gap vs the status time shows how fresh the position is (max 30 min). | 46315.471354166664 | — | USE |
+| 25 | atl_lat | GPS latitude of the vehicle at At Loading (at_loading_time). Nearest GPS point within ±30 min of the status time (interpolated inside a segment). NULL if no GPS in that window (~19-20% of trips). Whiteboard point C. | 29 | — | USE |
+| 26 | atl_long | GPS longitude of the vehicle at At Loading (at_loading_time). Same logic as atl_lat. | 78 | — | USE |
+| 27 | atl_gps_time | Timestamp (IST) of the GPS point used for atl_lat / atl_long. Gap vs the status time shows how fresh the position is (max 30 min). | 46315.55871527778 | — | USE |
+| 28 | intransit_lat | GPS latitude of the vehicle at In Transit (in_transit_time). Nearest GPS point within ±30 min of the status time (interpolated inside a segment). NULL if no GPS in that window (~19-20% of trips). Whiteboard point D. | 29 | — | USE |
+| 29 | intransit_long | GPS longitude of the vehicle at In Transit (in_transit_time). Same logic as intransit_lat. | 78 | — | USE |
+| 30 | intransit_gps_time | Timestamp (IST) of the GPS point used for intransit_lat / intransit_long. Gap vs the status time shows how fresh the position is (max 30 min). | 46315.60928240741 | — | USE |
+| 31 | atul_lat | GPS latitude of the vehicle at At Unloading (at_unloading_time). Nearest GPS point within ±30 min of the status time (interpolated inside a segment). NULL if no GPS in that window (~19-20% of trips). Whiteboard point E. | 29 | — | USE |
+| 32 | atul_long | GPS longitude of the vehicle at At Unloading (at_unloading_time). Same logic as atul_lat. | 79 | — | USE |
+| 33 | atul_gps_time | Timestamp (IST) of the GPS point used for atul_lat / atul_long. Gap vs the status time shows how fresh the position is (max 30 min). | 46315.81743055556 | — | USE |
+| 34 | te_lat | GPS latitude of the vehicle at Trip End (trip_end_time). Nearest GPS point within ±30 min of the status time (interpolated inside a segment). NULL if no GPS in that window (~19-20% of trips). Whiteboard point F. | 29 | — | USE |
+| 35 | te_long | GPS longitude of the vehicle at Trip End (trip_end_time). Same logic as te_lat. | 79 | — | USE |
+| 36 | te_gps_time | Timestamp (IST) of the GPS point used for te_lat / te_long. Gap vs the status time shows how fresh the position is (max 30 min). | 46315.85 | — | USE |
+| 37 | loading_window_ok | TRUE when at_loading_time and in_transit_time both exist, in_transit is after at_loading, and the gap is <= 72 h. Loading-stop columns are computed only when TRUE (~92% of trips). | True | — | USE |
+| 38 | loading_window_minutes | Minutes between at_loading_time and in_transit_time (status-marked loading duration). NULL when loading_window_ok is FALSE. | 73 | — | USE |
+| 39 | loading_max_stop_minutes | Longest single GPS STOPPAGE (minutes) between At Loading and In Transit (window padded ±15 min). Proxy for actual loading duration. Whiteboard G. Filled for ~72% of trips. | 81 | — | USE |
+| 40 | loading_max_stop_lat | Latitude where the longest loading-window stoppage happened - the likely real loading spot. Whiteboard H. | 29 | — | USE |
+| 41 | loading_max_stop_long | Longitude of the longest loading-window stoppage. Whiteboard H. | 78 | — | USE |
+| 42 | loading_max_stop_start | Start time (IST) of the longest loading-window stoppage. | 46315.557118055556 | — | USE |
+| 43 | loading_max_stop_end | End time (IST) of the longest loading-window stoppage. | 46315.61349537037 | — | USE |
+| 44 | loading_total_stop_minutes | Total minutes the vehicle was stopped (all STOPPAGE segments) between At Loading and In Transit. | 81 | — | USE |
+| 45 | loading_n_stops | Number of STOPPAGE segments between At Loading and In Transit. | 1 | — | USE |
+| 46 | loading_gps_segments | Number of GPS segments (DRIVING + STOPPAGE) found in the loading window. NULL/0 = no GPS. | 3 | — | USE |
+| 47 | dist_loading_max_stop_to_la_km | Straight-line (haversine) km from the longest loading stoppage to the loading address. <=2 km = loaded at the right place. Whiteboard I. | 0 | — | USE |
+| 48 | dist_plc_to_la_km | Km from the vehicle's position at placement to the loading address - how far the truck was when placed. Whiteboard J. | 47 | — | USE |
+| 49 | dist_gtl_to_la_km | Km from the vehicle's position at Going To Loading to the loading address. Whiteboard K. | 47 | — | USE |
+| 50 | dist_atl_to_la_km | Km from the vehicle's position when marked At Loading to the loading address. Large values = status marked before reaching. Whiteboard L. | 0 | — | USE |
+| 51 | dist_intransit_to_la_km | Km from the vehicle's position when marked In Transit to the loading address. Whiteboard M. | 0 | — | USE |
+| 52 | unloading_window_ok | TRUE when at_unloading_time and trip_end_time both exist, trip_end is after at_unloading, and the gap is <= 72 h (~89% of trips; ~8% have trip_end <= at_unloading). | True | — | USE |
+| 53 | unloading_window_minutes | Minutes between at_unloading_time and trip_end_time. NULL when unloading_window_ok is FALSE. | 47 | — | USE |
+| 54 | unloading_max_stop_minutes | Longest single GPS STOPPAGE (minutes) between At Unloading and Trip End. Proxy for actual unloading duration. Whiteboard N. Filled for ~66% of trips. | 27 | — | USE |
+| 55 | unloading_max_stop_lat | Latitude where the longest unloading-window stoppage happened - the likely real unloading spot. Whiteboard O. | 29 | — | USE |
+| 56 | unloading_max_stop_long | Longitude of the longest unloading-window stoppage. Whiteboard O. | 79 | — | USE |
+| 57 | unloading_max_stop_start | Start time (IST) of the longest unloading-window stoppage. | 46315.83497685185 | — | USE |
+| 58 | unloading_max_stop_end | End time (IST) of the longest unloading-window stoppage. | 46315.85358796296 | — | USE |
+| 59 | unloading_total_stop_minutes | Total minutes stopped between At Unloading and Trip End. | 53 | — | USE |
+| 60 | unloading_n_stops | Number of STOPPAGE segments between At Unloading and Trip End. | 2 | — | USE |
+| 61 | unloading_gps_segments | Number of GPS segments found in the unloading window. NULL/0 = no GPS. | 5 | — | USE |
+| 62 | dist_unloading_max_stop_to_ula_km | Km from the longest unloading stoppage to the unloading address. Whiteboard P. | 6 | — | USE |
+| 63 | dist_atul_to_ula_km | Km from the vehicle's position when marked At Unloading to the unloading address. Whiteboard Q. | 2 | — | USE |
+| 64 | dist_te_to_ula_km | Km from the vehicle's position at Trip End to the unloading address. Whiteboard R. | 6 | — | USE |
+| 65 | gps_shift_min | Minutes added to raw GPS times to align them to IST (auto-detected per run; currently 330). Technical column. | 0 | — | DNU |
+| 66 | etl_loaded_at | Timestamp the row was last (re)built by the daily job. Last 45 days are rebuilt every run. | 46332.13861111111 | — | USE |
