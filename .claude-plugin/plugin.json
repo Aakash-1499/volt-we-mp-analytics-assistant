@@ -1,6 +1,6 @@
 {
   "name": "volt",
-  "version": "1.20261111.495",
+  "version": "1.20261111.500",
   "description": "Volt - Wheelseye's read-only stakeholder analytics assistant over Redshift.",
   "author": {
     "name": "Aakash Singh",
