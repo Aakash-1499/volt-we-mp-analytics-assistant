@@ -1513,30 +1513,30 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | id | Unique ID of the IVR call request (primary key of sanchar_ivr). One row per call attempt. | 228598 | — | USE |
-| 2 | deleted | Soft-delete flag from source. Currently always FALSE. | False | — | DNU |
-| 3 | phone_number | Phone number called - SHA-256 hash of the last 10 digits (PII masked). Joinable to other hashed phones, not readable. | aa37b724…2090880 (64-char hash) | — | USE |
-| 4 | origin | Origin city of the demand the call was about (e.g. sonipat). | north delhi | — | USE |
-| 5 | destination | Destination city of the demand the call was about (e.g. mumbai city). | mehsana | — | USE |
-| 6 | user_code | Consigner code (WE…) who was called. Filled for 100% of rows. | WE9475653 | Same data as consigner_user_code - canonical name: consigner_user_code | USE |
+| 1 | id | Unique identifier of a demand (indent / freight request) created by a consigner.<br>Commonly refer as demand_id | 228598 | — | USE |
+| 2 | deleted | Filter is_deleted = false for live rows. | False | — | DNU |
+| 3 | phone_number | Masked Phone number called | aa37b724…2090880 (64-char hash) | — | USE |
+| 4 | origin | Origin city of the demand the call was about | north delhi | — | USE |
+| 5 | destination | Destination city of the demand the call was about | mehsana | — | USE |
+| 6 | user_code | Consigner user code | WE9475653 | Same data as consigner_user_code - canonical name: consigner_user_code | USE |
 | 7 | service_name | Internal service that triggered the call. Always 'vasooli' (consigner service); ignore 1 test row. | vasooli | — | USE |
-| 8 | analytics_label | JSON context of the call: demandId and consignmentId, e.g. {"demandId": "5224809", "consignmentId": "2797853"}. Present on ~100% of rows. | {"demandId": "5258275", "consignmentId": "2811535"} | — | USE |
-| 9 | callback_topic | Callback topic configured for the call. Always NULL in practice - not used. | (NULL) | — | DNU |
-| 10 | status | Whether the call request was handed to the IVR vendor: SENT (98.3%) / FAILED (1.7%) / PENDING. Not the call outcome - see response_status. | SENT | — | USE |
+| 8 | analytics_label | JSON context of the call: demandId and consignmentId | {"demandId": "5258275", "consignmentId": "2811535"} | — | USE |
+| 9 | callback_topic | Callback topic configured for the call. Always NULL in practice | (NULL) | — | DNU |
+| 10 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | SENT | — | USE |
 | 11 | http_status | HTTP code returned by the IVR vendor API: 200 (98.3%), 404 (1.7%), 0/400/502 (rare). | 200 | — | USE |
 | 12 | api_status | Vendor API acknowledgement status: queued, or NULL when the request failed. | queued | — | USE |
 | 13 | response_message | Vendor API response message (e.g. done). | done | — | USE |
 | 14 | execution_id | Vendor execution / run ID of the call. Use to trace a call with the IVR vendor. | 24bdbdb2-6f5c-4a40-a9e2-d513a89dba75 | — | USE |
 | 15 | error_message | Error text when the call request failed (status = FAILED); NULL otherwise. | (NULL) | — | USE |
 | 16 | raw_response | Full JSON response returned by the IVR vendor API (status, message, execution_id, run_id). No PII. | {"status":"queued","message":"done","execution_id":"24bdbdb2-…","run_id":"24bdbdb2-…"} | — | USE |
-| 17 | created_at | Call request creation time as epoch MICROseconds (16 digits). Use created_ts for a readable timestamp. | 1793916455372758 | — | DNU |
-| 18 | updated_at | Last update time as epoch MICROseconds (16 digits). | 1793916755461852 | — | DNU |
+| 17 | created_at | Datetime when row of the table is created | 1793916455372758 | — | DNU |
+| 18 | updated_at | Last modification — seconds later for auto-approved, over an hour for manual/fraud review. | 1793916755461852 | — | DNU |
 | 19 | agent_id | ID of the IVR voice agent / flow used for the call (3 distinct agents). | 07354461-46bd-4c41-9411-3f058068553e | — | USE |
-| 20 | ts_ms | Source change-capture time in epoch milliseconds. Technical - drives the incremental load. | 1793916755462 | — | DNU |
-| 21 | lsn | Source database log sequence number. Technical CDC column. | 169315083519912 | — | DNU |
-| 22 | _event_time | Timestamp of the source change event. Technical CDC column. | 46331.925405092596 | — | DNU |
-| 23 | created_ts | Call request creation timestamp (readable). Use this for date filters. Data from 21 May 2026. | 46331.92193287037 | — | USE |
-| 24 | dpyear | Partition year of the source data. Technical. | 2026 | — | DNU |
-| 25 | dpmonth | Partition month of the source data. Technical. | 11 | — | DNU |
+| 20 | ts_ms | DO NOT USE | 1793916755462 | — | DNU |
+| 21 | lsn | DO NOT USE | 169315083519912 | — | DNU |
+| 22 | _event_time | DO NOT USE | 46331.925405092596 | — | DNU |
+| 23 | created_ts | DO NOT USE | 46331.92193287037 | — | USE |
+| 24 | dpyear | DO NOT USE(Use for Partition) | 2026 | — | DNU |
+| 25 | dpmonth | DO NOT USE(Use for Partition) | 11 | — | DNU |
 | 26 | response_status | Final call outcome: completed (43%), busy (36%), no-answer (14%), failed, call-disconnected, in-progress states; NULL/blank ~6%. Use this for connect rate. | completed | — | USE |
-| 27 | duration | Call duration in seconds (0 when not connected; max 50, avg ~14 s on connected calls). | 11 | — | USE |
+| 27 | duration | Total duration of ticket lifecycle from creation to resolution (seconds). | 11 | — | USE |
