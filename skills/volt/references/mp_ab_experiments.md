@@ -60,3 +60,4 @@
 | Pricing | Non-User Level | DS_DISCOUNT | 46318 | Live |  | 32 | NewLane_OldCx_CONTROL |  | Placement |  |  |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46330 | Live |  | 33 | OldLane_NewCx_TEST |  | Placement |  |  |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46330 | Live |  | 34 | OldLane_NewCx_CONTROL |  | Placement |  |  |  |  |  |  |
+| PTL | User Level | PTL_Pay_at_booking |  | Live |  |  | PTL_DIVIDE_PAYMENT_FLOW |  |  |  |  |  |  |  |  |
