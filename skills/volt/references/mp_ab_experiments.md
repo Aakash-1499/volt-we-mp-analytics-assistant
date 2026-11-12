@@ -54,11 +54,11 @@
 | Pricing | Non-User Level | DS_DISCOUNT | 46308 | Live |  | 30 | NewLane_NewCx_CONTROL |  | Placement |  |  |  |  |  |  |
 | PTL | User Level | SHOW_PTL | 46135 | Live |  | 17 | Test | where load_type is PTL and deleted = 'false' | App active users | % PTL Landed to Price Search |  |  | % Price Search to Demands,% Demand to Plc, % Plc to Trip |  |  |
 | PTL | User Level | DISABLE_PTL | 46135 | Live |  | 18 | Control | where load_type is PTL and deleted = 'false' | App active users | % PTL Landed to Price Search |  |  | % Price Search to Demands,% Demand to Plc, % Plc to Trip |  |  |
-| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 44 | PTL_BROWSING_FLOW_DEFAULT | where load_type is PTL and deleted = 'false' | PTL Price Search / PTL landed consigners | % Price Search to Demands | % Demand to Plc, % Plc to Trip |  |  |  |  |
-| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 45 | Test | where load_type is PTL and deleted = 'false' | PTL Price Search / PTL landed consigners | % Price Search to Demands | % Demand to Plc, % Plc to Trip |  |  |  |  |
+| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 44 | PTL_BROWSING_FLOW_DEFAULT - control | where load_type is PTL and deleted = 'false' | PTL Price Search / PTL landed consigners | % Price Search to Demands | % Demand to Plc, % Plc to Trip |  |  |  |  |
+| PTL | User Level | Browsing Flow For PTL | 46310 | Live |  | 45 | Test - PTL_BROWSING_FLOW_V2 | where load_type is PTL and deleted = 'false' | PTL Price Search / PTL landed consigners | % Price Search to Demands | % Demand to Plc, % Plc to Trip |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46318 | Live |  | 31 | NewLane_OldCx_TEST |  | Placement |  |  |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46318 | Live |  | 32 | NewLane_OldCx_CONTROL |  | Placement |  |  |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46330 | Live |  | 33 | OldLane_NewCx_TEST |  | Placement |  |  |  |  |  |  |
 | Pricing | Non-User Level | DS_DISCOUNT | 46330 | Live |  | 34 | OldLane_NewCx_CONTROL |  | Placement |  |  |  |  |  |  |
-| PTL | User Level | PTL_pay at booking | 46276 | Live |  | 36 | PTL_DIVIDE_PAYMENT_FLOW |  | PTL Demands | %trips with payment recevied, %payment received |  |  |  |  |  |
-| PTL | User Level | PTL_pay at booking | 46276 | Live |  | 37 | PTL_DEFAULT_PAYMENT_FLOW |  | PTL Demands |  |  |  |  |  |  |
+| PTL | User Level | PTL_pay at booking | 46276 | Live |  | 36 | PTL_DEFAULT_PAYMENT_FLOW - control |  | PTL Demands | %trips with payment recevied, %payment received |  |  |  |  |  |
+| PTL | User Level | PTL_pay at booking | 46276 | Live |  | 37 | PTL_DIVIDE_PAYMENT_FLOW - Test |  | PTL Demands | %trips with payment recevied, %payment received |  |  |  |  |  |
