@@ -1332,10 +1332,6 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 84 | inactive_profile | 1 if the consigner is classified inactive. |  |  |  |
 | 85 | advance_profile | 1 if the consigner operates on advance payment. |  |  |  |
 
-## 31_aks_fact_nps
-
-#REF! (Cannot find range or sheet for imported range.)
-
 ## 31_dim_product_offerings
 
 **mp_analytics_core.dim_product_offerings:** Owner
