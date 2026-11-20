@@ -31,9 +31,6 @@ FO Attributes (FTL),"Fleet size:  We classify FO based on the number of trucks t
 Base Cluster: We have attributed a state to each FO based on the logic of the highest frequent origin for their GPS lanes."
 FO Journey (FTL),"Lands on App >> Open Loads Section >> Browse Loads through filters/others (Active Demands) >> View Loads (LDP) >> Pays token >> Selects Vehicle >> Placement >> Reaches Loading Point(AT_LOADING)
  >> Pickups Material (IN_TRANSIT)>> Gets Advance Payment >> Delivery (Trip End) >> Uploads POD >> Gets Balance Payment"
-,
-,
-,
 Demand Journey (FTL),Consigner confirm VT > Consigner confirms Search Mode > Consigner provides loading and unloading address >
 ,
 ,
