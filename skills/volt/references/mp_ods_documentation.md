@@ -1466,20 +1466,20 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | consignment_id | Unique ID of the consignment (trip). Primary key of fact_trip_itinerary: one row per consignment that reached IN_TRANSIT. | 2767578 | — | USE |
-| 2 | consignment_code | Human-readable consignment code, e.g. WE35392-2774827. | WE35392-2767578 | — | USE |
-| 3 | demand_id | Demand the consignment was placed against. Join key to fact_demands. | 5147643 | — | USE |
-| 4 | operator_code | Fleet operator (FO) who ran the trip. | WE7126970 | — | USE |
-| 5 | vehicle_id | Vehicle that ran the trip. Used to match GPS from fact_gps_itinerary. | 4220432 | — | USE |
-| 6 | vehicle_number | Registration number of the vehicle (from fact_vehicle_info). | UP16PT1202 | — | USE |
-| 7 | consignment_state | Current state of the consignment (e.g. COMPLETED, IN_TRANSIT). | TRIP_END | — | USE |
-| 8 | placement_type | How the vehicle was placed on the demand (system / manual). | Automation | — | USE |
-| 9 | consignment_time | Placement time (IST) - when the vehicle was placed on the demand. Whiteboard point A (PLC). Table keeps a rolling 150 days on this column. | 46315.46255787037 | — | USE |
-| 10 | gtl_time | Time (IST) the trip was marked Going To Loading. Whiteboard point B. | 46315.471354166664 | — | USE |
-| 11 | at_loading_time | Time (IST) the vehicle was marked At Loading. Whiteboard point C. | 46315.55871527778 | — | USE |
-| 12 | in_transit_time | Time (IST) the trip was marked In Transit (loading done). Whiteboard point D. | 46315.60928240741 | — | USE |
-| 13 | at_unloading_time | Time (IST) the vehicle was marked At Unloading. Whiteboard point E. | 46315.81743055556 | — | USE |
-| 14 | trip_end_time | Time (IST) the trip was marked Trip End. Whiteboard point F. | 46315.85 | — | USE |
+| 1 | consignment_id | Unique identifier of the consignment. | 2767578 | — | USE |
+| 2 | consignment_code | Unique code assigned to the consignment. | WE35392-2767578 | — | USE |
+| 3 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
+| 4 | operator_code | Unique identifier of a fleet operator (FO). WheelsEye internal code, typically starts with 'WE'. | WE7126970 | — | USE |
+| 5 | vehicle_id | Unique internal identifier of a specific vehicle in the WheelsEye system. | 4220432 | — | USE |
+| 6 | vehicle_number | Vehicle registration / number plate (RTO number). | UP16PT1202 | — | USE |
+| 7 | consignment_state | Status/state of the consignment. | TRIP_END | — | USE |
+| 8 | placement_type | Mode of placement: Manual or Automation. | Automation | — | USE |
+| 9 | consignment_time | Timestamp when consignment was created. | 46315.46255787037 | — | USE |
+| 10 | gtl_time | Timestamp when the vehicle started moving towards the loading point. | 46315.471354166664 | — | USE |
+| 11 | at_loading_time | Timestamp when the vehicle arrived at the loading point. | 46315.55871527778 | — | USE |
+| 12 | in_transit_time | Timestamp when the shipment moved to In-Transit. | 46315.60928240741 | — | USE |
+| 13 | at_unloading_time | Timestamp when the vehicle arrived at the unloading point. | 46315.81743055556 | — | USE |
+| 14 | trip_end_time | Timestamp when the trip officially ended. | 46315.85 | — | USE |
 | 15 | loading_lat | Latitude of the demand's loading address (LA). | 29 | Same data as fact_demands.from_lat - canonical name: from_lat | USE |
 | 16 | loading_long | Longitude of the demand's loading address (LA). | 78 | Same data as fact_demands.from_long - canonical name: from_long | USE |
 | 17 | unloading_lat | Latitude of the demand's unloading address (ULA). | 29 | Same data as fact_demands.to_lat - canonical name: to_lat | USE |
@@ -1532,3 +1532,39 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 64 | dist_te_to_ula_km | Km from the vehicle's position at Trip End to the unloading address. Whiteboard R. | 6 | — | USE |
 | 65 | gps_shift_min | Minutes added to raw GPS times to align them to IST (auto-detected per run; currently 330). Technical column. | 0 | — | DNU |
 | 66 | etl_loaded_at | Timestamp the row was last (re)built by the daily job. Last 45 days are rebuilt every run. | 46332.13861111111 | — | USE |
+
+## 35_fact_call_logs
+
+**mp_analytics_core.fact_call_logs:** Owner
+
+**Ekta:** Grain
+
+call_log_id (= dialer_code + '-' + dialer_call_id)
+
+**Short description:** One row per call across the MCUBE, EXOTEL and SPARKTG dialers - answered or not, recorded or not. Says who called whom (as WheelsEye user codes; raw phone numbers are resolved and dropped), direction, status, duration, whether a recording exists, and which agent handled it. Lifetime history, rebuilt daily (DAG fact-call-tables-emr, 03:10 IST). EXOTEL feed has been stale since 21-Oct-2026.
+
+Columns
+
+| # | Column | Description | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | call_log_id | Unique ID of the call. dialer_code + '-' + the dialer's own call id. Primary key; join key to fact_call_transcripts.call_log_id. | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 2 | dialer_code | Dialer the call went through: MCUBE (sales / KAM / support via LSQ), EXOTEL (masked Cx<->FO bridge), SPARKTG (RM calls to operators). | MCUBE | — | USE |
+| 3 | dialer_call_id | The dialer's own call id. MCUBE = LSQ prospectactivityid; EXOTEL = Graham call-log id; SPARKTG = Tesseract call id. | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 4 | caller_user_code | WheelsEye user code of the party who placed the call. On the agent side it is kept only if it is a WE staff code (an agent phone that is also a consigner account is blanked). Use agent_employee_id to identify agents. | WE2827925 | — | USE |
+| 5 | receiver_user_code | WheelsEye user code of the party who received the call. For MCUBE the customer comes from the LSQ prospect (97.7% coverage); otherwise from dim_phone_user. | WE9278617 | — | USE |
+| 6 | masked_number | Virtual / company number shown to the customer (a pool of ~30 numbers, not a person). | 8062916564 | — | USE |
+| 7 | is_masked | 1 when the call went through a masked / virtual number. | 1 | — | USE |
+| 8 | direction | inbound or outbound, from WheelsEye's point of view. MCUBE: LSQ event 21 = inbound, 22 = outbound. NULL on EXOTEL. | outbound | Lower-case | USE |
+| 9 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | Answered | Vocabulary differs by dialer - use is_answered | USE |
+| 10 | is_answered | 1 when the call connected (status in completed / answered / connected). Harmonised across dialers. | 1 | — | USE |
+| 11 | call_time | Time the call happened. | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 12 | call_date | Date of call_time. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | USE |
+| 13 | duration_sec | Call duration in seconds. Includes ring time (MCUBE), so a 31s call may have <30s of talk. NULL on EXOTEL (source has no duration). | 151 | — | USE |
+| 14 | has_recording | 1 when the dialer has a recording link for the call. EXOTEL is always 0 (source has no link) - use fact_call_transcripts for EXOTEL recordings. | 1 | — | USE |
+| 15 | agent_id | ID of the IVR voice agent / flow used for the call (3 distinct agents). | e1c57871-8aea-11ef-bf52-020d08ebce6f | — | USE |
+| 16 | agent_employee_id | Readable employee id of the agent (salesperson id), from fact_internal_users via agent_id. | WTL0115 | — | USE |
+| 17 | caller_role | Role of the caller: CX (consigner), FO (operator), WE (WheelsEye staff), OTHER (partner types), UNKNOWN. Agent side is WE by structure (MCUBE outbound, SPARKTG). | WE | — | USE |
+| 18 | receiver_role | Role of the receiver, same values as caller_role. WE on MCUBE inbound calls. | CX | — | USE |
+| 19 | metadata | JSON of every dialer field not promoted to a column (e.g. MCUBE tag, call_notes, mcube_payload). Never contains phone numbers. | {"mcube_payload":"source_data",...} | JSON string | USE |
+| 20 | source_updated_ts | When the source record was last updated (CDC). Used to keep the latest version of a call. | 46302.225 | UTC | DO NOT USE |
+| 21 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. | 46346 | — | DO NOT USE |
