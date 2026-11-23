@@ -1522,8 +1522,8 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | call_log_id | Unique ID of the call. dialer_code + '-' + the dialer's own call id. Primary key; join key to fact_call_transcripts.call_log_id. | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 2 | dialer_code | Dialer the call went through: MCUBE (sales / KAM / support via LSQ), EXOTEL (masked Cx<->FO bridge), SPARKTG (RM calls to operators). | MCUBE | — | USE |
-| 3 | dialer_call_id | The dialer's own call id. MCUBE = LSQ prospectactivityid; EXOTEL = Graham call-log id; SPARKTG = Tesseract call id. | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 2 | dialer_code | Dialer the recording came from: MCUBE, EXOTEL, SPARKTG. | MCUBE | — | USE |
+| 3 | dialer_call_id | <missing in Glossary> | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
 | 4 | caller_user_code | WheelsEye user code of the party who placed the call. On the agent side it is kept only if it is a WE staff code (an agent phone that is also a consigner account is blanked). Use agent_employee_id to identify agents. | WE2827925 | — | USE |
 | 5 | receiver_user_code | WheelsEye user code of the party who received the call. For MCUBE the customer comes from the LSQ prospect (97.7% coverage); otherwise from dim_phone_user. | WE9278617 | — | USE |
 | 6 | masked_number | Virtual / company number shown to the customer (a pool of ~30 numbers, not a person). | 8062916564 | — | USE |
@@ -1532,7 +1532,7 @@ Columns
 | 9 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | Answered | Vocabulary differs by dialer - use is_answered | USE |
 | 10 | is_answered | 1 when the call connected (status in completed / answered / connected). Harmonised across dialers. | 1 | — | USE |
 | 11 | call_time | Time the call happened. | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 12 | call_date | Date of call_time. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | USE |
+| 12 | call_date | <missing in Glossary> | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | USE |
 | 13 | duration_sec | Call duration in seconds. Includes ring time (MCUBE), so a 31s call may have <30s of talk. NULL on EXOTEL (source has no duration). | 151 | — | USE |
 | 14 | has_recording | 1 when the dialer has a recording link for the call. EXOTEL is always 0 (source has no link) - use fact_call_transcripts for EXOTEL recordings. | 1 | — | USE |
 | 15 | agent_id | ID of the IVR voice agent / flow used for the call (3 distinct agents). | e1c57871-8aea-11ef-bf52-020d08ebce6f | — | USE |
@@ -1557,20 +1557,20 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | dialer_code | Dialer the call went through: MCUBE (sales / KAM / support via LSQ), EXOTEL (masked Cx<->FO bridge), SPARKTG (RM calls to operators). | MCUBE | — | USE |
+| 1 | dialer_code | Dialer the recording came from: MCUBE, EXOTEL, SPARKTG. | MCUBE | — | USE |
 | 2 | recording_id | The provider's call/recording id: a 32-char hex Call SID for Exotel, a 20-digit id for mCube. Also the filename in recording_url. | 92173693201795072440 | — | USE |
 | 3 | recording_source_id | Primary key of the row in the source table. Call_id in graham_dialplan_call_log for Exotel, prospectactivityid in lsq_prospectactivity_base for mCube/LSQ. Use it to join back to the source table. | fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
 | 4 | call_log_id | Unique ID of the call. dialer_code + '-' + the dialer's own call id. Primary key; join key to fact_call_transcripts.call_log_id. | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
 | 5 | recording_url | Public URL of the audio file (recordings.exotel.com/... or recordings.mcube.com/....wav). Null for rows not picked up yet and for Exotel calls that have no recording. | https://recordings.mcube.com/... | — | USE |
-| 6 | stt_job_status | The STT provider's job state as last polled (retrying, completed, failed, etc.). Null if never submitted. | completed | — | USE |
+| 6 | stt_job_status | The STT provider's job state as last polled (retrying, completed, failed, etc.). Null if never submitted. | completed | — | DNU |
 | 7 | transcript_text | Full transcript, segments separated by ' \| ' and tagged speaker_0 / speaker_1. Up to 65,535 bytes. | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
 | 8 | transcript_len | Length of transcript_text in characters. 0 = no text. | 816 | — | USE |
-| 9 | segment_count | Number of speech segments in the transcript. -1 when not transcribed. | 22 | — | USE |
-| 10 | is_truncated | TRUE when the source transcript was cut off. | False | — | USE |
-| 11 | has_transcript | 1 when transcript_len > 0. Use this, not stt_job_status - completed jobs can have empty text. | 1 | — | USE |
+| 9 | segment_count | <missing in Glossary> | 22 | — | USE |
+| 10 | is_truncated | <missing in Glossary> | False | — | USE |
+| 11 | has_transcript | <missing in Glossary> | 1 | — | USE |
 | 12 | call_time | Time the call happened. | 46345.072222222225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 13 | audio_duration_sec | Length of the audio in seconds. | 39.08 | — | USE |
-| 14 | n_speakers | Number of distinct speakers detected. | 2 | — | USE |
+| 14 | n_speakers | <missing in Glossary> | 2 | — | USE |
 | 15 | metadata | JSON of every dialer field not promoted to a column (e.g. MCUBE tag, call_notes, mcube_payload). Never contains phone numbers. | {"recording_source":"MCUBE_LSQ_PROSPECTACTIVITY_BASE",...} | JSON string | USE |
 | 16 | created_ts | DO NOT USE | 46346.02315972222 | UTC | DO NOT USE |
 | 17 | source_updated_ts | When the source record was last updated (CDC). Used to keep the latest version of a call. | 46346.23708333333 | UTC | DO NOT USE |
