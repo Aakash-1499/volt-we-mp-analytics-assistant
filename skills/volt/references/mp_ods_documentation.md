@@ -1513,35 +1513,26 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 **Ekta:** Grain
 
-call_log_id (= dialer_code + '-' + dialer_call_id)
+**call_log_id - one row per call:** Short description
 
-**Short description:** One row per call across the MCUBE, EXOTEL and SPARKTG dialers - answered or not, recorded or not. Says who called whom (as WheelsEye user codes; raw phone numbers are resolved and dropped), direction, status, duration, whether a recording exists, and which agent handled it. Lifetime history, rebuilt daily (DAG fact-call-tables-emr, 03:10 IST). EXOTEL feed has been stale since 21-Oct-2026.
+MASTER call table: every call across the MCUBE, EXOTEL and SPARKTG dialers - answered or not, recorded or not - with who called whom (user codes + roles), the agent, direction, outcome and duration. Lifetime history. Sources (S3, same feeds DE uses): MCUBE = LSQ prospect activity extension base (events 21 inbound / 22 outbound), EXOTEL = graham_dialplan_call_log, SPARKTG = tesseract_rm_call_log. User codes are DERIVED first (MCUBE: LSQ prospect; EXOTEL: the trip the call belongs to) and looked up from the phone number only as a fallback. Raw phone numbers are never stored.
 
 Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | call_log_id | <missing in Glossary> | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 2 | dialer_code | <missing in Glossary> | MCUBE | — | USE |
-| 3 | dialer_call_id | <missing in Glossary> | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 4 | caller_user_code | <missing in Glossary> | WE2827925 | — | USE |
-| 5 | receiver_user_code | <missing in Glossary> | WE9278617 | — | USE |
-| 6 | masked_number | <missing in Glossary> | 8062916564 | — | USE |
-| 7 | is_masked | <missing in Glossary> | 1 | — | USE |
-| 8 | direction | <missing in Glossary> | outbound | Lower-case | USE |
-| 9 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | Answered | Vocabulary differs by dialer - use is_answered | USE |
-| 10 | is_answered | <missing in Glossary> | 1 | — | USE |
-| 11 | call_time | <missing in Glossary> | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 12 | call_date | <missing in Glossary> | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | USE |
-| 13 | duration_sec | <missing in Glossary> | 151 | — | USE |
-| 14 | has_recording | <missing in Glossary> | 1 | — | USE |
-| 15 | agent_id | ID of the IVR voice agent / flow used for the call (3 distinct agents). | e1c57871-8aea-11ef-bf52-020d08ebce6f | — | USE |
-| 16 | agent_employee_id | <missing in Glossary> | WTL0115 | — | USE |
-| 17 | caller_role | <missing in Glossary> | WE | — | USE |
-| 18 | receiver_role | <missing in Glossary> | CX | — | USE |
-| 19 | metadata | <missing in Glossary> | {"mcube_payload":"source_data",...} | JSON string | USE |
-| 20 | source_updated_ts | <missing in Glossary> | 46302.225 | UTC | DO NOT USE |
-| 21 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. | 46346 | — | DO NOT USE |
+| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | MCUBE | — | USE |
+| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE2827925 | — | USE |
+| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE9278617 | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). Filled for ~99.7% of MCUBE calls; NULL on EXOTEL and SPARKTG. | 8062916564 | — | USE |
+| 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | 1 | — | USE |
+| 8 | is_answered | 1 when the call connected. Harmonised across dialers. | outbound | Lower-case | USE |
+| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown: EXOTEL's call feed carries no link even though its calls are recorded (see fact_call_transcripts). | Answered | Vocabulary differs by dialer - use is_answered | USE |
+| 10 | call_at | Time of the call. | 1 | — | USE |
+| 11 | call_duration_sec | Call duration in seconds. Includes ring time on MCUBE, so a 31s call may have <30s of talk. NULL on EXOTEL. | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | USE |
 
 ## 29_fact_call_transcripts
 
@@ -1560,7 +1551,7 @@ Columns
 | 1 | dialer_code | <missing in Glossary> | MCUBE | — | USE |
 | 2 | recording_id | The provider's call/recording id: a 32-char hex Call SID for Exotel, a 20-digit id for mCube. Also the filename in recording_url. | 92173693201795072440 | — | USE |
 | 3 | recording_source_id | Primary key of the row in the source table. Call_id in graham_dialplan_call_log for Exotel, prospectactivityid in lsq_prospectactivity_base for mCube/LSQ. Use it to join back to the source table. | fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
-| 4 | call_log_id | <missing in Glossary> | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
+| 4 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
 | 5 | recording_url | Public URL of the audio file (recordings.exotel.com/... or recordings.mcube.com/....wav). Null for rows not picked up yet and for Exotel calls that have no recording. | https://recordings.mcube.com/... | — | USE |
 | 6 | stt_job_status | The STT provider's job state as last polled (retrying, completed, failed, etc.). Null if never submitted. | completed | — | DNU |
 | 7 | transcript_text | <missing in Glossary> | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
