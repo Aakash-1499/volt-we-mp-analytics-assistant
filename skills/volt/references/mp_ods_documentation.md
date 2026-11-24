@@ -1704,22 +1704,22 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). Joins to dim_survey. | NPS_REASON | — | USE |
-| 2 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 5ca179e49fc593fa | — | USE |
-| 3 | survey_type | Survey the question belongs to: NPS, TRIP_RATING, PICKUP_FEEDBACK, TICKET_CSAT, CHAT_CSAT, CANCEL_REASON, DR_CANCEL_REASON. Use to pull a whole survey (score + reasons + comment). | NPS | — | USE |
-| 4 | question_type | rating, single_select, multi_select or freetext. | multi_select | — | USE |
-| 5 | question_text | Question in plain English. | Reasons for the score | — | USE |
-| 6 | scale_max | Top of the scale for rating questions (5, or 1 for yes / no). | 5 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | answer_text | Exactly what the user gave: the option, or free text (comments, remarks). Phone numbers masked. | सही भाड़ा नहीं मिलता है | UTC date | USE |
-| 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 1 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | Use only where session_status = 'TICKET_GENERATED' | DNU |
-| 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 | — | USE |
-| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | For trends start from Jun-2026 | USE |
-| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
-| 13 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | — | USE |
-| 14 | issue_selected | Issue the user picked in the chat menu | NO_RESPONSE_GTL | Same data as consignment_id | USE |
-| 15 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
-| 16 | chat_feedback | SATISFIED / NOT_SATISFIED (operator chat only - the consigner chat has no feedback field). | NOT_SATISFIED | — | USE |
-| 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | — | USE |
-| 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call | — | USE |
-| 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 | — | USE |
-| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+| 2 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 5ca179e49fc593fa |  | USE |
+| 3 | survey_type | Survey the question belongs to: NPS, TRIP_RATING, PICKUP_FEEDBACK, TICKET_CSAT, CHAT_CSAT, CANCEL_REASON, DR_CANCEL_REASON. Use to pull a whole survey (score + reasons + comment). | NPS |  | USE |
+| 4 | question_type | rating, single_select, multi_select or freetext. | multi_select |  | USE |
+| 5 | question_text | Question in plain English. | Reasons for the score |  | USE |
+| 6 | scale_max | Top of the scale for rating questions (5, or 1 for yes / no). | 5 |  | USE |
+| 7 | answer_text | Exactly what the user gave: the option, or free text (comments, remarks). Phone numbers masked. | सही भाड़ा नहीं मिलता है |  | USE |
+| 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 1 |  | USE |
+| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
+| 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 |  | USE |
+| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 |  | USE |
+| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 |  | USE |
+| 13 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 |  | USE |
+| 14 | issue_selected | Issue the user picked in the chat menu | NO_RESPONSE_GTL |  | USE |
+| 15 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL |  | USE |
+| 16 | chat_feedback | SATISFIED / NOT_SATISFIED (operator chat only - the consigner chat has no feedback field). | NOT_SATISFIED |  | USE |
+| 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] |  | USE |
+| 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call |  | USE |
+| 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 |  | USE |
+| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
