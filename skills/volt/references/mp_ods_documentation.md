@@ -1565,9 +1565,9 @@ Columns
 
 **Ekta:** Grain
 
-chat_session_id - one row per in-app help chat session
+**chat_session_id:** Short description
 
-**Short description:** Every help-chat session in the consigner app (chatbot) and the operator app (Tesseract): who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback. Lifetime history.
+Every help-chat session in the consigner app (chatbot) and the operator app (Tesseract): who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback. Lifetime history.
 
 Columns
 
@@ -1592,4 +1592,4 @@ Columns
 | 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | — | USE |
 | 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call | — | USE |
 | 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 | — | USE |
-| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | USE |
+| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
