@@ -1567,13 +1567,48 @@ Columns
 
 **chat_session_id:** Short description
 
-Every help-chat session in the consigner app (chatbot) and the operator app (Tesseract): who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback. Lifetime history.
+Every help-chat session in the consigner app (chatbot) and the operator app (Tesseract): who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback.
 
 Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | chat_session_id | Unique session id = chat source + '-' + session id. | FO_TESSERACT-e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
+| 1 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
+| 2 | user_code | Consigner user code | WE7832909 | — | USE |
+| 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
+| 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
+| 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
+| 6 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | followup_call_log_id | First inbound call by the same user within 60 min after the chat - a chat that did not resolve the issue. Joins to fact_call_logs. | MCUBE-0a1b... | UTC date | USE |
+| 8 | total_messages | Number of messages in the session. | 12 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | user_messages | Messages typed / selected by the user (rest are bot). | 5 | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 | — | USE |
+| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | For trends start from Jun-2026 | USE |
+| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
+| 13 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | — | USE |
+| 14 | issue_selected | Issue the user picked in the chat menu | NO_RESPONSE_GTL | Same data as consignment_id | USE |
+| 15 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
+| 16 | chat_feedback | SATISFIED / NOT_SATISFIED (operator chat only - the consigner chat has no feedback field). | NOT_SATISFIED | — | USE |
+| 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | — | USE |
+| 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call | — | USE |
+| 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 | — | USE |
+| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+
+## 37_fact_chat_details
+
+**mp_analytics_core.fact_chat_details:** Owner
+
+**Ekta:** Grain
+
+chat_session_id + chat_message_id - one row per chat message
+
+**Short description:** Every message of every help-chat session. Used for quoting customers and issue tagging.
+
+Columns
+
+| # | Column | Description | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
 | 2 | user_code | Consigner user code | WE7832909 | — | USE |
 | 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
 | 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
