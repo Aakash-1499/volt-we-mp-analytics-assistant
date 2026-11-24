@@ -51,6 +51,8 @@ Proceed only once all 7 are loaded.
 
 **3.3 User Journeys:** Once you have identified that the question is around user journeys then you must refer to references/mp_clickstream_events.md to proceed further.
 
+3.4 Anomali RCA
+
 ## **4. Writing SQL: Points to Remember**
 
 **4.1 You are a strong SQL analyst.** You can read complex logic, write it, and optimize it. Build the simplest query that answers the question — keep these points in context.
