@@ -1521,26 +1521,26 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | call_log_id | Unique ID of the call. dialer_code + '-' + the dialer's own call id. Primary key; join key to fact_call_transcripts.call_log_id. | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 2 | dialer_code | Dialer the recording came from: MCUBE, EXOTEL, SPARKTG. | MCUBE | — | USE |
+| 1 | call_log_id | <missing in Glossary> | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 2 | dialer_code | <missing in Glossary> | MCUBE | — | USE |
 | 3 | dialer_call_id | <missing in Glossary> | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 4 | caller_user_code | WheelsEye user code of the party who placed the call. On the agent side it is kept only if it is a WE staff code (an agent phone that is also a consigner account is blanked). Use agent_employee_id to identify agents. | WE2827925 | — | USE |
-| 5 | receiver_user_code | WheelsEye user code of the party who received the call. For MCUBE the customer comes from the LSQ prospect (97.7% coverage); otherwise from dim_phone_user. | WE9278617 | — | USE |
-| 6 | masked_number | Virtual / company number shown to the customer (a pool of ~30 numbers, not a person). | 8062916564 | — | USE |
-| 7 | is_masked | 1 when the call went through a masked / virtual number. | 1 | — | USE |
-| 8 | direction | inbound or outbound, from WheelsEye's point of view. MCUBE: LSQ event 21 = inbound, 22 = outbound. NULL on EXOTEL. | outbound | Lower-case | USE |
+| 4 | caller_user_code | <missing in Glossary> | WE2827925 | — | USE |
+| 5 | receiver_user_code | <missing in Glossary> | WE9278617 | — | USE |
+| 6 | masked_number | <missing in Glossary> | 8062916564 | — | USE |
+| 7 | is_masked | <missing in Glossary> | 1 | — | USE |
+| 8 | direction | <missing in Glossary> | outbound | Lower-case | USE |
 | 9 | status | Demand status: EXPIRED (closed without a trip), FULFILLED (trip started), PENDING (active, searching vehicle). Consider all values by default. | Answered | Vocabulary differs by dialer - use is_answered | USE |
-| 10 | is_answered | 1 when the call connected (status in completed / answered / connected). Harmonised across dialers. | 1 | — | USE |
-| 11 | call_time | Time the call happened. | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 10 | is_answered | <missing in Glossary> | 1 | — | USE |
+| 11 | call_time | <missing in Glossary> | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 12 | call_date | <missing in Glossary> | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | USE |
-| 13 | duration_sec | Call duration in seconds. Includes ring time (MCUBE), so a 31s call may have <30s of talk. NULL on EXOTEL (source has no duration). | 151 | — | USE |
-| 14 | has_recording | 1 when the dialer has a recording link for the call. EXOTEL is always 0 (source has no link) - use fact_call_transcripts for EXOTEL recordings. | 1 | — | USE |
+| 13 | duration_sec | <missing in Glossary> | 151 | — | USE |
+| 14 | has_recording | <missing in Glossary> | 1 | — | USE |
 | 15 | agent_id | ID of the IVR voice agent / flow used for the call (3 distinct agents). | e1c57871-8aea-11ef-bf52-020d08ebce6f | — | USE |
-| 16 | agent_employee_id | Readable employee id of the agent (salesperson id), from fact_internal_users via agent_id. | WTL0115 | — | USE |
-| 17 | caller_role | Role of the caller: CX (consigner), FO (operator), WE (WheelsEye staff), OTHER (partner types), UNKNOWN. Agent side is WE by structure (MCUBE outbound, SPARKTG). | WE | — | USE |
-| 18 | receiver_role | Role of the receiver, same values as caller_role. WE on MCUBE inbound calls. | CX | — | USE |
-| 19 | metadata | JSON of every dialer field not promoted to a column (e.g. MCUBE tag, call_notes, mcube_payload). Never contains phone numbers. | {"mcube_payload":"source_data",...} | JSON string | USE |
-| 20 | source_updated_ts | When the source record was last updated (CDC). Used to keep the latest version of a call. | 46302.225 | UTC | DO NOT USE |
+| 16 | agent_employee_id | <missing in Glossary> | WTL0115 | — | USE |
+| 17 | caller_role | <missing in Glossary> | WE | — | USE |
+| 18 | receiver_role | <missing in Glossary> | CX | — | USE |
+| 19 | metadata | <missing in Glossary> | {"mcube_payload":"source_data",...} | JSON string | USE |
+| 20 | source_updated_ts | <missing in Glossary> | 46302.225 | UTC | DO NOT USE |
 | 21 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. | 46346 | — | DO NOT USE |
 
 ## 29_fact_call_transcripts
@@ -1557,23 +1557,23 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | dialer_code | Dialer the recording came from: MCUBE, EXOTEL, SPARKTG. | MCUBE | — | USE |
+| 1 | dialer_code | <missing in Glossary> | MCUBE | — | USE |
 | 2 | recording_id | The provider's call/recording id: a 32-char hex Call SID for Exotel, a 20-digit id for mCube. Also the filename in recording_url. | 92173693201795072440 | — | USE |
 | 3 | recording_source_id | Primary key of the row in the source table. Call_id in graham_dialplan_call_log for Exotel, prospectactivityid in lsq_prospectactivity_base for mCube/LSQ. Use it to join back to the source table. | fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
-| 4 | call_log_id | Unique ID of the call. dialer_code + '-' + the dialer's own call id. Primary key; join key to fact_call_transcripts.call_log_id. | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
+| 4 | call_log_id | <missing in Glossary> | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
 | 5 | recording_url | Public URL of the audio file (recordings.exotel.com/... or recordings.mcube.com/....wav). Null for rows not picked up yet and for Exotel calls that have no recording. | https://recordings.mcube.com/... | — | USE |
 | 6 | stt_job_status | The STT provider's job state as last polled (retrying, completed, failed, etc.). Null if never submitted. | completed | — | DNU |
-| 7 | transcript_text | Full transcript, segments separated by ' \| ' and tagged speaker_0 / speaker_1. Up to 65,535 bytes. | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
-| 8 | transcript_len | Length of transcript_text in characters. 0 = no text. | 816 | — | USE |
+| 7 | transcript_text | <missing in Glossary> | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
+| 8 | transcript_len | <missing in Glossary> | 816 | — | USE |
 | 9 | segment_count | <missing in Glossary> | 22 | — | USE |
 | 10 | is_truncated | <missing in Glossary> | False | — | USE |
 | 11 | has_transcript | <missing in Glossary> | 1 | — | USE |
-| 12 | call_time | Time the call happened. | 46345.072222222225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 13 | audio_duration_sec | Length of the audio in seconds. | 39.08 | — | USE |
+| 12 | call_time | <missing in Glossary> | 46345.072222222225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 13 | audio_duration_sec | <missing in Glossary> | 39.08 | — | USE |
 | 14 | n_speakers | <missing in Glossary> | 2 | — | USE |
-| 15 | metadata | JSON of every dialer field not promoted to a column (e.g. MCUBE tag, call_notes, mcube_payload). Never contains phone numbers. | {"recording_source":"MCUBE_LSQ_PROSPECTACTIVITY_BASE",...} | JSON string | USE |
+| 15 | metadata | <missing in Glossary> | {"recording_source":"MCUBE_LSQ_PROSPECTACTIVITY_BASE",...} | JSON string | USE |
 | 16 | created_ts | DO NOT USE | 46346.02315972222 | UTC | DO NOT USE |
-| 17 | source_updated_ts | When the source record was last updated (CDC). Used to keep the latest version of a call. | 46346.23708333333 | UTC | DO NOT USE |
+| 17 | source_updated_ts | <missing in Glossary> | 46346.23708333333 | UTC | DO NOT USE |
 | 18 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. | 46346 | — | DO NOT USE |
 
 ## 36_fact_chat_logs
@@ -1591,29 +1591,29 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | chat_session_id | <missing in Glossary> | FO_TESSERACT-e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
-| 2 | chat_source | Which chat the session came from. Today only FO_TESSERACT (operator help chat). | FO_TESSERACT | — | USE |
-| 3 | session_id | Source session id. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
+| 2 | chat_source | <missing in Glossary> | FO_TESSERACT | — | USE |
+| 3 | session_id | <missing in Glossary> | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
 | 4 | user_code | Consigner user code | WE7832909 | — | USE |
-| 5 | user_role | Role of user_code from ums_users: FO, CX, WE, OTHER, UNKNOWN. ~14% of sessions are CX-typed users in the FO chat. | FO | — | USE |
-| 6 | started_at | Time the session started. | 46346.10087962963 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | chat_date | Date of started_at. | 46346 | UTC date | USE |
-| 8 | last_activity_at | Last update on the session (for EXPIRED this is the expiry sweep, for resolved tickets the resolution time). | 46346.11383101852 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | duration_sec | Call duration in seconds. Includes ring time (MCUBE), so a 31s call may have <30s of talk. NULL on EXOTEL (source has no duration). | 1119 | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 10 | session_status | Raw session status: TICKET_GENERATED, TICKET_RESOLVED, REOPENED, CONDITIONAL_ENDED, EXPIRED, ACTIVE, NULL (before ~Jun-2026). | TICKET_GENERATED | — | USE |
-| 11 | outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, UNKNOWN (status not captured before ~Jun-2026). | TICKET_RAISED | For trends start from Jun-2026 | USE |
-| 12 | handed_to_agent | 1 when a support ticket was raised from the chat. | 1 | — | USE |
+| 5 | user_role | <missing in Glossary> | FO | — | USE |
+| 6 | started_at | <missing in Glossary> | 46346.10087962963 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | chat_date | <missing in Glossary> | 46346 | UTC date | USE |
+| 8 | last_activity_at | <missing in Glossary> | 46346.11383101852 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | duration_sec | <missing in Glossary> | 1119 | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 10 | session_status | <missing in Glossary> | TICKET_GENERATED | — | USE |
+| 11 | outcome | <missing in Glossary> | TICKET_RAISED | For trends start from Jun-2026 | USE |
+| 12 | handed_to_agent | <missing in Glossary> | 1 | — | USE |
 | 13 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | T2250156 | — | USE |
 | 14 | trip_id | Unique identifier of the trip associated with the demand. | 2837691 | Same data as consignment_id | USE |
 | 15 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | — | USE |
 | 16 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
 | 17 | consigner_code | Consigner user code | WE9562223 | — | USE |
-| 18 | issue_type | Issue the user picked in the chat. | NO_RESPONSE_GTL | — | USE |
+| 18 | issue_type | <missing in Glossary> | NO_RESPONSE_GTL | — | USE |
 | 19 | subject | Subject/title of the ticket — brief description of the issue. | MP_GTL | — | USE |
-| 20 | trip_state | State of the trip when the chat was opened. | GOING_TO_LOAD | — | USE |
-| 21 | has_feedback | 1 when the user left feedback on the session. | 1 | — | USE |
-| 22 | feedback_category | SATISFIED or NOT_SATISFIED. | NOT_SATISFIED | — | USE |
-| 23 | feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | JSON array string | USE |
-| 24 | feedback_comment | Free-text comment with the feedback (~22% of feedback has one). | loading party still not received my call | — | USE |
-| 25 | feedback_at | Time feedback was given. | 46346.104108796295 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 26 | metadata | JSON of every dialer field not promoted to a column (e.g. MCUBE tag, call_notes, mcube_payload). Never contains phone numbers. | {"start_reference_id":"4","last_reference_id":"3"} | JSON string | DO NOT USE |
+| 20 | trip_state | <missing in Glossary> | GOING_TO_LOAD | — | USE |
+| 21 | has_feedback | <missing in Glossary> | 1 | — | USE |
+| 22 | feedback_category | <missing in Glossary> | NOT_SATISFIED | — | USE |
+| 23 | feedback_reasons | <missing in Glossary> | ["DELAY_IN_RESOLUTION"] | JSON array string | USE |
+| 24 | feedback_comment | <missing in Glossary> | loading party still not received my call | — | USE |
+| 25 | feedback_at | <missing in Glossary> | 46346.104108796295 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 26 | metadata | <missing in Glossary> | {"start_reference_id":"4","last_reference_id":"3"} | JSON string | DO NOT USE |
 | 27 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. | 46346 | — | DO NOT USE |
