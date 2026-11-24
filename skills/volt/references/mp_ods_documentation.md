@@ -644,7 +644,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 4 | deleted | Filter is_deleted = false for live rows. | false | — | DNU |
 | 5 | created_by | User who created the ticket. | bhim.singh@wheelseye.com | — | DNU |
 | 6 | updated_by | User who last updated the ticket. | ptl@wheelseye.com | — | DNU |
-| 7 | user_code | Consigner user code | WE8414272 | — | USE |
+| 7 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE8414272 | — | USE |
 | 8 | variant_id | Variant identifier per experiment. Used to tag Test and Control consigners in each experiment | 18 | — | USE |
 | 9 | ts_ms | DO NOT USE | 1775736600873 | — | DNU |
 | 10 | lsn | DO NOT USE | 0 | — | DNU |
@@ -753,7 +753,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | event_date | Calendar date of the event (or timestamp when the event occurred). | 2026-08-17 | — | USE |
-| 2 | user_code | Consigner user code | WE2477229 | — | USE |
+| 2 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE2477229 | — | USE |
 | 3 | demand_id | Unique identifier of a demand created by a consigner. | 4826862 | — | USE |
 | 4 | event_name | Name of the event trigger on certain action on app. | v1_add_lr | — | USE |
 | 5 | event_action | Type of action done on app : Click, View, Scroll. | click | — | USE |
@@ -1403,7 +1403,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 3 | phone_number | Masked Phone number called | aa37b724…2090880 (64-char hash) | — | USE |
 | 4 | origin | Origin city of the demand the call was about | north delhi | — | USE |
 | 5 | destination | Destination city of the demand the call was about | mehsana | — | USE |
-| 6 | user_code | Consigner user code | WE9475653 | Same data as consigner_user_code - canonical name: consigner_user_code | USE |
+| 6 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9475653 | Same data as consigner_user_code - canonical name: consigner_user_code | USE |
 | 7 | service_name | Internal service that triggered the call. Always 'vasooli' (consigner service); ignore 1 test row. | vasooli | — | USE |
 | 8 | analytics_label | JSON context of the call: demandId and consignmentId | {"demandId": "5258275", "consignmentId": "2811535"} | — | USE |
 | 9 | callback_topic | Callback topic configured for the call. Always NULL in practice | (NULL) | — | DNU |
@@ -1574,7 +1574,7 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
-| 2 | user_code | Consigner user code | WE7832909 | — | USE |
+| 2 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE7832909 | — | USE |
 | 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
 | 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
 | 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
@@ -1608,25 +1608,13 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
-| 2 | user_code | Consigner user code | WE7832909 | — | USE |
-| 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
-| 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
-| 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
-| 6 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | followup_call_log_id | First inbound call by the same user within 60 min after the chat - a chat that did not resolve the issue. Joins to fact_call_logs. | MCUBE-0a1b... | UTC date | USE |
-| 8 | total_messages | Number of messages in the session. | 12 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | user_messages | Messages typed / selected by the user (rest are bot). | 5 | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 | — | USE |
-| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | For trends start from Jun-2026 | USE |
-| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
-| 13 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | — | USE |
-| 14 | issue_selected | Issue the user picked in the chat menu | NO_RESPONSE_GTL | Same data as consignment_id | USE |
-| 15 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
-| 16 | chat_feedback | SATISFIED / NOT_SATISFIED (operator chat only - the consigner chat has no feedback field). | NOT_SATISFIED | — | USE |
-| 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | — | USE |
-| 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call | — | USE |
-| 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 | — | USE |
+| 1 | chat_message_id | Raw message id from the chat. | 6affd413b673ff32e816f668 | — | USE |
+| 2 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | 6dd418698186 | — | USE |
+| 3 | message_order | Position of the message in the session (1 = first). Use to read a conversation in order | 3 | — | USE |
+| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9556589 | — | USE |
+| 5 | sender_type | USER (customer) or BOT (bot / system message). | USER | — | USE |
+| 6 | message_text | Message text. Phone numbers masked as XXXXXXXXXX. [image] = image-only message, [empty] = no text. | Vehicle has stopped / running late |  | USE |
+| 7 | sent_at | Time the message was sent. | 46346.2091087963 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
 
 ## 38_fact_tickets
@@ -1646,7 +1634,7 @@ Columns
 | 1 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | 2290909 | — | USE |
 | 2 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2251213 | — | USE |
 | 3 | ticket_side | CX (consigner ticket) or FO (operator ticket). | FO | — | USE |
-| 4 | user_code | Consigner user code | WE9068921 | — | USE |
+| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9068921 | — | USE |
 | 5 | user_code_source | How user_code was found: ticket_creator (user raised it), via_demand (agent ticket -> demand -> consigner), via_chat (agent ticket -> the chat that raised it). | ticket_creator | — | USE |
 | 6 | raised_by_type | USER (raised in the app) or AGENT (raised by staff). | USER | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 7 | subject | Subject/title of the ticket — brief description of the issue. | Message | UTC date | USE |
@@ -1686,7 +1674,7 @@ Columns
 | 2 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). Joins to dim_survey. | NPS_REASON | — | USE |
 | 3 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 5ca179e49fc593fa | — | USE |
 | 4 | response_id | One survey submission (groups the score, reasons and comment of one NPS response). | NPS-WEFO1-1795139246 | — | USE |
-| 5 | user_code | Consigner user code | WEFO1 | — | USE |
+| 5 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WEFO1 | — | USE |
 | 6 | answered_by | Who gave the answer: CX, FO, SYSTEM (automatic reason) or AGENT (staff-entered reason). | FO | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 7 | asked_at | When the question was answered / shown. | 46346.07460648148 | UTC date | USE |
 | 8 | is_responded | 1 if the user answered, 0 if shown and skipped (e.g. pickup prompt skipped, trip not rated). Use as the response-rate denominator. | 1 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
