@@ -1565,9 +1565,9 @@ Columns
 
 **Ekta:** Grain
 
-chat_session_id (= chat_source + '-' + session_id)
+chat_session_id - one row per in-app help chat session
 
-**Short description:** One row per in-app help chat session. v1 covers the FO help chat (Tesseract) only - ~1.02M sessions since Dec-2023: who chatted, when, the issue and trip context, how it ended (ticket / bot / abandoned) and the user's feedback. Message counts and the consigner chat are pending (v2). Rebuilt daily (DAG fact-chat-logs-emr, 04:10 IST).
+**Short description:** Every help-chat session in the consigner app and the operator app: who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback. Lifetime history.
 
 Columns
 
