@@ -1567,7 +1567,7 @@ Columns
 
 chat_session_id - one row per in-app help chat session
 
-**Short description:** Every help-chat session in the consigner app and the operator app: who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback.
+**Short description:** Every help-chat session in the consigner app (chatbot) and the operator app (Tesseract): who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback. Lifetime history.
 
 Columns
 
@@ -1578,7 +1578,7 @@ Columns
 | 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
 | 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
 | 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
-| 6 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 6 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 7 | followup_call_log_id | First inbound call by the same user within 60 min after the chat - a chat that did not resolve the issue. Joins to fact_call_logs. | MCUBE-0a1b... | UTC date | USE |
 | 8 | total_messages | Number of messages in the session. | 12 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 9 | user_messages | Messages typed / selected by the user (rest are bot). | 5 | Use only where session_status = 'TICKET_GENERATED' | USE |
