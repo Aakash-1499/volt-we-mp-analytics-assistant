@@ -1540,32 +1540,24 @@ Columns
 
 **Ekta:** Grain
 
-call_log_id (= dialer_code + '-' + recording_source_id)
+**call_log_id - one row per SAMPLED call:** Short description
 
-**Short description:** One row per recorded call in the last 3 months, transcribed or not. Carries the speech-to-text transcript (speaker-tagged, Hindi/English mix), its length and quality fields. call_log_id joins to fact_call_logs for who/when/agent. Only ~64% of answered MCUBE calls are sent for transcription; use has_transcript = 1 to keep rows with text. Rebuilt daily with fact_call_logs.
+A random SAMPLE of call transcripts (speech-to-text), last 3 months, with user codes and roles carried from fact_call_logs so the table stands alone. Every row has a parent call in fact_call_logs.The full set stays in DE's transcription source.
 
 Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | dialer_code | <missing in Glossary> | MCUBE | — | USE |
-| 2 | recording_id | The provider's call/recording id: a 32-char hex Call SID for Exotel, a 20-digit id for mCube. Also the filename in recording_url. | 92173693201795072440 | — | USE |
-| 3 | recording_source_id | Primary key of the row in the source table. Call_id in graham_dialplan_call_log for Exotel, prospectactivityid in lsq_prospectactivity_base for mCube/LSQ. Use it to join back to the source table. | fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
-| 4 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
-| 5 | recording_url | Public URL of the audio file (recordings.exotel.com/... or recordings.mcube.com/....wav). Null for rows not picked up yet and for Exotel calls that have no recording. | https://recordings.mcube.com/... | — | USE |
-| 6 | stt_job_status | The STT provider's job state as last polled (retrying, completed, failed, etc.). Null if never submitted. | completed | — | DNU |
-| 7 | transcript_text | <missing in Glossary> | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
-| 8 | transcript_len | <missing in Glossary> | 816 | — | USE |
-| 9 | segment_count | <missing in Glossary> | 22 | — | USE |
-| 10 | is_truncated | <missing in Glossary> | False | — | USE |
-| 11 | has_transcript | <missing in Glossary> | 1 | — | USE |
-| 12 | call_time | <missing in Glossary> | 46345.072222222225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 13 | audio_duration_sec | <missing in Glossary> | 39.08 | — | USE |
-| 14 | n_speakers | <missing in Glossary> | 2 | — | USE |
-| 15 | metadata | <missing in Glossary> | {"recording_source":"MCUBE_LSQ_PROSPECTACTIVITY_BASE",...} | JSON string | USE |
-| 16 | created_ts | DO NOT USE | 46346.02315972222 | UTC | DO NOT USE |
-| 17 | source_updated_ts | <missing in Glossary> | 46346.23708333333 | UTC | DO NOT USE |
-| 18 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. | 46346 | — | DO NOT USE |
+| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
+| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | WE2827925 | — | USE |
+| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | CX | — | USE |
+| 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE9278617 | — | USE |
+| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WTL0115 | — | DNU |
+| 7 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 8 | recording_duration_sec | Length of the recorded audio in seconds (talk time, unlike call_duration_sec which includes ring). | 39.08 | — | USE |
+| 9 | transcript_text | Full transcript, segments separated by ' \| ' and tagged speaker_0 / speaker_1. Hindi-English mix. Speaker numbers are not fixed to caller / receiver. | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
+| 10 | transcript_length | Length of transcript_text in characters. | 816 | — | USE |
 
 ## 36_fact_chat_logs
 
