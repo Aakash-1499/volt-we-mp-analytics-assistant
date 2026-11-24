@@ -1513,9 +1513,9 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 **Ekta:** Grain
 
-**call_log_id - one row per call:** Short description
+**call_log_id:** Short description
 
-MASTER call table: every call across the MCUBE, EXOTEL and SPARKTG dialers - answered or not, recorded or not - with who called whom (user codes + roles), the agent, direction, outcome and duration. Lifetime history. Sources (S3, same feeds DE uses): MCUBE = LSQ prospect activity extension base (events 21 inbound / 22 outbound), EXOTEL = graham_dialplan_call_log, SPARKTG = tesseract_rm_call_log. User codes are DERIVED first (MCUBE: LSQ prospect; EXOTEL: the trip the call belongs to) and looked up from the phone number only as a fallback. Raw phone numbers are never stored.
+MASTER call table: every call across the MCUBE, EXOTEL and SPARKTG dialers - answered or not, recorded or not - with who called whom (user codes + roles), the agent, direction, outcome and duration. Lifetime history. Sources (S3, same feeds DE uses): MCUBE = LSQ prospect activity extension base (events 21 inbound / 22 outbound), EXOTEL = graham_dialplan_call_log, SPARKTG = tesseract_rm_call_log.
 
 Columns
 
@@ -1526,13 +1526,13 @@ Columns
 | 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE2827925 | — | USE |
 | 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE9278617 | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). Filled for ~99.7% of MCUBE calls; NULL on EXOTEL and SPARKTG. | 8062916564 | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | 8062916564 | — | USE |
 | 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | 1 | — | USE |
-| 8 | is_answered | 1 when the call connected. Harmonised across dialers. | outbound | Lower-case | USE |
-| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown: EXOTEL's call feed carries no link even though its calls are recorded (see fact_call_transcripts). | Answered | Vocabulary differs by dialer - use is_answered | USE |
+| 8 | is_answered | 1 when the call connected. | outbound | Lower-case | USE |
+| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | Answered | Vocabulary differs by dialer - use is_answered | USE |
 | 10 | call_at | Time of the call. | 1 | — | USE |
 | 11 | call_duration_sec | Call duration in seconds. Includes ring time on MCUBE, so a 31s call may have <30s of talk. NULL on EXOTEL. | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | USE |
+| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
 
 ## 29_fact_call_transcripts
 
