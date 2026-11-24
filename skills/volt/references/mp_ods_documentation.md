@@ -1631,66 +1631,99 @@ Columns
 
 ## 38_fact_tickets
 
-**mp_analytics_core.fact_chat_details:** Owner
+**mp_analytics_core.fact_tickets:** Owner
 
 **Ekta:** Grain
 
-chat_session_id + chat_message_id - one row per chat message
+**ticket_id - one row per support ticket:** Short description
 
-**Short description:** Every message of every help-chat session. Used for quoting customers and issue tagging.
+Every support ticket raised for consigners (fact_cx_tickets) and operators (fact_operator_tickets), last 12 months: who it belongs to, the issue, the text, ownership, resolution, CSAT, and the chat that raised it.
 
 Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
-| 2 | user_code | Consigner user code | WE7832909 | — | USE |
-| 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
-| 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
-| 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
-| 6 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | followup_call_log_id | First inbound call by the same user within 60 min after the chat - a chat that did not resolve the issue. Joins to fact_call_logs. | MCUBE-0a1b... | UTC date | USE |
-| 8 | total_messages | Number of messages in the session. | 12 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | user_messages | Messages typed / selected by the user (rest are bot). | 5 | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 | — | USE |
-| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | For trends start from Jun-2026 | USE |
-| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
-| 13 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | — | USE |
-| 14 | issue_selected | Issue the user picked in the chat menu | NO_RESPONSE_GTL | Same data as consignment_id | USE |
-| 15 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
-| 16 | chat_feedback | SATISFIED / NOT_SATISFIED (operator chat only - the consigner chat has no feedback field). | NOT_SATISFIED | — | USE |
-| 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | — | USE |
-| 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call | — | USE |
-| 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 | — | USE |
-| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+| 1 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | 2290909 | — | USE |
+| 2 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2251213 | — | USE |
+| 3 | ticket_side | CX (consigner ticket) or FO (operator ticket). | FO | — | USE |
+| 4 | user_code | Consigner user code | WE9068921 | — | USE |
+| 5 | user_code_source | How user_code was found: ticket_creator (user raised it), via_demand (agent ticket -> demand -> consigner), via_chat (agent ticket -> the chat that raised it). | ticket_creator | — | USE |
+| 6 | raised_by_type | USER (raised in the app) or AGENT (raised by staff). | USER | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | subject | Subject/title of the ticket — brief description of the issue. | Message | UTC date | USE |
+| 8 | issue | Issue picked on the ticket (e.g. Balance Payment, GTL DELAY ISSUE). | Balance Payment | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | sub_issue | Sub-category of the ticket issue. Also in ss_1_consignerservice_stats_table_pms. | Driver not reachable | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 10 | description | Free-text complaint body, mostly Hinglish. | Message : Unloading OTP Nahi Mil Raha hai | — | USE |
+| 11 | context | Contextual metadata or notes associated with the ticket. | Can't see my recent booking | For trends start from Jun-2026 | USE |
+| 12 | ticket_status | Ticket status: ACTIVE, RESOLVED ... | RESOLVED | — | USE |
+| 13 | assigned_to | Agent or team to whom the ticket is assigned. | agent@wheelseye.com | — | USE |
+| 14 | kam | Key Account Manager assigned to handle this ticket. | kam@wheelseye.com | Same data as consignment_id | USE |
+| 15 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | agent@wheelseye.com | — | USE |
+| 16 | csat_response | Customer's rating on closure: GOOD / BAD (CX), SATISFIED / NOT_SATISFIED (FO). NULL = not rated. | NOT_SATISFIED | — | USE |
+| 17 | csat_reason | Reason given with the rating (operator tickets). | DELAY | — | USE |
+| 18 | ticket_created_at | Ticket creation time. | 46346.56736111111 | — | USE |
+| 19 | resolved_at | Resolution time. | 46346.62986111111 | — | USE |
+| 20 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
+| 21 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
+| 22 | customer_segment | Consigner business type / operator consigner type (SME, ENTERPRISE ...). | SME |  | USE |
+| 23 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... |  | USE |
+| 24 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
 
 ## 39_fact_user_feedback
 
-#REF! (Cannot find range or sheet for imported range.)
-
-## 40_dim_survey
-
-**mp_analytics_core.fact_chat_details:** Owner
+**mp_analytics_core.fact_user_feedback:** Owner
 
 **Ekta:** Grain
 
-chat_session_id + chat_message_id - one row per chat message
+feedback_id - one row per answer (a multi-select answer = one row per option picked)
 
-**Short description:** Every message of every help-chat session. Used for quoting customers and issue tagging.
+**Short description:** Every structured answer a user gave: NPS (score, reasons, comment), trip rating, pickup feedback, ticket CSAT, chat CSAT, placement cancel reasons and DR cancel reasons. Lifetime. Joins to dim_survey for the question / answer template.
 
 Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
-| 2 | user_code | Consigner user code | WE7832909 | — | USE |
-| 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
-| 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
-| 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
-| 6 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | followup_call_log_id | First inbound call by the same user within 60 min after the chat - a chat that did not resolve the issue. Joins to fact_call_logs. | MCUBE-0a1b... | UTC date | USE |
-| 8 | total_messages | Number of messages in the session. | 12 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | user_messages | Messages typed / selected by the user (rest are bot). | 5 | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 1 | feedback_id | Unique answer id = response + question (+ option position). | NPS-WEFO1-1795139246-REASON-1 | — | USE |
+| 2 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). Joins to dim_survey. | NPS_REASON | — | USE |
+| 3 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 5ca179e49fc593fa | — | USE |
+| 4 | response_id | One survey submission (groups the score, reasons and comment of one NPS response). | NPS-WEFO1-1795139246 | — | USE |
+| 5 | user_code | Consigner user code | WEFO1 | — | USE |
+| 6 | answered_by | Who gave the answer: CX, FO, SYSTEM (automatic reason) or AGENT (staff-entered reason). | FO | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | asked_at | When the question was answered / shown. | 46346.07460648148 | UTC date | USE |
+| 8 | is_responded | 1 if the user answered, 0 if shown and skipped (e.g. pickup prompt skipped, trip not rated). Use as the response-rate denominator. | 1 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 2 | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 10 | answer_text | Exactly what the user gave: the option, or free text (comments, remarks). Phone numbers masked. | सही भाड़ा नहीं मिलता है | — | USE |
+| 11 | is_user_given | 1 = a real user answer; 0 = system / agent-entered reason (e.g. AUTO_CANCELLED_NO_ACTIVITY). Filter on 1 for 'what users told us'. | 1 | For trends start from Jun-2026 | USE |
+| 12 | demand_id | Unique identifier of a demand created by a consigner. | 5303844 | — | USE |
+| 13 | consignment_code | Unique code assigned to the consignment. | WE35392-1 | — | USE |
+| 14 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2251213 | Same data as consignment_id | USE |
+| 15 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... | — | USE |
+| 16 | app_version | App version at the time of the event. | 7.4.1 | — | USE |
+| 17 | platform | App platform through whcih demand was created: App/Web | Android | — | USE |
+| 18 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+
+## 40_dim_survey
+
+**mp_analytics_core.dim_survey:** Owner
+
+**Ekta:** Grain
+
+question_id + answer_id - one row per question and answer option (the survey template)
+
+**Short description:** The survey template: every question, its type and text, and every answer option seen. Options are observed from answers (sources do not publish picklists), so an option never chosen is not listed.
+
+Columns
+
+| # | Column | Description | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). Joins to dim_survey. | NPS_REASON | — | USE |
+| 2 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 5ca179e49fc593fa | — | USE |
+| 3 | survey_type | Survey the question belongs to: NPS, TRIP_RATING, PICKUP_FEEDBACK, TICKET_CSAT, CHAT_CSAT, CANCEL_REASON, DR_CANCEL_REASON. Use to pull a whole survey (score + reasons + comment). | NPS | — | USE |
+| 4 | question_type | rating, single_select, multi_select or freetext. | multi_select | — | USE |
+| 5 | question_text | Question in plain English. | Reasons for the score | — | USE |
+| 6 | scale_max | Top of the scale for rating questions (5, or 1 for yes / no). | 5 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | answer_text | Exactly what the user gave: the option, or free text (comments, remarks). Phone numbers masked. | सही भाड़ा नहीं मिलता है | UTC date | USE |
+| 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 1 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | Use only where session_status = 'TICKET_GENERATED' | DNU |
 | 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 | — | USE |
 | 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | For trends start from Jun-2026 | USE |
 | 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
