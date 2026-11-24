@@ -1567,36 +1567,29 @@ Columns
 
 chat_session_id - one row per in-app help chat session
 
-**Short description:** Every help-chat session in the consigner app and the operator app: who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback. Lifetime history.
+**Short description:** Every help-chat session in the consigner app and the operator app: who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback.
 
 Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | chat_session_id | <missing in Glossary> | FO_TESSERACT-e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
-| 2 | chat_source | <missing in Glossary> | FO_TESSERACT | — | USE |
-| 3 | session_id | <missing in Glossary> | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
-| 4 | user_code | Consigner user code | WE7832909 | — | USE |
-| 5 | user_role | <missing in Glossary> | FO | — | USE |
-| 6 | started_at | <missing in Glossary> | 46346.10087962963 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | chat_date | <missing in Glossary> | 46346 | UTC date | USE |
-| 8 | last_activity_at | <missing in Glossary> | 46346.11383101852 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | duration_sec | <missing in Glossary> | 1119 | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 10 | session_status | <missing in Glossary> | TICKET_GENERATED | — | USE |
-| 11 | outcome | <missing in Glossary> | TICKET_RAISED | For trends start from Jun-2026 | USE |
-| 12 | handed_to_agent | <missing in Glossary> | 1 | — | USE |
-| 13 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | T2250156 | — | USE |
-| 14 | trip_id | Unique identifier of the trip associated with the demand. | 2837691 | Same data as consignment_id | USE |
-| 15 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | — | USE |
-| 16 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
-| 17 | consigner_code | Consigner user code | WE9562223 | — | USE |
-| 18 | issue_type | <missing in Glossary> | NO_RESPONSE_GTL | — | USE |
-| 19 | subject | Subject/title of the ticket — brief description of the issue. | MP_GTL | — | USE |
-| 20 | trip_state | <missing in Glossary> | GOING_TO_LOAD | — | USE |
-| 21 | has_feedback | <missing in Glossary> | 1 | — | USE |
-| 22 | feedback_category | <missing in Glossary> | NOT_SATISFIED | — | USE |
-| 23 | feedback_reasons | <missing in Glossary> | ["DELAY_IN_RESOLUTION"] | JSON array string | USE |
-| 24 | feedback_comment | <missing in Glossary> | loading party still not received my call | — | USE |
-| 25 | feedback_at | <missing in Glossary> | 46346.104108796295 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 26 | metadata | <missing in Glossary> | {"start_reference_id":"4","last_reference_id":"3"} | JSON string | DO NOT USE |
-| 27 | last_updated_date | Timestamp of the most recent ETL refresh of this row. Operational column. | 46346 | — | DO NOT USE |
+| 1 | chat_session_id | Unique session id = chat source + '-' + session id. | FO_TESSERACT-e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
+| 2 | user_code | Consigner user code | WE7832909 | — | USE |
+| 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
+| 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
+| 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
+| 6 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | followup_call_log_id | First inbound call by the same user within 60 min after the chat - a chat that did not resolve the issue. Joins to fact_call_logs. | MCUBE-0a1b... | UTC date | USE |
+| 8 | total_messages | Number of messages in the session. | 12 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | user_messages | Messages typed / selected by the user (rest are bot). | 5 | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 | — | USE |
+| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 | For trends start from Jun-2026 | USE |
+| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
+| 13 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | — | USE |
+| 14 | issue_selected | Issue the user picked in the chat menu | NO_RESPONSE_GTL | Same data as consignment_id | USE |
+| 15 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
+| 16 | chat_feedback | SATISFIED / NOT_SATISFIED (operator chat only - the consigner chat has no feedback field). | NOT_SATISFIED | — | USE |
+| 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | — | USE |
+| 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call | — | USE |
+| 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 | — | USE |
+| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | USE |
