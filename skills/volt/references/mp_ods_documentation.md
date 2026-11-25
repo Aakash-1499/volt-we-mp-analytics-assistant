@@ -1522,16 +1522,16 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | MCUBE | — | USE |
-| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | WE2827925 | — | USE |
+| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | CX/FO/WE | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE2827925 | — | USE |
-| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE9278617 | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | 8062916564 | — | USE |
-| 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | 1 | — | USE |
-| 8 | is_answered | 1 when the call connected. | outbound | Lower-case | USE |
-| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | Answered | Vocabulary differs by dialer - use is_answered | USE |
-| 10 | call_at | Time of the call. | 1 | — | USE |
-| 11 | call_duration_sec | Call duration in seconds. Includes ring time on MCUBE, so a 31s call may have <30s of talk. NULL on EXOTEL. | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | CX/FO/WE | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WE2827925 | — | USE |
+| 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | inbound/outbound | — | USE |
+| 8 | is_answered | 1 when the call connected. | 1/0 | Lower-case | USE |
+| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | 1/0 | Vocabulary differs by dialer - use is_answered | USE |
+| 10 | call_at | Time of the call. |  | — | USE |
+| 11 | call_duration_sec | Call duration in seconds. Includes ring time on MCUBE, so a 31s call may have <30s of talk. NULL on EXOTEL. | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 12 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
 
 ## 29_fact_call_transcripts
