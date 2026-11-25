@@ -1624,27 +1624,19 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_code | Unique code for the support ticket | T2251213 | — | USE |
-| 2 | ticket_side | <missing in Glossary> | FO | — | USE |
-| 3 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9068921 | — | USE |
-| 4 | user_code_source | <missing in Glossary> | ticket_creator |  | USE |
-| 5 | raised_by_type | <missing in Glossary> | USER |  | USE |
-| 6 | subject | Subject/title of the ticket — brief description of the issue. | Message |  | USE |
-| 7 | issue | <missing in Glossary> | Balance Payment |  | USE |
-| 8 | sub_issue | Sub-category of the ticket issue. Also in ss_1_consignerservice_stats_table_pms. | Driver not reachable |  | USE |
-| 9 | description | Free-text complaint body, mostly Hinglish. | Message : Unloading OTP Nahi Mil Raha hai |  | USE |
-| 10 | context | Contextual metadata or notes associated with the ticket. | Can't see my recent booking |  | USE |
-| 11 | ticket_status | <missing in Glossary> | RESOLVED |  | USE |
-| 12 | assigned_to | Agent or team to whom the ticket is assigned. | agent@wheelseye.com |  | USE |
-| 13 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | agent@wheelseye.com |  | USE |
-| 14 | csat_response | <missing in Glossary> | NOT_SATISFIED |  | USE |
-| 15 | csat_reason | <missing in Glossary> | DELAY | — | USE |
-| 16 | ticket_created_at | <missing in Glossary> | 46346.56736111111 | — | USE |
-| 17 | resolved_at | <missing in Glossary> | 46346.62986111111 | — | USE |
-| 18 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
-| 19 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
-| 21 | chat_session_id | Unique session id = chat source + '-' + session id. Source = SPLIT_PART(chat_session_id,'-',1): CX_CHATBOT (consigner app) or FO_TESSERACT (operator app). Joins to fact_chat_details, fact_tickets, fact_user_feedback. | e30f9dbf-5335-... |  | USE |
-| 22 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
+| 1 | ticket_code | Unique ticket code. | T2264299 | — | USE |
+| 2 | user_code | WheelsEye user code (UMS). Prefix says whose. | WE9068921 | — | USE |
+| 3 | user_role | User role: CX, FO, WE, OTHER or UNKNOWN. | FO | — | USE |
+| 4 | ticket_raised_by | SELF (user) or AGENT. | SELF | — | USE |
+| 6 | description | Ticket text. | Unloading OTP nahi mil raha | Numbers masked | USE |
+| 7 | context | User's own words. | Can't see my booking | Numbers masked | USE |
+| 8 | ticket_status | ACTIVE, RESOLVED … | RESOLVED | — | USE |
+| 9 | assigned_to_user_code | WheelsEye user code (UMS). Prefix says whose. | WE8166664 | — | USE |
+| 10 | resolved_by_user_code | WheelsEye user code (UMS). Prefix says whose. | WE9144303 | FO tickets | USE |
+| 11 | ticket_created_at | Ticket creation time. | 46346.56736111111 | UTC | USE |
+| 12 | resolved_at | Resolution time. | 46346.62986111111 | UTC | USE |
+| 13 | consignment_code | Trip the ticket is about. | WE35392-2838751 | — | USE |
+| 14 | table_refreshed_on | Date table was last rebuilt. | 46351 | — | DNU |
 
 ## 39_fact_user_feedback
 
@@ -1660,23 +1652,18 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | survey_id | <missing in Glossary> | NPS-WE1491473-1768656733 | — | USE |
-| 2 | question_id | <missing in Glossary> | NPS_REASON | — | USE |
-| 3 | answer_id | <missing in Glossary> | 5ca179e49fc593fa | — | USE |
-| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WEFO1 | — | USE |
-| 5 | answered_by | <missing in Glossary> | FO | — | USE |
-| 6 | asked_at | <missing in Glossary> | 46346.07460648148 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | is_responded | <missing in Glossary> | 1 | UTC date | USE |
-| 8 | answer_score | <missing in Glossary> | 2 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | answer_text | <missing in Glossary> | सही भाड़ा नहीं मिलता है | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 10 | is_user_given | <missing in Glossary> | 1 | — | USE |
-| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5303844 | For trends start from Jun-2026 | USE |
-| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-1 | — | USE |
-| 13 | ticket_code | Unique code for the support ticket | T2251213 | — | USE |
-| 14 | chat_session_id | Unique session id = chat source + '-' + session id. Source = SPLIT_PART(chat_session_id,'-',1): CX_CHATBOT (consigner app) or FO_TESSERACT (operator app). Joins to fact_chat_details, fact_tickets, fact_user_feedback. | e30f9dbf-5335-... | Same data as consignment_id | USE |
-| 15 | app_version | App version at the time of the event. | 7.4.1 | — | USE |
-| 16 | platform | App platform through whcih demand was created: App/Web | Android | — | USE |
-| 17 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 | — | DNU |
+| 1 | question_id | Question answered. Joins dim_survey. | NPS_REASON | — | USE |
+| 2 | answer_id | Option chosen. Joins dim_survey. | 2662148750c3af4b | — | USE |
+| 3 | user_code | WheelsEye user code (UMS). Prefix says whose. | WE1491473 | — | USE |
+| 4 | user_role | User role: CX, FO, WE, OTHER or UNKNOWN. | FO | — | USE |
+| 5 | asked_at | When answered. | 46346.07460648148 | UTC | USE |
+| 6 | answer_score | Numeric answer (1-5, yes = 1). | 2 | Ratings / CSAT only | USE |
+| 7 | answer_text | User's own words. | driver late, call XXXXXXXXXX | Comments only; masked | USE |
+| 8 | demand_id | Demand it is about. | 5303844 | DR cancel | USE |
+| 9 | consignment_code | Trip it is about. | WE35392-1 | Trip, pickup, cancel | USE |
+| 10 | ticket_code | Ticket it is about. | T2251213 | Ticket CSAT | USE |
+| 11 | chat_session_id | Chat it is about. | e30f9dbf-5335-… | Chat CSAT | USE |
+| 12 | table_refreshed_on | Date table was last rebuilt. | 46351 | — | DNU |
 
 ## 40_dim_survey
 
@@ -1692,15 +1679,15 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | question_id | <missing in Glossary> | NPS_REASON | — | USE |
-| 2 | answer_id | <missing in Glossary> | 5ca179e49fc593fa |  | USE |
-| 3 | survey_type | <missing in Glossary> | NPS |  | USE |
-| 4 | question_type | <missing in Glossary> | multi_select |  | USE |
-| 5 | question_text | <missing in Glossary> | Reasons for the score |  | USE |
-| 6 | scale_max | <missing in Glossary> | 5 |  | USE |
-| 7 | answer_text | <missing in Glossary> | सही भाड़ा नहीं मिलता है |  | USE |
-| 8 | answer_score | <missing in Glossary> | 1 |  | USE |
-| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
+| 1 | question_id | Question id. | NPS_REASON | — | USE |
+| 2 | answer_id | Answer option id (stable hash of question + option text). | 5ca179e49fc593fa |  | USE |
+| 3 | survey_type | Survey the question belongs to: NPS, TRIP_RATING, PICKUP_FEEDBACK, TICKET_CSAT, CHAT_CSAT, CANCEL_REASON, DR_CANCEL_REASON. Use to pull a whole survey (score + reasons + comment). | NPS |  | USE |
+| 4 | question_type | rating, single_select, multi_select or freetext. | multi_select |  | USE |
+| 5 | question_text | Question in plain English. | Reasons for the score |  | USE |
+| 6 | scale_max | Top of the scale for rating questions (5, or 1 for yes / no). | 5 |  | USE |
+| 7 | answer_text | The option text. Ratings: the score or YES / NO / NOT_ANSWERED / SKIPPED. Free text: FREETEXT. | सही भाड़ा नहीं मिलता है |  | USE |
+| 8 | answer_score | Numeric value of a rating option (5, YES = 1, NO = 0). Use for averages. | 1 |  | USE |
+| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
 | 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 |  | USE |
 | 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 |  | USE |
 | 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 |  | USE |
