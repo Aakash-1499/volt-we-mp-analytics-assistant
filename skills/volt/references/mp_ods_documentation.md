@@ -1668,22 +1668,22 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | survey_id | One survey submission, built per survey: <br>NPS-<user_code>-<epoch secs>, TRIP-<consignment>, PICKUP-<id>, TKT-<ticket_id>, CHAT-<chat_session_id>, CNL-<consignment>, DRC-<demand_id>. Groups the score, reasons and comment of one submission. | NPS-WEFO1-1795139246-REASON-1 | — | USE |
+| 1 | survey_id | One survey submission, built per survey: <br>NPS-<user_code>-<epoch secs>, TRIP-<consignment>, PICKUP-<id>, TKT-<ticket_id>, CHAT-<chat_session_id>, CNL-<consignment>, DRC-<demand_id>. Groups the score, reasons and comment of one submission. | NPS-WE1491473-1768656733 | — | USE |
 | 2 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). Joins to dim_survey. | NPS_REASON | — | USE |
 | 3 | answer_id | Answer option chosen = first 16 chars of MD5(question_id + '::' + option). Never NULL (NOT_ANSWERED when shown but not answered). Joins to dim_survey with question_id. | 5ca179e49fc593fa | — | USE |
-| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | NPS-WEFO1-1795139246 | — | USE |
-| 5 | answered_by | Who gave the answer: CX, FO, SYSTEM (automatic reason) or AGENT (staff-entered reason). | WEFO1 | — | USE |
-| 6 | asked_at | When the question was answered / shown. | FO | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | is_responded | 1 if the user answered, 0 if shown and skipped (e.g. pickup prompt skipped, trip not rated). Use as the response-rate denominator. | 46346.07460648148 | UTC date | USE |
-| 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 1 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | answer_text | Only the user's own words: free-text comments / remarks, and the reasons or comment after a CSAT or cancel option. NULL for plain picklist / rating answers - their text is in dim_survey. Phone numbers, accounts and emails masked. | 2 | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 10 | is_user_given | 1 = a real user answer; 0 = system / agent-entered reason (e.g. AUTO_CANCELLED_NO_ACTIVITY). Filter on 1 for 'what users told us'. | सही भाड़ा नहीं मिलता है | — | USE |
-| 11 | demand_id | Unique identifier of a demand created by a consigner. | 1 | For trends start from Jun-2026 | USE |
-| 12 | consignment_code | Unique code assigned to the consignment. | 5303844 | — | USE |
-| 13 | ticket_code | Unique code for the support ticket | WE35392-1 | — | USE |
-| 14 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | T2251213 | Same data as consignment_id | USE |
-| 15 | app_version | App version at the time of the event. | e30f9dbf-5335-... | — | USE |
-| 16 | platform | App platform through whcih demand was created: App/Web | 7.4.1 | — | USE |
+| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WEFO1 | — | USE |
+| 5 | answered_by | Who gave the answer: CX, FO, SYSTEM (automatic reason) or AGENT (staff-entered reason). | FO | — | USE |
+| 6 | asked_at | When the question was answered / shown. | 46346.07460648148 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | is_responded | 1 if the user answered, 0 if shown and skipped (e.g. pickup prompt skipped, trip not rated). Use as the response-rate denominator. | 1 | UTC date | USE |
+| 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 2 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | answer_text | Only the user's own words: free-text comments / remarks, and the reasons or comment after a CSAT or cancel option. NULL for plain picklist / rating answers - their text is in dim_survey. Phone numbers, accounts and emails masked. | सही भाड़ा नहीं मिलता है | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 10 | is_user_given | 1 = a real user answer; 0 = system / agent-entered reason (e.g. AUTO_CANCELLED_NO_ACTIVITY). Filter on 1 for 'what users told us'. | 1 | — | USE |
+| 11 | demand_id | Unique identifier of a demand created by a consigner. | 5303844 | For trends start from Jun-2026 | USE |
+| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-1 | — | USE |
+| 13 | ticket_code | Unique code for the support ticket | T2251213 | — | USE |
+| 14 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... | Same data as consignment_id | USE |
+| 15 | app_version | App version at the time of the event. | 7.4.1 | — | USE |
+| 16 | platform | App platform through whcih demand was created: App/Web | Android | — | USE |
 | 17 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
 
 ## 40_dim_survey
