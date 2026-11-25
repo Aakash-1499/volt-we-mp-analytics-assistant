@@ -1720,3 +1720,30 @@ Columns
 | 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call |  | USE |
 | 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 |  | USE |
 | 20 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
+
+## 41_dim_taxonomy
+
+**mp_analytics_core.dim_taxonomy:** Owner
+
+**Ekta:** Grain
+
+**issue_id:** Short description
+
+List of issues (L1 > L2 > L3). Managed by Product in Google Sheet.
+
+**Built by:** dim-taxonomy.py | copies the Google Sheet daily
+
+Columns
+
+| # | Column | Description | Sample value | ⚠ Standardization | use_flag |
+| --- | --- | --- | --- | --- | --- |
+| 1 | issue_id | Unique issue code | cx_otp_stuck |  | USE |
+| 2 | issue_name | Issue description | OTP stuck |  | USE |
+| 3 | issue_level | 1 = L1(what CX/FO says), 2 = L2(why it happened), 3 = L3(root cause) | 1 |  | USE |
+| 4 | parent_issue_id | Issue origin | cx_otp_stuck | Blank for level 1 | USE |
+| 5 | user_type | Who raises it: CX, FO or both | CX |  | USE |
+| 6 | source | Where it comes from: ticket, chat, survey, call | ticket |  | USE |
+| 7 | definition | One-line meaning. | Loading OTP missing or not accepted |  | USE |
+| 8 | valid_from | Date the issue went live. | 46357 |  | USE |
+| 9 | valid_to | Date the issue was retired. |  | Blank = active | USE |
+| 10 | table_refreshed_on | Date this table was last rebuilt. | 46351 |  | DNU |
