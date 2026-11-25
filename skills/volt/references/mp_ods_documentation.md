@@ -644,7 +644,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 4 | deleted | Filter is_deleted = false for live rows. | false | — | DNU |
 | 5 | created_by | User who created the ticket. | bhim.singh@wheelseye.com | — | DNU |
 | 6 | updated_by | User who last updated the ticket. | ptl@wheelseye.com | — | DNU |
-| 7 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE8414272 | — | USE |
+| 7 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE8414272 | — | USE |
 | 8 | variant_id | Variant identifier per experiment. Used to tag Test and Control consigners in each experiment | 18 | — | USE |
 | 9 | ts_ms | DO NOT USE | 1775736600873 | — | DNU |
 | 10 | lsn | DO NOT USE | 0 | — | DNU |
@@ -753,7 +753,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | event_date | Calendar date of the event (or timestamp when the event occurred). | 2026-08-17 | — | USE |
-| 2 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE2477229 | — | USE |
+| 2 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE2477229 | — | USE |
 | 3 | demand_id | Unique identifier of a demand created by a consigner. | 4826862 | — | USE |
 | 4 | event_name | Name of the event trigger on certain action on app. | v1_add_lr | — | USE |
 | 5 | event_action | Type of action done on app : Click, View, Scroll. | click | — | USE |
@@ -1403,7 +1403,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 3 | phone_number | Masked Phone number called | aa37b724…2090880 (64-char hash) | — | USE |
 | 4 | origin | Origin city of the demand the call was about | north delhi | — | USE |
 | 5 | destination | Destination city of the demand the call was about | mehsana | — | USE |
-| 6 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9475653 | Same data as consigner_user_code - canonical name: consigner_user_code | USE |
+| 6 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE9475653 | Same data as consigner_user_code - canonical name: consigner_user_code | USE |
 | 7 | service_name | Internal service that triggered the call. Always 'vasooli' (consigner service); ignore 1 test row. | vasooli | — | USE |
 | 8 | analytics_label | JSON context of the call: demandId and consignmentId | {"demandId": "5258275", "consignmentId": "2811535"} | — | USE |
 | 9 | callback_topic | Callback topic configured for the call. Always NULL in practice | (NULL) | — | DNU |
@@ -1574,7 +1574,7 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | chat_session_id | Unique session id = chat source + '-' + session id. | e30f9dbf-5335-… | — | USE |
-| 2 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE7832909 | — | USE |
+| 2 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE7832909 | — | USE |
 | 3 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | FO | — | USE |
 | 4 | started_at | Chat Session start time. | 46346.10087962963 | UTC | USE |
 | 5 | last_message_at | Time of the last message | 46346.11383101852 | UTC | USE |
@@ -1604,7 +1604,7 @@ Columns
 | 1 | chat_message_id | Unique message id = chat source + '-' + message id. | CX_CHATBOT-6affd413b673ff32e816f668 | — | USE |
 | 2 | chat_session_id | Unique session id = chat source + '-' + session id. | CX_CHATBOT-6dd418698186 | — | USE |
 | 3 | message_order | Position of the message in the session (1 = first). Use to read a conversation in order - bot messages often share a timestamp. | 3 | — | USE |
-| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9556589 | — | USE |
+| 4 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE9556589 | — | USE |
 | 5 | sender_type | USER (customer) or BOT (bot / system message). | USER | — | USE |
 | 6 | message_text | Message description | Vehicle has stopped / running late | — | USE |
 | 7 | sent_at | Time the message was sent. | 46346.2091087963 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
@@ -1625,14 +1625,14 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | ticket_code | Unique code for the support ticket | T2264299 | — | USE |
-| 2 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9068921 | — | USE |
+| 2 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE9068921 | — | USE |
 | 3 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | FO | — | USE |
-| 4 | ticket_raised_by | <missing in Glossary> | SELF | — | USE |
+| 4 | ticket_raised_by | Ticket raised by SELF/AGENT | SELF | — | USE |
 | 6 | description | Free-text complaint body, mostly Hinglish. | Unloading OTP nahi mil raha | Numbers masked | USE |
 | 7 | context | Contextual metadata or notes associated with the ticket. | Can't see my booking | Numbers masked | USE |
 | 8 | ticket_status | Ticket status: ACTIVE, RESOLVED | RESOLVED | — | USE |
 | 9 | assigned_to_user_code | Agent the ticket is assigned to. | WE8166664 | — | USE |
-| 10 | resolved_by_user_code | <missing in Glossary> | WE9144303 | FO tickets | USE |
+| 10 | resolved_by_user_code | agent that resolved the ticket | WE9144303 | FO tickets | USE |
 | 11 | ticket_created_at | Ticket creation time. | 46346.56736111111 | UTC | USE |
 | 12 | resolved_at | Resolution time. | 46346.62986111111 | UTC | USE |
 | 13 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 | — | USE |
@@ -1653,8 +1653,8 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). | NPS_REASON | — | USE |
-| 2 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 2662148750c3af4b | — | USE |
-| 3 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE1491473 | — | USE |
+| 2 | answer_id | Answer option chosen | 2662148750c3af4b | — | USE |
+| 3 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE1491473 | — | USE |
 | 4 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | FO | — | USE |
 | 5 | asked_at | When the question was answered / shown. | 46346.07460648148 | UTC | USE |
 | 6 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 2 | Ratings / CSAT only | USE |
@@ -1680,7 +1680,7 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). | NPS_REASON | — | USE |
-| 2 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 5ca179e49fc593fa |  | USE |
+| 2 | answer_id | Answer option chosen | 5ca179e49fc593fa |  | USE |
 | 3 | survey_type | Survey the question belongs to: NPS, TRIP_RATING, PICKUP_FEEDBACK, TICKET_CSAT, CHAT_CSAT, CANCEL_REASON, DR_CANCEL_REASON. Use to pull a whole survey (score + reasons + comment). | NPS |  | USE |
 | 4 | question_type | rating, single_select, multi_select or freetext. | multi_select |  | USE |
 | 5 | question_text | Question in plain English. | Reasons for the score |  | USE |
@@ -1739,7 +1739,7 @@ Columns
 | 2 | interaction_id | ID in the source table. | MCUBE-2be2f174-c210… | col_5 | USE |
 | --- | --- | --- | --- | --- | --- |
 | 3 | topic_id | Unique topic code. Never changes. | cx_payment_not_linked |  | USE |
-| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9556589 |  | USE |
+| 4 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE9556589 |  | USE |
 | 5 | user_type | Which side of the marketplace answered. Operator 39,315 rows / 12,636 users; Consigner 361 rows / 349 users. The survey is effectively FO-only today. | CX |  | USE |
 | 6 | captured_at | When it was said. | 46346.2091087963 |  | USE |
 | 7 | topic_text | User's words. | paisa de diya, OTP nahi aaya |  | USE |
