@@ -1738,9 +1738,7 @@ Columns
 | 2 | topic_name | Topic in plain words. | OTP stuck | col_5 | USE |
 | --- | --- | --- | --- | --- | --- |
 | 3 | topic_level | 1 = L1(symptom), 2 = L2(cause), 3 = L3(root cause). | 1 |  | USE |
-| 4 | parent_topic_id | L1 topic | cx_otp_stuck |  | USE |
-| 5 | user_type | Who raises it: CX, FO or CX,FO. | CX |  | USE |
-| 6 | source | Where it comes from: product, ticket, chat, survey. | ticket |  | USE |
-| 7 | valid_from | Date the topic went live. | 46357 |  | USE |
-| 8 | valid_to | Date the topic was retired. |  |  | USE |
-| 9 | table_refreshed_on | Date this table was last rebuilt. | 46351 |  | DNU |
+| 4 | parent_topic_id | L1 topic associated with the specific topic/issue | cx_otp_stuck |  | USE |
+| 5 | valid_from | Date the topic went live. | 46357 |  | USE |
+| 6 | valid_to | Date the topic was retired. |  |  | USE |
+| 7 | table_refreshed_on | Date this table was last rebuilt. | 46351 |  | DNU |
