@@ -434,8 +434,8 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | 1917184 | — | USE |
-| 2 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | TKT-20251119-001 | — | USE |
+| 1 | ticket_id | Ticket raised from the chat. Joins to fact_tickets.ticket_code. | 1917184 | — | USE |
+| 2 | ticket_code | Unique code for the support ticket | TKT-20251119-001 | — | USE |
 | 3 | ticket_created_time | Timestamp when the support ticket was created. | 2025-11-19 10:00:00 | — | USE |
 | 4 | kam | Key Account Manager assigned to handle this ticket. | rahul.sharma@wheelseye.com | — | USE |
 | 5 | assigned_to | Agent or team to whom the ticket is assigned. | cx_ops_team | — | USE |
@@ -790,7 +790,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T1636426 | — | USE |
+| 1 | ticket_code | Unique code for the support ticket | T1636426 | — | USE |
 | 2 | trip_id | Unique identifier of the trip associated with the demand. | WE35392-2410953 | — | USE |
 | 3 | description | Free-text complaint body, mostly Hinglish. | "Message : Do p o d Mili hai" | — | USE |
 | 4 | issue_identified | Agent-assigned root cause — the analytically useful classification. Top: No Response from Customer, Balance Payment, Refund Amount in bank Account, Unloading Detention, Delay in Unloading, Extra Distance. | Balance Payment | — | USE |
@@ -820,7 +820,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 28 | ticket_feedback | Feedback provided by consigner on ticket resolution. Also in ss_1_consignerservice_stats_table_pms. | SATISFIED | — | USE |
 | 29 | ticket_feedback_reason | Reason for the rating. Can be comma-separated multi-value — split before grouping. | NO_UPDATES | — | USE |
 | 30 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | mohd.arsh@wheelseye.com | — | USE |
-| 31 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | 1676122 | — | USE |
+| 31 | ticket_id | Ticket raised from the chat. Joins to fact_tickets.ticket_code. | 1676122 | — | USE |
 
 ## 22_fact_system_alerts
 
@@ -836,8 +836,8 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | 1962141 | — | USE |
-| 2 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T1922445 | — | USE |
+| 1 | ticket_id | Ticket raised from the chat. Joins to fact_tickets.ticket_code. | 1962141 | — | USE |
+| 2 | ticket_code | Unique code for the support ticket | T1922445 | — | USE |
 | 3 | subject | Subject/title of the ticket — brief description of the issue. | POD_DAMAGE | — | USE |
 | 4 | context | Contextual metadata or notes associated with the ticket. | "The operator has a outstanding recovery of Rs.-50.01" | — | USE |
 | 5 | description | Free-text complaint body, mostly Hinglish. | "The operator has a outstanding recovery of Rs.-890.51" | — | USE |
@@ -1522,16 +1522,16 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | MCUBE | — | USE |
-| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | 2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | WE2827925 | — | USE |
+| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | CX/FO/WE | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE2827925 | — | USE |
-| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE9278617 | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | 8062916564 | — | USE |
-| 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | 1 | — | USE |
-| 8 | is_answered | 1 when the call connected. | outbound | Lower-case | USE |
-| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | Answered | Vocabulary differs by dialer - use is_answered | USE |
-| 10 | call_at | Time of the call. | 1 | — | USE |
-| 11 | call_duration_sec | Call duration in seconds. Includes ring time on MCUBE, so a 31s call may have <30s of talk. NULL on EXOTEL. | 46302.225 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | CX/FO/WE | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WE2827925 | — | USE |
+| 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | inbound/outbound | — | USE |
+| 8 | is_answered | 1 when the call connected. | 1/0 | Lower-case | USE |
+| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | 1/0 | Vocabulary differs by dialer - use is_answered | USE |
+| 10 | call_at | Time of the call. |  | — | USE |
+| 11 | call_duration_sec | Call duration in seconds. Includes ring time on MCUBE, so a 31s call may have <30s of talk. NULL on EXOTEL. | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 12 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
 
 ## 29_fact_call_transcripts
@@ -1553,7 +1553,7 @@ Columns
 | 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | CX | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE9278617 | — | USE |
 | 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WTL0115 | — | DNU |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WTL0115 | — | USE |
 | 7 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 8 | recording_duration_sec | Length of the recorded audio in seconds (talk time, unlike call_duration_sec which includes ring). | 39.08 | — | USE |
 | 9 | transcript_text | Full transcript, segments separated by ' \| ' and tagged speaker_0 / speaker_1. Hindi-English mix. Speaker numbers are not fixed to caller / receiver. | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
@@ -1578,7 +1578,7 @@ Columns
 | 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
 | 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
 | 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
-| 6 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 6 | ticket_code | Unique code for the support ticket | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 7 | followup_call_log_id | First inbound call by the same user within 60 min after the chat - a chat that did not resolve the issue. Joins to fact_call_logs. | MCUBE-0a1b... | UTC date | USE |
 | 8 | total_messages | Number of messages in the session. | 12 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 9 | user_messages | Messages typed / selected by the user (rest are bot). | 5 | Use only where session_status = 'TICKET_GENERATED' | USE |
@@ -1631,30 +1631,29 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_id | Internal numeric ID of the system ticket (surrogate key). | 2290909 | — | USE |
-| 2 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | T2251213 | — | USE |
-| 3 | ticket_side | CX (consigner ticket) or FO (operator ticket). | FO | — | USE |
-| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9068921 | — | USE |
-| 5 | user_code_source | How user_code was found: ticket_creator (user raised it), via_demand (agent ticket -> demand -> consigner), via_chat (agent ticket -> the chat that raised it). | ticket_creator | — | USE |
-| 6 | raised_by_type | USER (raised in the app) or AGENT (raised by staff). | USER | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | subject | Subject/title of the ticket — brief description of the issue. | Message | UTC date | USE |
-| 8 | issue | Issue picked on the ticket (e.g. Balance Payment, GTL DELAY ISSUE). | Balance Payment | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | sub_issue | Sub-category of the ticket issue. Also in ss_1_consignerservice_stats_table_pms. | Driver not reachable | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 10 | description | Free-text complaint body, mostly Hinglish. | Message : Unloading OTP Nahi Mil Raha hai | — | USE |
-| 11 | context | Contextual metadata or notes associated with the ticket. | Can't see my recent booking | For trends start from Jun-2026 | USE |
-| 12 | ticket_status | Ticket status: ACTIVE, RESOLVED ... | RESOLVED | — | USE |
-| 13 | assigned_to | Agent or team to whom the ticket is assigned. | agent@wheelseye.com | — | USE |
-| 14 | kam | Key Account Manager assigned to handle this ticket. | kam@wheelseye.com | Same data as consignment_id | USE |
-| 15 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | agent@wheelseye.com | — | USE |
-| 16 | csat_response | Customer's rating on closure: GOOD / BAD (CX), SATISFIED / NOT_SATISFIED (FO). NULL = not rated. | NOT_SATISFIED | — | USE |
-| 17 | csat_reason | Reason given with the rating (operator tickets). | DELAY | — | USE |
-| 18 | ticket_created_at | Ticket creation time. | 46346.56736111111 | — | USE |
-| 19 | resolved_at | Resolution time. | 46346.62986111111 | — | USE |
-| 20 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
-| 21 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
-| 22 | customer_segment | Consigner business type / operator consigner type (SME, ENTERPRISE ...). | SME |  | USE |
-| 23 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... |  | USE |
-| 24 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
+| 1 | ticket_code | Unique code for the support ticket | T2251213 | — | USE |
+| 2 | ticket_side | CX (consigner ticket) or FO (operator ticket). | FO | — | USE |
+| 3 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9068921 | — | USE |
+| 4 | user_code_source | How user_code was found: ticket_creator (user raised it), via_demand (agent ticket -> demand -> consigner), via_chat (agent ticket -> the chat that raised it). | ticket_creator | — | USE |
+| 5 | raised_by_type | USER (raised in the app) or AGENT (raised by staff). | USER | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 6 | subject | Subject/title of the ticket — brief description of the issue. | Message | UTC date | USE |
+| 7 | issue | Issue picked on the ticket (e.g. Balance Payment, GTL DELAY ISSUE). | Balance Payment | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 8 | sub_issue | Sub-category of the ticket issue. Also in ss_1_consignerservice_stats_table_pms. | Driver not reachable | Use only where session_status = 'TICKET_GENERATED' | USE |
+| 9 | description | Free-text complaint body, mostly Hinglish. | Message : Unloading OTP Nahi Mil Raha hai | — | USE |
+| 10 | context | Contextual metadata or notes associated with the ticket. | Can't see my recent booking | For trends start from Jun-2026 | USE |
+| 11 | ticket_status | Ticket status: ACTIVE, RESOLVED ... | RESOLVED | — | USE |
+| 12 | assigned_to | Agent or team to whom the ticket is assigned. | agent@wheelseye.com | — | USE |
+| 13 | kam | Key Account Manager assigned to handle this ticket. | kam@wheelseye.com | Same data as consignment_id | USE |
+| 14 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | agent@wheelseye.com | — | USE |
+| 15 | csat_response | Customer's rating on closure: GOOD / BAD (CX), SATISFIED / NOT_SATISFIED (FO). NULL = not rated. | NOT_SATISFIED | — | USE |
+| 16 | csat_reason | Reason given with the rating (operator tickets). | DELAY | — | USE |
+| 17 | ticket_created_at | Ticket creation time. | 46346.56736111111 | — | USE |
+| 18 | resolved_at | Resolution time. | 46346.62986111111 | — | USE |
+| 19 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
+| 20 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
+| 21 | customer_segment | Consigner business type / operator consigner type (SME, ENTERPRISE ...). | SME |  | USE |
+| 22 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... |  | USE |
+| 23 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
 
 ## 39_fact_user_feedback
 
@@ -1682,7 +1681,7 @@ Columns
 | 10 | is_user_given | 1 = a real user answer; 0 = system / agent-entered reason (e.g. AUTO_CANCELLED_NO_ACTIVITY). Filter on 1 for 'what users told us'. | सही भाड़ा नहीं मिलता है | — | USE |
 | 11 | demand_id | Unique identifier of a demand created by a consigner. | 1 | For trends start from Jun-2026 | USE |
 | 12 | consignment_code | Unique code assigned to the consignment. | 5303844 | — | USE |
-| 13 | ticket_code | Unique code for the support ticket. Also in ss_1_consignerservice_stats_table_pms and ss_1_mp_system_tickets. | WE35392-1 | — | USE |
+| 13 | ticket_code | Unique code for the support ticket | WE35392-1 | — | USE |
 | 14 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | T2251213 | Same data as consignment_id | USE |
 | 15 | app_version | App version at the time of the event. | e30f9dbf-5335-... | — | USE |
 | 16 | platform | App platform through whcih demand was created: App/Web | 7.4.1 | — | USE |
