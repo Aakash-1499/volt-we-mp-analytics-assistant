@@ -1634,26 +1634,25 @@ Columns
 | 1 | ticket_code | Unique code for the support ticket | T2251213 | — | USE |
 | 2 | ticket_side | CX (consigner ticket) or FO (operator ticket). | FO | — | USE |
 | 3 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9068921 | — | USE |
-| 4 | user_code_source | How user_code was found: ticket_creator (user raised it), via_demand (agent ticket -> demand -> consigner), via_chat (agent ticket -> the chat that raised it). | ticket_creator | — | USE |
-| 5 | raised_by_type | USER (raised in the app) or AGENT (raised by staff). | USER | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 6 | subject | Subject/title of the ticket — brief description of the issue. | Message | UTC date | USE |
-| 7 | issue | Issue picked on the ticket (e.g. Balance Payment, GTL DELAY ISSUE). | Balance Payment | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 8 | sub_issue | Sub-category of the ticket issue. Also in ss_1_consignerservice_stats_table_pms. | Driver not reachable | Use only where session_status = 'TICKET_GENERATED' | USE |
-| 9 | description | Free-text complaint body, mostly Hinglish. | Message : Unloading OTP Nahi Mil Raha hai | — | USE |
-| 10 | context | Contextual metadata or notes associated with the ticket. | Can't see my recent booking | For trends start from Jun-2026 | USE |
-| 11 | ticket_status | Ticket status: ACTIVE, RESOLVED ... | RESOLVED | — | USE |
-| 12 | assigned_to | Agent or team to whom the ticket is assigned. | agent@wheelseye.com | — | USE |
-| 13 | kam | Key Account Manager assigned to handle this ticket. | kam@wheelseye.com | Same data as consignment_id | USE |
-| 14 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | agent@wheelseye.com | — | USE |
-| 15 | csat_response | Customer's rating on closure: GOOD / BAD (CX), SATISFIED / NOT_SATISFIED (FO). NULL = not rated. | NOT_SATISFIED | — | USE |
-| 16 | csat_reason | Reason given with the rating (operator tickets). | DELAY | — | USE |
-| 17 | ticket_created_at | Ticket creation time. | 46346.56736111111 | — | USE |
-| 18 | resolved_at | Resolution time. | 46346.62986111111 | — | USE |
-| 19 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
-| 20 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
-| 21 | customer_segment | Consigner business type / operator consigner type (SME, ENTERPRISE ...). | SME |  | USE |
-| 22 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... |  | USE |
-| 23 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
+| 4 | user_code_source | How user_code was found: ticket_creator (user raised it), via_demand (agent ticket -> demand -> consigner), via_chat (agent ticket -> the chat that raised it). | ticket_creator |  | USE |
+| 5 | raised_by_type | USER (raised in the app) or AGENT (raised by staff). | USER |  | USE |
+| 6 | subject | Subject/title of the ticket — brief description of the issue. | Message |  | USE |
+| 7 | issue | Issue picked on the ticket (e.g. Balance Payment, GTL DELAY ISSUE). | Balance Payment |  | USE |
+| 8 | sub_issue | Sub-category of the ticket issue. Also in ss_1_consignerservice_stats_table_pms. | Driver not reachable |  | USE |
+| 9 | description | Free-text complaint body, mostly Hinglish. | Message : Unloading OTP Nahi Mil Raha hai |  | USE |
+| 10 | context | Contextual metadata or notes associated with the ticket. | Can't see my recent booking |  | USE |
+| 11 | ticket_status | Ticket status: ACTIVE, RESOLVED ... | RESOLVED |  | USE |
+| 12 | assigned_to | Agent or team to whom the ticket is assigned. | agent@wheelseye.com |  | USE |
+| 13 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | agent@wheelseye.com |  | USE |
+| 14 | csat_response | Customer's rating on closure: GOOD / BAD (CX), SATISFIED / NOT_SATISFIED (FO). NULL = not rated. | NOT_SATISFIED |  | USE |
+| 15 | csat_reason | Reason given with the rating (operator tickets). | DELAY | — | USE |
+| 16 | ticket_created_at | Ticket creation time. | 46346.56736111111 | — | USE |
+| 17 | resolved_at | Resolution time. | 46346.62986111111 | — | USE |
+| 18 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
+| 19 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
+| 20 | customer_segment | Consigner business type / operator consigner type (SME, ENTERPRISE ...). | SME |  | USE |
+| 21 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... |  | USE |
+| 22 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
 
 ## 39_fact_user_feedback
 
