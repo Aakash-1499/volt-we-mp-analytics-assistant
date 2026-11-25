@@ -1615,7 +1615,7 @@ Columns
 | 5 | sender_type | USER (customer) or BOT (bot / system message). | USER | — | USE |
 | 6 | message_text | Message text. Phone numbers masked as XXXXXXXXXX. [image] = image-only message, [empty] = no text. | Vehicle has stopped / running late |  | USE |
 | 7 | sent_at | Time the message was sent. | 46346.2091087963 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 8 | user_role |  |  |  |  |
+| 8 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN |  |  |  |
 | 8 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 | — | DNU |
 
 ## 38_fact_tickets
@@ -1651,7 +1651,6 @@ Columns
 | 17 | resolved_at | Resolution time. | 46346.62986111111 | — | USE |
 | 18 | demand_id | Unique identifier of a demand created by a consigner. | 5147643 | — | USE |
 | 19 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
-| 20 | customer_segment | Consigner business type / operator consigner type (SME, ENTERPRISE ...). | SME |  | USE |
 | 21 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... |  | USE |
 | 22 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
 
@@ -1706,7 +1705,7 @@ Columns
 | 3 | survey_type | Survey the question belongs to: NPS, TRIP_RATING, PICKUP_FEEDBACK, TICKET_CSAT, CHAT_CSAT, CANCEL_REASON, DR_CANCEL_REASON. Use to pull a whole survey (score + reasons + comment). | NPS |  | USE |
 | 4 | question_type | rating, single_select, multi_select or freetext. | multi_select |  | USE |
 | 5 | question_text | Question in plain English. | Reasons for the score |  | USE |
-| 6 | scale_max | Top of the scale for rating questions (5, or 1 for yes / no). | 5 |  | USE |
+| 6 | scale_max | Max scale for rating questions (5, or 1 for yes / no). | 5 |  | USE |
 | 7 | answer_text | Only the user's own words: free-text comments / remarks, and the reasons or comment after a CSAT or cancel option. NULL for plain picklist / rating answers - their text is in dim_survey. Phone numbers, accounts and emails masked. | सही भाड़ा नहीं मिलता है |  | USE |
 | 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 1 |  | USE |
 | 9 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
