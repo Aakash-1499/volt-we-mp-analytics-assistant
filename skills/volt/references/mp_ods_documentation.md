@@ -1575,7 +1575,7 @@ Columns
 | --- | --- | --- | --- | --- | --- |
 | 1 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-44b5-bd8e-94e0b2772afa | — | USE |
 | 2 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE7832909 | — | USE |
-| 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
+| 3 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | FO | — | USE |
 | 4 | started_at | Session start time. | 46346.10087962963 | — | USE |
 | 5 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN | TICKET_RAISED | — | USE |
 | 6 | ticket_code | Unique code for the support ticket | T2250156 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
