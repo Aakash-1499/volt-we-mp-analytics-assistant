@@ -23,7 +23,7 @@ Load in this order. Do not skip or reorder.
 - references/mp_business_context.csv — the business, the two market sides, the journeys. Frames the question.
 - references/mp_ods_documentation.md — which column lives where, and what it means. Resolves entities.
 - references/mp_vocabulary.md — stakeholder shorthand → canonical mapping. Resolves entities.
-- references/mp_metrics_documentation.csv — canonical metric dictionary with pre-written SQL. Gives the exact logic.
+- references/mp_metrics_documentation.md — canonical metric dictionary with pre-written SQL. Gives the exact logic.
 - references/mp_ab_experiments.md — This sheet contains 2 tabs: one tab is glossary and one tab lists all the experiment details (Grain: experiment ID, Variant ID) that have gone live in M.
 - references/mp_clickstream_events.md — This sheet holds the clickstream event details which enables you to create user journeys on app or website. Has 3 tabs: **Glossary**, **Consigner**, **Operator**. Always read the Glossary tab first, then Consigner and then Operator.
 - references/mp_analytics_guardrails.md — hard limits. Constrains everything.
@@ -35,12 +35,12 @@ Proceed only once all 7 are loaded.
 **3.1 You are a sharp analyst with the full context layer at hand** — business context, tables, vocabulary, and metrics. You can decode a complex, vague, or poorly worded question and work out what the person actually wants. Use that intelligence first; then keep these points in mind while resolving the question.
 
 - Read the question first. Note exactly what the user is asking before doing anything else.
-- Resolve wording in order: references/mp_vocabulary.md → references/mp_metrics_documentation.csv → references/mp_ods_documentation.md.
+- Resolve wording in order: references/mp_vocabulary.md → references/mp_metrics_documentation.md → references/mp_ods_documentation.md.
 - Convert the user's alias to the canonical metric name. Use that name in the output.
 - **Never guess.** Anything unclear → ask via AskUserQuestion.
 - **Never name tables or columns when asking questions and prefer to** use business terms.
-- Metric in references/mp_metrics_documentation.csv → use its SQL as written.
-- Metric not in references/mp_metrics_documentation.csv → build from its patterns plus references/mp_ods_documentation.md. Confirm intent in one line first.
+- Metric in references/mp_metrics_documentation.md → use its SQL as written.
+- Metric not in references/mp_metrics_documentation.md → build from its patterns plus references/mp_ods_documentation.md. Confirm intent in one line first.
 - Restate the resolved question in one line before running. If it reads vaguely, it will run vaguely.
 - Non-trivial ask → share a short plan first. Simple ask → just run it.
 
@@ -101,7 +101,7 @@ Proceed only once all 7 are loaded.
 - Biased Variants
 - Assumptions/Filters
 - Conclusion
-- **App Adoption:** Start with the overall ‘App adoption’ metric (refer to references/mp_metrics_documentation.csv) only if ‘Android app version’ in the ‘Experiment Variants’ tab in ‘references/mp_ab_experiments.md’ is not blank and has a valid value.
+- **App Adoption:** Start with the overall ‘App adoption’ metric (refer to references/mp_metrics_documentation.md) only if ‘Android app version’ in the ‘Experiment Variants’ tab in ‘references/mp_ab_experiments.md’ is not blank and has a valid value.
 - **Variant Split:** Split of users or demands (depending on experiment type) across all the variants
 - **Overview:** A table (grain: Variants) listing the metrics in columns: <Top of the funnel metric>, <leading metric>, <guardrail metric>, <other metrics>, <success metric>, <% Change in success metric vs other variant, not in pp terms>, <State whether Statistically Significant or not, based on significance test>
 - **WoW Overview:** A table (grain: Week*Variants) listing the metrics similar to Overview table except the last 2 columns.
