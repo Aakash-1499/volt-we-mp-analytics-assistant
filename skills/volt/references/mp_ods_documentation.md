@@ -1521,7 +1521,7 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's recording id | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
 | 2 | caller_user_code | User code of the party who placed the call | WE2827925 | — | USE |
 | 3 | caller_role | Type of user who called: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE2827925 | — | USE |
@@ -1548,7 +1548,7 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
+| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's recording id | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
 | 2 | caller_user_code | User code of the party who placed the call | WE2827925 | — | USE |
 | 3 | caller_role | Type of user who called: CX/FO/WE/OTHER/UNKNOWN | CX | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE9278617 | — | USE |
