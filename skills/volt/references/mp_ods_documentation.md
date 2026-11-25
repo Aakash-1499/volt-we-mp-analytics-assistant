@@ -1521,18 +1521,18 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
-| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | WE2827925 | — | USE |
-| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | CX/FO/WE | — | USE |
-| 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE2827925 | — | USE |
+| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id | MCUBE-2be2f174-c210-11f1-9913-06c00c075c11 | — | USE |
+| 2 | caller_user_code | User code of the party who placed the call | WE2827925 | — | USE |
+| 3 | caller_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
+| 4 | receiver_user_code | User code of the party who received the call. | WE2827925 | — | USE |
 | 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | CX/FO/WE | — | USE |
 | 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WE2827925 | — | USE |
 | 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | inbound/outbound | — | USE |
 | 8 | is_answered | 1 when the call connected. | 1/0 | Lower-case | USE |
 | 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | 1/0 | Vocabulary differs by dialer - use is_answered | USE |
 | 10 | call_at | Time of the call. |  | — | USE |
-| 11 | call_duration_sec | Call duration in seconds. Includes ring time on MCUBE, so a 31s call may have <30s of talk. NULL on EXOTEL. | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
+| 11 | call_duration_sec | Call duration in seconds | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
 
 ## 29_fact_call_transcripts
 
@@ -1548,10 +1548,10 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id. Joins to fact_call_transcripts and fact_chat_logs.followup_call_log_id. | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
-| 2 | caller_user_code | User code of the party who placed the call. Derived first: MCUBE = LSQ prospect's consigner code; EXOTEL = the trip's consigner code (consigner and loading / unloading / payment contacts) or operator code (operator and driver). Fallback: phone number -> dim_phone_user. NULL on the WheelsEye agent side (use agent_employee_code) and when nothing matches. | WE2827925 | — | USE |
-| 3 | caller_role | Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). On MCUBE / SPARKTG the agent side is always WE. On EXOTEL the role comes from the trip's party list (CX = consigner side, FO = operator / driver, WE = WheelsEye ops). | CX | — | USE |
-| 4 | receiver_user_code | User code of the party who received the call. Same derivation as caller_user_code. | WE9278617 | — | USE |
+| 1 | call_log_id | Unique call id = dialer + '-' + the dialer's own call id | MCUBE-fc00818f-e3e8-11f1-97d1-06c00c075c11 | — | USE |
+| 2 | caller_user_code | User code of the party who placed the call | WE2827925 | — | USE |
+| 3 | caller_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | CX | — | USE |
+| 4 | receiver_user_code | User code of the party who received the call. | WE9278617 | — | USE |
 | 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE | — | USE |
 | 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WTL0115 | — | USE |
 | 7 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
@@ -1592,7 +1592,7 @@ Columns
 | 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] | — | USE |
 | 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call | — | USE |
 | 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 | — | USE |
-| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 | — | DNU |
 
 ## 37_fact_chat_details
 
@@ -1616,7 +1616,7 @@ Columns
 | 6 | message_text | Message text. Phone numbers masked as XXXXXXXXXX. [image] = image-only message, [empty] = no text. | Vehicle has stopped / running late |  | USE |
 | 7 | sent_at | Time the message was sent. | 46346.2091087963 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 8 | user_role |  |  |  |  |
-| 8 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+| 8 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 | — | DNU |
 
 ## 38_fact_tickets
 
@@ -1653,7 +1653,7 @@ Columns
 | 19 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 |  | USE |
 | 20 | customer_segment | Consigner business type / operator consigner type (SME, ENTERPRISE ...). | SME |  | USE |
 | 21 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... |  | USE |
-| 22 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
+| 22 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
 
 ## 39_fact_user_feedback
 
@@ -1685,7 +1685,7 @@ Columns
 | 14 | chat_session_id | Raw session id from the chat app; unique across both CX and FO app. | e30f9dbf-5335-... | Same data as consignment_id | USE |
 | 15 | app_version | App version at the time of the event. | 7.4.1 | — | USE |
 | 16 | platform | App platform through whcih demand was created: App/Web | Android | — | USE |
-| 17 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+| 17 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 | — | DNU |
 
 ## 40_dim_survey
 
@@ -1709,7 +1709,7 @@ Columns
 | 6 | scale_max | Top of the scale for rating questions (5, or 1 for yes / no). | 5 |  | USE |
 | 7 | answer_text | Only the user's own words: free-text comments / remarks, and the reasons or comment after a CSAT or cancel option. NULL for plain picklist / rating answers - their text is in dim_survey. Phone numbers, accounts and emails masked. | सही भाड़ा नहीं मिलता है |  | USE |
 | 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 1 |  | USE |
-| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
+| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
 | 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 |  | USE |
 | 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 |  | USE |
 | 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 |  | USE |
@@ -1720,4 +1720,4 @@ Columns
 | 17 | chat_feedback_reasons | Reasons picked with the feedback (JSON array). | ["DELAY_IN_RESOLUTION"] |  | USE |
 | 18 | chat_feedback_comment | Free-text comment with the feedback. Phone numbers masked. | loading party still not received my call |  | USE |
 | 19 | chat_feedback_at | Time feedback was given. | 46346.104108796295 |  | USE |
-| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
+| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
