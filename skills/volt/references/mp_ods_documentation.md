@@ -1729,21 +1729,18 @@ Columns
 
 **issue_id:** Short description
 
-List of issues (L1 > L2 > L3). Managed by Product in Google Sheet.
-
-**Built by:** dim-taxonomy.py | copies the Google Sheet daily
+List of issues and their hierarchy. Managed by Product in Google Sheet.
 
 Columns
 
-| # | Column | Description | Sample value | ⚠ Standardization | use_flag |
+**#:** 1
+
+| 2 | topic_name | Topic in plain words. | OTP stuck | col_5 | USE |
 | --- | --- | --- | --- | --- | --- |
-| 1 | issue_id | Unique issue code | cx_otp_stuck |  | USE |
-| 2 | issue_name | Issue description | OTP stuck |  | USE |
-| 3 | issue_level | 1 = L1(what CX/FO says), 2 = L2(why it happened), 3 = L3(root cause) | 1 |  | USE |
-| 4 | parent_issue_id | Issue origin | cx_otp_stuck | Blank for level 1 | USE |
-| 5 | user_type | Who raises it: CX, FO or both | CX |  | USE |
-| 6 | source | Where it comes from: ticket, chat, survey, call | ticket |  | USE |
-| 7 | definition | One-line meaning. | Loading OTP missing or not accepted |  | USE |
-| 8 | valid_from | Date the issue went live. | 46357 |  | USE |
-| 9 | valid_to | Date the issue was retired. |  | Blank = active | USE |
-| 10 | table_refreshed_on | Date this table was last rebuilt. | 46351 |  | DNU |
+| 3 | topic_level | 1 = L1(symptom), 2 = L2(cause), 3 = L3(root cause). | 1 |  | USE |
+| 4 | parent_topic_id | L1 topic | cx_otp_stuck |  | USE |
+| 5 | user_type | Who raises it: CX, FO or CX,FO. | CX |  | USE |
+| 6 | source | Where it comes from: product, ticket, chat, survey. | ticket |  | USE |
+| 7 | valid_from | Date the topic went live. | 46357 |  | USE |
+| 8 | valid_to | Date the topic was retired. |  |  | USE |
+| 9 | table_refreshed_on | Date this table was last rebuilt. | 46351 |  | DNU |
