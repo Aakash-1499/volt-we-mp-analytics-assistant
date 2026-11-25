@@ -1556,8 +1556,8 @@ Columns
 | 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WTL0115 | — | USE |
 | 7 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 8 | recording_duration_sec | Length of the recorded audio in seconds (talk time, unlike call_duration_sec which includes ring). | 39.08 | — | USE |
-| 9 | transcript_text | Full transcript, segments separated by ' \| ' and tagged speaker_0 / speaker_1. Hindi-English mix. Speaker numbers are not fixed to caller / receiver. | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
-| 10 | transcript_length | Length of transcript_text in characters. | 816 | — | USE |
+| 9 | transcript_text | Call to text | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
+| 10 | transcript_length | Character length of transcript_text. | 816 | — | USE |
 
 ## 36_fact_chat_logs
 
