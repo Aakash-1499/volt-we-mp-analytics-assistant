@@ -434,7 +434,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_id | <missing in Glossary> | 1917184 | — | USE |
+| 1 | ticket_id | Unique ticket id. | 1917184 | — | USE |
 | 2 | ticket_code | Unique code for the support ticket | TKT-20251119-001 | — | USE |
 | 3 | ticket_created_time | Timestamp when the support ticket was created. | 2025-11-19 10:00:00 | — | USE |
 | 4 | kam | Key Account Manager assigned to handle this ticket. | rahul.sharma@wheelseye.com | — | USE |
@@ -820,7 +820,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 | 28 | ticket_feedback | Feedback provided by consigner on ticket resolution. Also in ss_1_consignerservice_stats_table_pms. | SATISFIED | — | USE |
 | 29 | ticket_feedback_reason | Reason for the rating. Can be comma-separated multi-value — split before grouping. | NO_UPDATES | — | USE |
 | 30 | resolved_by | Agent who actually resolved. Use this, not assigned_to, for productivity metrics. | mohd.arsh@wheelseye.com | — | USE |
-| 31 | ticket_id | <missing in Glossary> | 1676122 | — | USE |
+| 31 | ticket_id | Unique ticket id. | 1676122 | — | USE |
 
 ## 22_fact_system_alerts
 
@@ -836,7 +836,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 | # | Column | Description (from Glossary) | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_id | <missing in Glossary> | 1962141 | — | USE |
+| 1 | ticket_id | Unique ticket id. | 1962141 | — | USE |
 | 2 | ticket_code | Unique code for the support ticket | T1922445 | — | USE |
 | 3 | subject | Subject/title of the ticket — brief description of the issue. | POD_DAMAGE | — | USE |
 | 4 | context | Contextual metadata or notes associated with the ticket. | "The operator has a outstanding recovery of Rs.-50.01" | — | USE |
@@ -1525,9 +1525,9 @@ Columns
 | 2 | caller_user_code | User code of the party who placed the call | WE2827925 | — | USE |
 | 3 | caller_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE2827925 | — | USE |
-| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | CX/FO/WE | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WE2827925 | — | USE |
-| 7 | direction | inbound / outbound from WheelsEye's point of view. NULL on EXOTEL (no WheelsEye side). | inbound/outbound | — | USE |
+| 5 | receiver_role | Type of user who received the call: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call | WE2827925 | — | USE |
+| 7 | direction | inbound / outbound from WheelsEye's point of view | inbound/outbound | — | USE |
 | 8 | is_answered | 1 when the call connected. | 1/0 | Lower-case | USE |
 | 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | 1/0 | Vocabulary differs by dialer - use is_answered | USE |
 | 10 | call_at | Time of the call. |  | — | USE |
@@ -1552,8 +1552,8 @@ Columns
 | 2 | caller_user_code | User code of the party who placed the call | WE2827925 | — | USE |
 | 3 | caller_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | CX | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE9278617 | — | USE |
-| 5 | receiver_role | Role of the receiver (same values and logic as caller_role). | WE | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call (from fact_internal_users). | WTL0115 | — | USE |
+| 5 | receiver_role | Type of user who received the call: CX/FO/WE/OTHER/UNKNOWN | WE | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call | WTL0115 | — | USE |
 | 7 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
 | 8 | recording_duration_sec | Length of the recorded audio in seconds (talk time, unlike call_duration_sec which includes ring). | 39.08 | — | USE |
 | 9 | transcript_text | Call to text | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
@@ -1602,13 +1602,13 @@ Columns
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
 | 1 | chat_message_id | Unique message id = chat source + '-' + message id. | CX_CHATBOT-6affd413b673ff32e816f668 | — | USE |
-| 2 | chat_session_id | Session the message belongs to. Joins to fact_chat_logs. | CX_CHATBOT-6dd418698186 | — | USE |
+| 2 | chat_session_id | Unique session id = chat source + '-' + session id. Source = SPLIT_PART(chat_session_id,'-',1): CX_CHATBOT (consigner app) or FO_TESSERACT (operator app). Joins to fact_chat_details, fact_tickets, fact_user_feedback. | CX_CHATBOT-6dd418698186 | — | USE |
 | 3 | message_order | Position of the message in the session (1 = first). Use to read a conversation in order - bot messages often share a timestamp. | 3 | — | USE |
-| 4 | user_code | User code of the person who chatted (same for every message of a session). | WE9556589 | — | USE |
+| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9556589 | — | USE |
 | 5 | sender_type | USER (customer) or BOT (bot / system message). Only USER messages should be tagged as issues. | USER | — | USE |
 | 6 | message_text | Message text. Phone numbers masked as XXXXXXXXXX. [image] = image-only message, [empty] = no text. | Vehicle has stopped / running late | — | USE |
 | 7 | sent_at | Time the message was sent. | 46346.2091087963 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 8 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+| 8 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 | — | DNU |
 
 ## 38_fact_tickets
 
@@ -1624,19 +1624,19 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | ticket_code | Unique ticket code. | T2264299 | — | USE |
-| 2 | user_code | WheelsEye user code (UMS). Prefix says whose. | WE9068921 | — | USE |
-| 3 | user_role | User role: CX, FO, WE, OTHER or UNKNOWN. | FO | — | USE |
-| 4 | ticket_raised_by | SELF (user) or AGENT. | SELF | — | USE |
-| 6 | description | Ticket text. | Unloading OTP nahi mil raha | Numbers masked | USE |
-| 7 | context | User's own words. | Can't see my booking | Numbers masked | USE |
-| 8 | ticket_status | ACTIVE, RESOLVED … | RESOLVED | — | USE |
-| 9 | assigned_to_user_code | WheelsEye user code (UMS). Prefix says whose. | WE8166664 | — | USE |
-| 10 | resolved_by_user_code | WheelsEye user code (UMS). Prefix says whose. | WE9144303 | FO tickets | USE |
+| 1 | ticket_code | Unique code for the support ticket | T2264299 | — | USE |
+| 2 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9068921 | — | USE |
+| 3 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
+| 4 | ticket_raised_by | <missing in Glossary> | SELF | — | USE |
+| 6 | description | Free-text complaint body, mostly Hinglish. | Unloading OTP nahi mil raha | Numbers masked | USE |
+| 7 | context | Contextual metadata or notes associated with the ticket. | Can't see my booking | Numbers masked | USE |
+| 8 | ticket_status | Ticket status: ACTIVE, RESOLVED ... | RESOLVED | — | USE |
+| 9 | assigned_to_user_code | <missing in Glossary> | WE8166664 | — | USE |
+| 10 | resolved_by_user_code | <missing in Glossary> | WE9144303 | FO tickets | USE |
 | 11 | ticket_created_at | Ticket creation time. | 46346.56736111111 | UTC | USE |
 | 12 | resolved_at | Resolution time. | 46346.62986111111 | UTC | USE |
-| 13 | consignment_code | Trip the ticket is about. | WE35392-2838751 | — | USE |
-| 14 | table_refreshed_on | Date table was last rebuilt. | 46351 | — | DNU |
+| 13 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 | — | USE |
+| 14 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
 
 ## 39_fact_user_feedback
 
@@ -1652,18 +1652,18 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | question_id | Question answered. Joins dim_survey. | NPS_REASON | — | USE |
-| 2 | answer_id | Option chosen. Joins dim_survey. | 2662148750c3af4b | — | USE |
-| 3 | user_code | WheelsEye user code (UMS). Prefix says whose. | WE1491473 | — | USE |
-| 4 | user_role | User role: CX, FO, WE, OTHER or UNKNOWN. | FO | — | USE |
-| 5 | asked_at | When answered. | 46346.07460648148 | UTC | USE |
-| 6 | answer_score | Numeric answer (1-5, yes = 1). | 2 | Ratings / CSAT only | USE |
-| 7 | answer_text | User's own words. | driver late, call XXXXXXXXXX | Comments only; masked | USE |
-| 8 | demand_id | Demand it is about. | 5303844 | DR cancel | USE |
-| 9 | consignment_code | Trip it is about. | WE35392-1 | Trip, pickup, cancel | USE |
-| 10 | ticket_code | Ticket it is about. | T2251213 | Ticket CSAT | USE |
-| 11 | chat_session_id | Chat it is about. | e30f9dbf-5335-… | Chat CSAT | USE |
-| 12 | table_refreshed_on | Date table was last rebuilt. | 46351 | — | DNU |
+| 1 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). Joins to dim_survey. | NPS_REASON | — | USE |
+| 2 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 2662148750c3af4b | — | USE |
+| 3 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE1491473 | — | USE |
+| 4 | user_role | Role of user_code. Type of this user from ums_users: CX (consigner), FO (operator), WE (WheelsEye staff / agent), OTHER (partner types), UNKNOWN (no code). ~14% of operator-chat users are typed CX. | FO | — | USE |
+| 5 | asked_at | When the question was answered / shown. | 46346.07460648148 | UTC | USE |
+| 6 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 2 | Ratings / CSAT only | USE |
+| 7 | answer_text | Exactly what the user gave: the option, or free text (comments, remarks). Phone numbers masked. | driver late, call XXXXXXXXXX | Comments only; masked | USE |
+| 8 | demand_id | Unique identifier of a demand created by a consigner. | 5303844 | DR cancel | USE |
+| 9 | consignment_code | Unique code assigned to the consignment. | WE35392-1 | Trip, pickup, cancel | USE |
+| 10 | ticket_code | Unique code for the support ticket | T2251213 | Ticket CSAT | USE |
+| 11 | chat_session_id | Unique session id = chat source + '-' + session id. Source = SPLIT_PART(chat_session_id,'-',1): CX_CHATBOT (consigner app) or FO_TESSERACT (operator app). Joins to fact_chat_details, fact_tickets, fact_user_feedback. | e30f9dbf-5335-… | Chat CSAT | USE |
+| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
 
 ## 40_dim_survey
 
@@ -1679,15 +1679,15 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | question_id | Question id. | NPS_REASON | — | USE |
-| 2 | answer_id | Answer option id (stable hash of question + option text). | 5ca179e49fc593fa |  | USE |
+| 1 | question_id | Question answered (e.g. NPS_SCORE, NPS_REASON, TRIP_RATING, PICKUP_RATING, TICKET_CSAT, PLACEMENT_CANCEL_REASON). Joins to dim_survey. | NPS_REASON | — | USE |
+| 2 | answer_id | Answer option chosen. Joins to dim_survey with question_id. | 5ca179e49fc593fa |  | USE |
 | 3 | survey_type | Survey the question belongs to: NPS, TRIP_RATING, PICKUP_FEEDBACK, TICKET_CSAT, CHAT_CSAT, CANCEL_REASON, DR_CANCEL_REASON. Use to pull a whole survey (score + reasons + comment). | NPS |  | USE |
 | 4 | question_type | rating, single_select, multi_select or freetext. | multi_select |  | USE |
 | 5 | question_text | Question in plain English. | Reasons for the score |  | USE |
 | 6 | scale_max | Top of the scale for rating questions (5, or 1 for yes / no). | 5 |  | USE |
-| 7 | answer_text | The option text. Ratings: the score or YES / NO / NOT_ANSWERED / SKIPPED. Free text: FREETEXT. | सही भाड़ा नहीं मिलता है |  | USE |
-| 8 | answer_score | Numeric value of a rating option (5, YES = 1, NO = 0). Use for averages. | 1 |  | USE |
-| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 |  | DNU |
+| 7 | answer_text | Exactly what the user gave: the option, or free text (comments, remarks). Phone numbers masked. | सही भाड़ा नहीं मिलता है |  | USE |
+| 8 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 1 |  | USE |
+| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46349 |  | DNU |
 | 10 | last_message_at | Time of the last message (never earlier than started_at). | 46346.11383101852 |  | USE |
 | 11 | demand_id | Unique identifier of a demand created by a consigner. | 5328450 |  | USE |
 | 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 |  | USE |
@@ -1720,7 +1720,7 @@ Columns
 | 4 | parent_topic_id | L1 topic associated with the specific topic/issue | cx_otp_stuck |  | USE |
 | 5 | valid_from | Date the topic went live. | 46357 |  | USE |
 | 6 | valid_to | Date the topic was retired. |  |  | USE |
-| 7 | table_refreshed_on | Date this table was last rebuilt. | 46351 |  | DNU |
+| 7 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 |  | DNU |
 
 ## 42_fact_interaction_topics
 
@@ -1738,9 +1738,9 @@ Columns
 
 | 2 | interaction_id | ID in the source table. | MCUBE-2be2f174-c210… | col_5 | USE |
 | --- | --- | --- | --- | --- | --- |
-| 3 | topic_id | Topic from dim_taxonomy. | cx_payment_not_linked |  | USE |
-| 4 | user_code | User who raised it. | WE9556589 |  | USE |
-| 5 | user_type | CX or FO. | CX |  | USE |
+| 3 | topic_id | Unique topic code. Never changes. | cx_payment_not_linked |  | USE |
+| 4 | user_code | Identifier of the person who answered. Holds an operator_code or a consigner_user_code depending on user_type — it is NOT a single entity, so always filter user_type before joining. | WE9556589 |  | USE |
+| 5 | user_type | Which side of the marketplace answered. Operator 39,315 rows / 12,636 users; Consigner 361 rows / 349 users. The survey is effectively FO-only today. | CX |  | USE |
 | 6 | captured_at | When it was said. | 46346.2091087963 |  | USE |
 | 7 | topic_text | User's words. | paisa de diya, OTP nahi aaya |  | USE |
 | 8 | sentiment | negative, neutral or positive. | negative |  | USE |
