@@ -1615,7 +1615,7 @@ Columns
 | 5 | sender_type | USER (customer) or BOT (bot / system message). | USER | — | USE |
 | 6 | message_text | Message text. Phone numbers masked as XXXXXXXXXX. [image] = image-only message, [empty] = no text. | Vehicle has stopped / running late |  | USE |
 | 7 | sent_at | Time the message was sent. | 46346.2091087963 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 20 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
+| 8 | table_refreshed_on | Date this table was last rebuilt by its DAG. Use to check freshness. | 46349 | — | DNU |
 
 ## 38_fact_tickets
 
