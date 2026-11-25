@@ -1742,3 +1742,27 @@ Columns
 | 5 | valid_from | Date the topic went live. | 46357 |  | USE |
 | 6 | valid_to | Date the topic was retired. |  |  | USE |
 | 7 | table_refreshed_on | Date this table was last rebuilt. | 46351 |  | DNU |
+
+## 42_fact_interaction_topics
+
+mp_analytics_core.fact_interaction_topics
+
+**Owner:** Ekta
+
+**Grain:** interaction_type + interaction_id + topic_id
+
+**Short description:** Topics raised in calls, chats, tickets and surveys. One row per topic.
+
+Columns
+
+**#:** 1
+
+| 2 | interaction_id | ID in the source table. | MCUBE-2be2f174-c210… | col_5 | USE |
+| --- | --- | --- | --- | --- | --- |
+| 3 | topic_id | Topic from dim_taxonomy. | cx_payment_not_linked |  | USE |
+| 4 | user_code | User who raised it. | WE9556589 |  | USE |
+| 5 | user_type | CX or FO. | CX |  | USE |
+| 6 | captured_at | When it was said. | 46346.2091087963 |  | USE |
+| 7 | topic_text | User's words. | paisa de diya, OTP nahi aaya |  | USE |
+| 8 | sentiment | negative, neutral or positive. | negative |  | USE |
+| 9 | is_primary | 1 = main topic of the interaction. | 1 |  | USE |
