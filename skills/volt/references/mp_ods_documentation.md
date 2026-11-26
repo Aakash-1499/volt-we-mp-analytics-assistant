@@ -1579,11 +1579,11 @@ Columns
 | 6 | chat_outcome | How the session ended: TICKET_RAISED, BOT_ENDED, ABANDONED, IN_PROGRESS, HANDED_TO_AGENT, UNKNOWN (operator chats before ~Jun-2026 have no status). | TICKET_RAISED | UNKNOWN = before 2025 | USE |
 | 7 | ticket_code | Unique code for the support ticket | T2250156 | — | USE |
 | 8 | followup_call_log_id | First inbound call by the same user within 60 min after the chat | MCUBE-0a1b… | — | USE |
-| 11 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
-| 12 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | Operator chats only | USE |
-| 13 | issue_selected | Issue the user picked in the chat menu (operator chat). | NO_RESPONSE_GTL | Moves to fact_interaction_topics | USE |
-| 14 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
-| 15 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
+| 9 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
+| 10 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | Operator chats only | USE |
+| 11 | issue_selected | Issue the user picked in the chat menu (operator chat). | NO_RESPONSE_GTL | Moves to fact_interaction_topics | USE |
+| 12 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
+| 13 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
 
 ## 37_fact_chat_details
 
