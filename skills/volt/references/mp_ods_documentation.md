@@ -1726,7 +1726,7 @@ mp_analytics_core.fact_interaction_topics
 
 **Grain:** interaction_type + interaction_id + topic_id
 
-**Short description:** Topics raised in calls, chats, tickets and surveys. One row per topic.
+**Short description:** Topics raised in calls, chats, tickets and surveys.
 
 Columns
 
@@ -1736,8 +1736,8 @@ Columns
 | --- | --- | --- | --- | --- | --- |
 | 3 | topic_id | Unique topic code. Never changes. | cx_payment_not_linked |  | USE |
 | 4 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE9556589 |  | USE |
-| 5 | user_type | Which side of the marketplace answered. Operator 39,315 rows / 12,636 users; Consigner 361 rows / 349 users. The survey is effectively FO-only today. | CX |  | USE |
-| 6 | captured_at | When it was said. | 46346.2091087963 |  | USE |
+| 5 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | CX |  | USE |
+| 6 | captured_at | When was the interaction captured | 46346.2091087963 |  | USE |
 | 7 | topic_text | User's words. | paisa de diya, OTP nahi aaya |  | USE |
 | 8 | sentiment | negative, neutral or positive. | negative |  | USE |
 | 9 | is_primary | 1 = main topic of the interaction. | 1 |  | USE |
