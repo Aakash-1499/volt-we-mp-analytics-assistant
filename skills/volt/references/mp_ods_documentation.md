@@ -1565,13 +1565,13 @@ Columns
 
 **chat_session_id:** Short description
 
-Every help-chat session in the consigner app and operator app: who chatted, when, what it was about, how it ended, whether it became a ticket or a call
+Every chat session in the consigner app and operator app: who chatted, when, what it was about, how it ended, whether it became a ticket or a call
 
 Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | chat_session_id | Unique session id = chat source + '-' + session id. | e30f9dbf-5335-… | — | USE |
+| 1 | chat_session_id | Unique identifier for a chat session | e30f9dbf-5335-… | — | USE |
 | 2 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE7832909 | — | USE |
 | 3 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | FO | — | USE |
 | 4 | started_at | Chat Session start time. | 46346.10087962963 | UTC | USE |
@@ -1580,7 +1580,7 @@ Columns
 | 7 | ticket_code | Unique code for the support ticket | T2250156 | — | USE |
 | 8 | followup_call_log_id | First inbound call by the same user within 60 min after the chat | MCUBE-0a1b… | — | USE |
 | 9 | consignment_code | Unique code assigned to the consignment. | WE35392-2837691 | — | USE |
-| 10 | consigner_user_code | Unique identifier of a consigner (CX / customer). WheelsEye internal code, typically starts with 'WE'.<br>It depicts the Unique code assigned to the consigner | WE9562223 | Operator chats only | USE |
+| 10 | related_trip_consigner_user_code |  | WE9562223 | Operator chats only | USE |
 | 11 | issue_selected | Issue the user picked in the chat menu (operator chat). | NO_RESPONSE_GTL | Moves to fact_interaction_topics | USE |
 | 12 | trip_stage | Trip stage the issue belongs to: MP_GTL, MP_LOADING, MP_TRANSIT, MP_UNLOADING, MP_TRIP_END, MP_KYC ... | MP_GTL | — | USE |
 | 13 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
@@ -1591,7 +1591,7 @@ Columns
 
 **Ekta:** Grain
 
-chat_session_id + chat_message_id - one row per chat message
+chat_message_id - one row per chat message
 
 **Short description:** Every message of every help-chat session. Used for quoting customers and issue tagging.
 
@@ -1599,8 +1599,8 @@ Columns
 
 | # | Column | Description | Sample value | ⚠ Standardization | use_flag |
 | --- | --- | --- | --- | --- | --- |
-| 1 | chat_message_id | Unique message id = chat source + '-' + message id. | CX_CHATBOT-6affd413b673ff32e816f668 | — | USE |
-| 2 | chat_session_id | Unique session id = chat source + '-' + session id. | CX_CHATBOT-6dd418698186 | — | USE |
+| 1 | chat_message_id | Unique message id per chat | 6affd413b673ff32e816f668 | — | USE |
+| 2 | chat_session_id | Unique identifier for a chat session | CX_CHATBOT-6dd418698186 | — | USE |
 | 3 | message_order | Position of the message in the session (1 = first). Use to read a conversation in order - bot messages often share a timestamp. | 3 | — | USE |
 | 4 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE9556589 | — | USE |
 | 5 | sender_type | USER (customer) or BOT (bot / system message). | USER | — | USE |
@@ -1616,7 +1616,7 @@ Columns
 
 **ticket_id - one row per support ticket:** Short description
 
-Every support ticket raised for consigners (fact_cx_tickets) and operators (fact_operator_tickets), last 12 months: who it belongs to, the issue, the text, ownership, resolution, CSAT, and the chat that raised it.
+Every support ticket raised for consigners and operators in last 12months : tkt owner, issue description, assigned agent, resolution, etc.
 
 Columns
 
@@ -1627,14 +1627,13 @@ Columns
 | 3 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | FO | — | USE |
 | 4 | ticket_raised_by | Ticket raised by SELF/AGENT | SELF | — | USE |
 | 6 | description | Free-text complaint body, mostly Hinglish. | Unloading OTP nahi mil raha | Numbers masked | USE |
-| 7 | context | Contextual metadata or notes associated with the ticket. | Can't see my booking | Numbers masked | USE |
-| 8 | ticket_status | Ticket status: ACTIVE, RESOLVED | RESOLVED | — | USE |
-| 9 | assigned_to_user_code | Agent the ticket is assigned to. | WE8166664 | — | USE |
-| 10 | resolved_by_user_code | agent that resolved the ticket | WE9144303 | FO tickets | USE |
-| 11 | ticket_created_at | Ticket creation time. | 46346.56736111111 | UTC | USE |
-| 12 | resolved_at | Resolution time. | 46346.62986111111 | UTC | USE |
-| 13 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 | — | USE |
-| 14 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
+| 7 | ticket_status | Ticket status: ACTIVE, RESOLVED | RESOLVED | — | USE |
+| 8 | assigned_to_user_code | Agent the ticket is assigned to. | WE8166664 | — | USE |
+| 9 | resolved_by_user_code | agent that resolved the ticket | WE9144303 | FO tickets | USE |
+| 10 | ticket_created_at | Ticket creation time. | 46346.56736111111 | UTC | USE |
+| 11 | resolved_at | Resolution time. | 46346.62986111111 | UTC | USE |
+| 12 | consignment_code | Unique code assigned to the consignment. | WE35392-2838751 | — | USE |
+| 13 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
 
 ## 39_fact_user_feedback
 
@@ -1642,9 +1641,9 @@ Columns
 
 **Ekta:** Grain
 
-survey_id + question_id + answer_id - one row per answer option given (a multi-select answer = one row per option picked)
+**question_id+usercode+asked_at+answer_id:** Short description
 
-**Short description:** Every structured answer a user gave: NPS (score, reasons, comment), trip rating, pickup feedback, ticket CSAT, chat CSAT, placement cancel reasons and DR cancel reasons. Lifetime. Joins to dim_survey for the question / answer template.
+Every structured answer a user gave: NPS (score, reasons, comment), trip rating, pickup feedback, ticket CSAT, chat CSAT, placement cancel reasons and DR cancel reasons. Lifetime. Joins to dim_survey for the question / answer template.
 
 Columns
 
@@ -1660,7 +1659,7 @@ Columns
 | 8 | demand_id | Unique identifier of a demand created by a consigner. | 5303844 | DR cancel | USE |
 | 9 | consignment_code | Unique code assigned to the consignment. | WE35392-1 | Trip, pickup, cancel | USE |
 | 10 | ticket_code | Unique code for the support ticket | T2251213 | Ticket CSAT | USE |
-| 11 | chat_session_id | Unique session id = chat source + '-' + session id. | e30f9dbf-5335-… | Chat CSAT | USE |
+| 11 | chat_session_id | Unique identifier for a chat session | e30f9dbf-5335-… | Chat CSAT | USE |
 | 12 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 | — | DNU |
 
 ## 40_dim_survey
