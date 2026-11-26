@@ -1526,10 +1526,11 @@ Columns
 | 3 | caller_role | Type of user who called: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE2827925 | — | USE |
 | 5 | receiver_role | Type of user who received the call: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
-| 6 | direction | inbound / outbound from WheelsEye's point of view | inbound/outbound | — | USE |
-| 7 | call_at | Time of the call. |  | — | USE |
-| 8 | call_duration_sec | Call duration in seconds | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call | WE2827925 | — | USE |
+| 7 | direction | inbound / outbound from WheelsEye's point of view | inbound/outbound | — | USE |
+| 10 | call_at | Time of the call. |  | — | USE |
+| 11 | call_duration_sec | Call duration in seconds | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
 
 ## 29_fact_call_transcripts
 
@@ -1550,10 +1551,11 @@ Columns
 | 3 | caller_role | Type of user who called: CX/FO/WE/OTHER/UNKNOWN | CX | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE9278617 | — | USE |
 | 5 | receiver_role | Type of user who received the call: CX/FO/WE/OTHER/UNKNOWN | WE | — | USE |
-| 6 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 7 | recording_duration_sec | Length of the recorded audio in seconds, excluding ring time | 39.08 | — | USE |
-| 8 | transcript_text | Call to text | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
-| 9 | transcript_length | Character length of transcript_text. | 816 | — | USE |
+| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call | WTL0115 | — | USE |
+| 7 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 8 | recording_duration_sec | Length of the recorded audio in seconds, excluding ring time | 39.08 | — | USE |
+| 9 | transcript_text | Call to text | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
+| 10 | transcript_length | Character length of transcript_text. | 816 | — | USE |
 
 ## 36_fact_chat_logs
 
@@ -1563,7 +1565,7 @@ Columns
 
 **chat_session_id:** Short description
 
-Every help-chat session in the consigner app (chatbot) and the operator app (Tesseract): who chatted, when, what it was about, how it ended, whether it became a ticket or a call, and the user's feedback.
+Every help-chat session in the consigner app and operator app: who chatted, when, what it was about, how it ended, whether it became a ticket or a call
 
 Columns
 
