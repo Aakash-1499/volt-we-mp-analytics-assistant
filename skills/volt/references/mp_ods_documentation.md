@@ -1515,7 +1515,7 @@ Columns (Description pulled from Glossary via VLOOKUP)
 
 **call_log_id:** Short description
 
-MASTER call table: every call across the MCUBE, EXOTEL and SPARKTG dialers - answered or not, recorded or not - with who called whom (user codes + roles), the agent, direction, outcome and duration. Lifetime history. Sources (S3, same feeds DE uses): MCUBE = LSQ prospect activity extension base (events 21 inbound / 22 outbound), EXOTEL = graham_dialplan_call_log, SPARKTG = tesseract_rm_call_log.
+Master call table across MCUBE, EXOTEL and SPARKTG dialers - answered or not, recorded or not - with who called whom (user codes + roles), the agent, direction, outcome and duration.
 
 Columns
 
@@ -1526,13 +1526,10 @@ Columns
 | 3 | caller_role | Type of user who called: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE2827925 | — | USE |
 | 5 | receiver_role | Type of user who received the call: CX/FO/WE/OTHER/UNKNOWN | CX/FO/WE | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call | WE2827925 | — | USE |
-| 7 | direction | inbound / outbound from WheelsEye's point of view | inbound/outbound | — | USE |
-| 8 | is_answered | 1 when the call connected. | 1/0 | Lower-case | USE |
-| 9 | has_recording | 1 = the dialer holds a recording link, 0 = no recording. NULL = unknown | 1/0 | Vocabulary differs by dialer - use is_answered | USE |
-| 10 | call_at | Time of the call. |  | — | USE |
-| 11 | call_duration_sec | Call duration in seconds | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 12 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
+| 6 | direction | inbound / outbound from WheelsEye's point of view | inbound/outbound | — | USE |
+| 7 | call_at | Time of the call. |  | — | USE |
+| 8 | call_duration_sec | Call duration in seconds | 120 | Stored in UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 9 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46302 | UTC date - calls 00:00-05:30 IST fall on the previous day | DNU |
 
 ## 29_fact_call_transcripts
 
@@ -1542,7 +1539,7 @@ Columns
 
 **call_log_id - one row per SAMPLED call:** Short description
 
-A random SAMPLE of call transcripts (speech-to-text), last 3 months, with user codes and roles carried from fact_call_logs so the table stands alone. Every row has a parent call in fact_call_logs.The full set stays in DE's transcription source.
+A random SAMPLE of call transcripts (speech-to-text) with user codes and roles.
 
 Columns
 
@@ -1553,11 +1550,10 @@ Columns
 | 3 | caller_role | Type of user who called: CX/FO/WE/OTHER/UNKNOWN | CX | — | USE |
 | 4 | receiver_user_code | User code of the party who received the call. | WE9278617 | — | USE |
 | 5 | receiver_role | Type of user who received the call: CX/FO/WE/OTHER/UNKNOWN | WE | — | USE |
-| 6 | agent_employee_code | Employee code of the WheelsEye agent on the call | WTL0115 | — | USE |
-| 7 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
-| 8 | recording_duration_sec | Length of the recorded audio in seconds, excluding ring time | 39.08 | — | USE |
-| 9 | transcript_text | Call to text | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
-| 10 | transcript_length | Character length of transcript_text. | 816 | — | USE |
+| 6 | call_at | Time of the call. | 46345.072222222225 | UTC - add 5:30 for IST: col + INTERVAL '330 minutes' | USE |
+| 7 | recording_duration_sec | Length of the recorded audio in seconds, excluding ring time | 39.08 | — | USE |
+| 8 | transcript_text | Call to text | speaker_0: Hello. \| speaker_1: हां जी, नमस्कार sir. \| ... | — | USE |
+| 9 | transcript_length | Character length of transcript_text. | 816 | — | USE |
 
 ## 36_fact_chat_logs
 
