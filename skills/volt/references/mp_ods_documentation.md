@@ -1713,7 +1713,7 @@ Columns
 | 2 | topic_name | Topic in plain words. | OTP stuck | col_5 | USE |
 | --- | --- | --- | --- | --- | --- |
 | 3 | topic_level | 1 = L1(symptom), 2 = L2(cause), 3 = L3(root cause). | 1 |  | USE |
-| 4 | parent_topic_id | L1 topic associated with the specific topic/issue | cx_otp_stuck |  | USE |
+| 4 | parent_topic_id | Topic one level up | cx_otp_stuck |  | USE |
 | 5 | valid_from | Date the topic went live. | 46357 |  | USE |
 | 6 | valid_to | Date the topic was retired. |  |  | USE |
 | 7 | table_refreshed_on | Date this table was last rebuilt by its DAG | 46351 |  | DNU |
@@ -1740,4 +1740,3 @@ Columns
 | 6 | captured_at | When was the interaction captured | 46346.2091087963 |  | USE |
 | 7 | topic_text | What the user said | paisa de diya, OTP nahi aaya |  | USE |
 | 8 | sentiment | negative, neutral or positive. | negative |  | USE |
-| 9 | is_primary | 1 = main topic of the interaction. | 1 |  | USE |
