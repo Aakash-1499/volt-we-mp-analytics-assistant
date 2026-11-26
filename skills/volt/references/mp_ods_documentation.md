@@ -1654,7 +1654,6 @@ Columns
 | 3 | user_code | Identifier for any MP user : CX/FO/WE(internal WE user) | WE1491473 | — | USE |
 | 4 | user_role | Type of user: CX/FO/WE/OTHER/UNKNOWN | FO | — | USE |
 | 5 | asked_at | When the question was answered / shown. | 46346.07460648148 | UTC | USE |
-| 6 | answer_score | Numeric value of the answer: 1-5 for NPS / trip rating, 1 / 0 for YES-NO and SATISFIED-NOT_SATISFIED. | 2 | Ratings / CSAT only | USE |
 | 7 | answer_text | Exactly what the user gave: the option, or free text (comments, remarks). | driver late, call XXXXXXXXXX | Comments only; masked | USE |
 | 8 | demand_id | Unique identifier of a demand created by a consigner. | 5303844 | DR cancel | USE |
 | 9 | consignment_code | Unique code assigned to the consignment. | WE35392-1 | Trip, pickup, cancel | USE |
@@ -1670,7 +1669,7 @@ Columns
 
 question_id + answer_id - one row per question and answer option (the survey template)
 
-**Short description:** The survey template: every question, its type and text, and every answer option seen. Options are observed from answers (sources do not publish picklists), so an option never chosen is not listed.
+**Short description:** The survey template: every question, its type and text, and every answer option seen. Note: An option never chosen is not listed.
 
 Columns
 
@@ -1703,7 +1702,7 @@ Columns
 
 **Ekta:** Grain
 
-**issue_id:** Short description
+**topic_id:** Short description
 
 List of issues and their hierarchy. Managed by Product in Google Sheet.
 
