@@ -1643,7 +1643,7 @@ Columns
 
 **question_id+usercode+asked_at+answer_id:** Short description
 
-Every structured answer a user gave: NPS (score, reasons, comment), trip rating, pickup feedback, ticket CSAT, chat CSAT, placement cancel reasons and DR cancel reasons. Lifetime. Joins to dim_survey for the question / answer template.
+Every structured answer a user gave: NPS (score, reasons, comment), trip rating, pickup feedback, ticket/chat CSAT, placement/DR cancel reasons.
 
 Columns
 
