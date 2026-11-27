@@ -1127,3 +1127,5 @@ Wheelseye MP — Metrics Definitions
 | 1 | demand_region |
 | 1 | veh_tyre_type |
 | 1 | tyre_count |
+| 1 | demand_cluster |
+| 1 | body_type |
