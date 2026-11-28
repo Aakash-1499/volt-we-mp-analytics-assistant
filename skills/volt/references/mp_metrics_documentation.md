@@ -1134,18 +1134,19 @@ Wheelseye MP — Metrics Definitions
 | 2 | veh_tyre_type |
 | 2 | tyre_count |
 | 2 | body_type |
-| 3 | Demand Region |
-| 3 | Consigner Segment |
-| 3 | Vehicle Tyre Type / VT |
-| 3 | Lane Type |
-| 3 | Demand State |
-| 3 | Demand Cluster |
-| 3 | Demand City |
-| 3 | Lead Source |
-| 3 | Consigner Region / Cx Region |
-| 3 | Consigner State |
-| 3 | Consigner Potential / Potential |
-| 3 | Sales Team |
+| 3 | demand_region |
+| 3 | cx_segment |
+| 3 | tyre |
+| 3 | lane_type |
+| 3 | demand_state |
+| 3 | demand_cluster |
+| 3 | demand_city |
+| 3 | original_lead_source_detailed |
+| 3 | consigner_region |
+| 3 | consigner_state |
+| 3 | cx_potential |
+| 3 | sales_team |
+| 3 | first_sales_team |
 
 ## Sheet3
 
