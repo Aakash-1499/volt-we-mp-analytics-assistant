@@ -1136,5 +1136,22 @@ Wheelseye MP — Metrics Definitions
 | 2 | veh_tyre_type |
 | 2 | tyre_count |
 | 2 | body_type |
-
-1
+| 3 | Demand Region |
+| 3 | Consigner Segment |
+| 3 | Vehicle Tyre Type / VT |
+| 3 | Distance (Min/Max, Trip Length) |
+| 3 | FO Region |
+| 3 | Lane Type |
+| 3 | Demand State |
+| 3 | Demand Cluster |
+| 3 | Demand City |
+| 3 | Business Category |
+| 3 | Lead Source |
+| 3 | Consigner Region / Cx Region |
+| 3 | Consigner State |
+| 3 | Consigner Potential / Potential |
+| 3 | Sales Team |
+| 3 | Platform |
+| 3 | App Potential |
+| 3 | Price Confidence |
+| 3 | Origin State |
