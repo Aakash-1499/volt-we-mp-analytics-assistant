@@ -1146,3 +1146,20 @@ Wheelseye MP — Metrics Definitions
 | 3 | Consigner State |
 | 3 | Consigner Potential / Potential |
 | 3 | Sales Team |
+
+## Sheet3
+
+| Cut | Column name |
+| --- | --- |
+| Demand Region | demand_region |
+| Consigner Segment | cx_segment |
+| Vehicle Tyre Type / VT | tyre |
+| Lane Type | lane_type (calculated in the query, not a table column) |
+| Demand State | demand_state |
+| Demand Cluster | demand_cluster |
+| Demand City | demand_city |
+| Lead Source | original_lead_source_detailed |
+| Consigner Region / Cx Region | consigner_region |
+| Consigner State | consigner_state |
+| Consigner Potential / Potential | cx_potential / app_potential |
+| Sales Team | sales_team / first_sales_team |
